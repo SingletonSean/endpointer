@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30503.244
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Endpointer.Authentication.API", "Endpointer.Authentication.API\Endpointer.Authentication.API.csproj", "{9980EAE8-9EFD-4DB5-8F34-62998F60D4EE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Endpointer.Authentication.Web", "Endpointer.Authentication.Web\Endpointer.Authentication.Web.csproj", "{4314BBE8-5861-4100-8F2B-0463BE99D208}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Endpointer.Authentication.LocalSamples.Web", "Endpointer.Authentication.Web\Endpointer.Authentication.LocalSamples.Web.csproj", "{4314BBE8-5861-4100-8F2B-0463BE99D208}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LocalSamples", "LocalSamples", "{D3F32D9E-8A35-475A-9F88-E1B54F59D3B9}"
 EndProject

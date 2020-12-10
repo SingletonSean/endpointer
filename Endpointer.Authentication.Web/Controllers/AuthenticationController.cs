@@ -44,7 +44,7 @@ namespace Endpointer.Authentication.LocalSamples.Web.Controllers
             return await _refreshHandler.HandleRefresh(refreshRequest, ModelState);
         }
 
-        [HttpPost("logout")]
+        [HttpDelete("logout")]
         public async Task<IActionResult> Logout()
         {
             return await _logoutHandler.HandleLogout(HttpContext.Request);
