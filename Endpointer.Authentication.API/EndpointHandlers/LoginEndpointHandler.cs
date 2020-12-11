@@ -55,7 +55,7 @@ namespace Endpointer.Authentication.API.EndpointHandlers
 
             AuthenticatedUserResponse response = await _authenticator.Authenticate(user);
 
-            return new OkObjectResult(response);
+            return new OkObjectResult(new SuccessResponse<AuthenticatedUserResponse>(response));
         }
     }
 }
