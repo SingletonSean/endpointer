@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Endpointer.Authentication.API.Models.Responses
+namespace Endpointer.Authentication.Core.Models.Responses
 {
     public class ErrorResponse
     {
@@ -13,11 +12,6 @@ namespace Endpointer.Authentication.API.Models.Responses
         public ErrorResponse(IEnumerable<string> errorMessages)
         {
             ErrorMessages = errorMessages;
-        }
-
-        public ErrorResponse(ModelStateDictionary modelState)
-        {
-            ErrorMessages = modelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage));
         }
     }
 }

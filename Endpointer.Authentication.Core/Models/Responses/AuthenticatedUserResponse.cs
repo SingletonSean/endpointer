@@ -1,4 +1,4 @@
-﻿namespace Endpointer.Authentication.API.Models.Responses
+﻿namespace Endpointer.Authentication.Core.Models.Responses
 {
     public class AuthenticatedUserResponse
     {

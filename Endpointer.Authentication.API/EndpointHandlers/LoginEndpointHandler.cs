@@ -1,9 +1,10 @@
-﻿using Endpointer.Authentication.API.Models;
-using Endpointer.Authentication.API.Models.Requests;
-using Endpointer.Authentication.API.Models.Responses;
+﻿using Endpointer.Authentication.API.Extensions;
+using Endpointer.Authentication.API.Models;
 using Endpointer.Authentication.API.Services.Authenticators;
 using Endpointer.Authentication.API.Services.PasswordHashers;
 using Endpointer.Authentication.API.Services.UserRepositories;
+using Endpointer.Authentication.Core.Models.Requests;
+using Endpointer.Authentication.Core.Models.Responses;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
@@ -32,7 +33,7 @@ namespace Endpointer.Authentication.API.EndpointHandlers
         {
             if (!modelState.IsValid)
             {
-                return new BadRequestObjectResult(new ErrorResponse(modelState));
+                return new BadRequestObjectResult(modelState.CreateErrorResponse());
             }
 
             return await HandleLogin(loginRequest);

@@ -3,3 +3,5 @@ bin
 .vs
 *.db
 /Endpointer.Authentication.Web/Properties/launchSettings.json
+secrets.txt
+todo.txt

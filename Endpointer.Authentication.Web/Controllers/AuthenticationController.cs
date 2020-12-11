@@ -1,9 +1,6 @@
 ﻿using Endpointer.Authentication.API.EndpointHandlers;
-using Endpointer.Authentication.API.Models.Requests;
+using Endpointer.Authentication.Core.Models.Requests;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Endpointer.Authentication.LocalSamples.Web.Controllers

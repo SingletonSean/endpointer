@@ -9,6 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Endpointer.Authentication.L
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LocalSamples", "LocalSamples", "{D3F32D9E-8A35-475A-9F88-E1B54F59D3B9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Endpointer.Authentication.Client", "Endpointer.Authentication.Client\Endpointer.Authentication.Client.csproj", "{3E1834A9-3980-49A8-BD2C-3E58EBD3B947}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Endpointer.Authentication.Core", "Endpointer.Authentication.Core\Endpointer.Authentication.Core.csproj", "{8C110ECF-587F-40C0-B38C-D17B76BB8BBB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +27,14 @@ Global
 		{4314BBE8-5861-4100-8F2B-0463BE99D208}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4314BBE8-5861-4100-8F2B-0463BE99D208}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4314BBE8-5861-4100-8F2B-0463BE99D208}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E1834A9-3980-49A8-BD2C-3E58EBD3B947}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E1834A9-3980-49A8-BD2C-3E58EBD3B947}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E1834A9-3980-49A8-BD2C-3E58EBD3B947}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E1834A9-3980-49A8-BD2C-3E58EBD3B947}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C110ECF-587F-40C0-B38C-D17B76BB8BBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C110ECF-587F-40C0-B38C-D17B76BB8BBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C110ECF-587F-40C0-B38C-D17B76BB8BBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C110ECF-587F-40C0-B38C-D17B76BB8BBB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

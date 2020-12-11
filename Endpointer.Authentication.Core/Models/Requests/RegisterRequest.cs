@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Endpointer.Authentication.API.Models.Requests
+namespace Endpointer.Authentication.Core.Models.Requests
 {
     public class RegisterRequest
     {
