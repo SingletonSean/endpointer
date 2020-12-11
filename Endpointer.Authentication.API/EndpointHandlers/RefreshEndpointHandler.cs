@@ -45,13 +45,13 @@ namespace Endpointer.Authentication.API.EndpointHandlers
             bool isValidRefreshToken = _refreshTokenValidator.Validate(refreshRequest.RefreshToken);
             if (!isValidRefreshToken)
             {
-                return new BadRequestObjectResult(new ErrorResponse("Invalid refresh token."));
+                return new BadRequestObjectResult(new ErrorResponse(ErrorCode.INVALID_REFRESH_TOKEN, "Invalid refresh token."));
             }
 
             RefreshToken refreshTokenDTO = await _refreshTokenRepository.GetByToken(refreshRequest.RefreshToken);
             if (refreshTokenDTO == null)
             {
-                return new NotFoundObjectResult(new ErrorResponse("Invalid refresh token."));
+                return new NotFoundObjectResult(new ErrorResponse(ErrorCode.INVALID_REFRESH_TOKEN, "Invalid refresh token."));
             }
 
             await _refreshTokenRepository.Delete(refreshTokenDTO.Id);
@@ -59,7 +59,7 @@ namespace Endpointer.Authentication.API.EndpointHandlers
             User user = await _userRepository.GetById(refreshTokenDTO.UserId);
             if (user == null)
             {
-                return new NotFoundObjectResult(new ErrorResponse("User not found."));
+                return new NotFoundResult();
             }
 
             AuthenticatedUserResponse response = await _authenticator.Authenticate(user);

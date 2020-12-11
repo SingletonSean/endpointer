@@ -11,7 +11,8 @@ namespace Endpointer.Authentication.API.Extensions
     {
         public static ErrorResponse CreateErrorResponse(this ModelStateDictionary modelState)
         {
-            IEnumerable<string> errorMessages = modelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage));
+            IEnumerable<ErrorMessageResponse> errorMessages = modelState.Values
+                .SelectMany(v => v.Errors.Select(e => new ErrorMessageResponse(ErrorCode.VALIDATION_FAILURE, e.ErrorMessage)));
 
             return new ErrorResponse(errorMessages);
         }

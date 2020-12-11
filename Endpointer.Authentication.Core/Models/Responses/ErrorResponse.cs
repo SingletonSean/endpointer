@@ -5,11 +5,13 @@ namespace Endpointer.Authentication.Core.Models.Responses
 {
     public class ErrorResponse
     {
-        public IEnumerable<string> ErrorMessages { get; set; }
+        public IEnumerable<ErrorMessageResponse> ErrorMessages { get; set; }
 
-        public ErrorResponse(string errorMessage) : this(new List<string>() { errorMessage }) { }
+        public ErrorResponse(int code, string errorMessage) : this(new ErrorMessageResponse(code, errorMessage)) { }
 
-        public ErrorResponse(IEnumerable<string> errorMessages)
+        public ErrorResponse(ErrorMessageResponse errorMessage) : this(new List<ErrorMessageResponse>() { errorMessage }) { }
+
+        public ErrorResponse(IEnumerable<ErrorMessageResponse> errorMessages)
         {
             ErrorMessages = errorMessages;
         }
