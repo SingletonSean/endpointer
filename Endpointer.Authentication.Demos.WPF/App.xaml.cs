@@ -37,26 +37,45 @@ namespace Endpointer.Authentication.Demos.WPF
                     services.AddEndpointerAuthenticationClient(endpointConfiguration);
 
                     services.AddSingleton<NavigationStore>();
+                    services.AddSingleton<TokenStore>();
+
+                    services.AddSingleton<NavigateCommand<RegisterViewModel>>();
+                    services.AddSingleton<NavigateCommand<LoginViewModel>>();
+                    services.AddSingleton<RefreshCommand>();
+                    services.AddSingleton<LogoutCommand>();
+
+                    services.AddSingleton<CreateViewModel<RegisterViewModel>>(s => () => s.GetRequiredService<RegisterViewModel>());
+                    services.AddSingleton<CreateViewModel<LoginViewModel>>(s => () => s.GetRequiredService<LoginViewModel>());
 
                     services.AddSingleton<MainViewModel>();
                     services.AddSingleton<CreateLayoutViewModel>(CreateLayoutViewModelFactory);
                     services.AddSingleton<RegisterViewModel>(CreateRegisterViewModel);
+                    services.AddSingleton<LoginViewModel>(CreateLoginViewModel);
 
                     services.AddSingleton<MainWindow>(s => new MainWindow(s.GetRequiredService<MainViewModel>()));
                 })
                 .Build();
         }
 
+        private LoginViewModel CreateLoginViewModel(IServiceProvider services)
+        {
+            return new LoginViewModel(vm => new LoginCommand(vm, 
+                services.GetRequiredService<TokenStore>(),
+                services.GetRequiredService<ILoginService>()));
+        }
+
         private RegisterViewModel CreateRegisterViewModel(IServiceProvider services)
         {
-            return new RegisterViewModel(
-                vm => new RegisterCommand(vm, services.GetRequiredService<IRegisterService>())
-                );
+            return new RegisterViewModel(vm => new RegisterCommand(vm, services.GetRequiredService<IRegisterService>()));
         }
 
         private CreateLayoutViewModel CreateLayoutViewModelFactory(IServiceProvider services)
         {
-            return vm => new LayoutViewModel(vm, (vm) => null, (vm) => null, (vm) => null, (vm) => null);
+            return vm => new LayoutViewModel(vm, 
+                (vm) => services.GetRequiredService<NavigateCommand<RegisterViewModel>>(),
+                (vm) => services.GetRequiredService<NavigateCommand<LoginViewModel>>(), 
+                (vm) => services.GetRequiredService<RefreshCommand>(),
+                (vm) => services.GetRequiredService<LogoutCommand>());
         }
 
         protected override void OnStartup(StartupEventArgs e)

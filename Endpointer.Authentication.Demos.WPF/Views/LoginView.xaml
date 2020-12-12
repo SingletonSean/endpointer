@@ -10,62 +10,60 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <components:Layout>
-        <Grid Grid.IsSharedSizeScope="True">
-            <Grid.Resources>
-                <Style TargetType="TextBlock">
-                    <Setter Property="VerticalAlignment" Value="Center" />
-                </Style>
-                <Style TargetType="TextBox">
-                    <Setter Property="Margin" Value="10 0 0 0" />
-                    <Setter Property="Padding" Value="1 2" />
-                    <Setter Property="Width" Value="300" />
-                    <Setter Property="HorizontalAlignment" Value="Left" />
-                </Style>
-                <Style TargetType="PasswordBox">
-                    <Setter Property="Padding" Value="1 2" />
-                    <Setter Property="Margin" Value="10 0 0 0" />
-                    <Setter Property="Width" Value="300" />
-                    <Setter Property="HorizontalAlignment" Value="Left" />
-                </Style>
-            </Grid.Resources>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-            </Grid.RowDefinitions>
+    <Grid Grid.IsSharedSizeScope="True">
+        <Grid.Resources>
+            <Style TargetType="TextBlock">
+                <Setter Property="VerticalAlignment" Value="Center" />
+            </Style>
+            <Style TargetType="TextBox">
+                <Setter Property="Margin" Value="10 0 0 0" />
+                <Setter Property="Padding" Value="1 2" />
+                <Setter Property="Width" Value="300" />
+                <Setter Property="HorizontalAlignment" Value="Left" />
+            </Style>
+            <Style TargetType="PasswordBox">
+                <Setter Property="Padding" Value="1 2" />
+                <Setter Property="Margin" Value="10 0 0 0" />
+                <Setter Property="Width" Value="300" />
+                <Setter Property="HorizontalAlignment" Value="Left" />
+            </Style>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0"
-                Style="{StaticResource Header}"
-                Text="Login" />
+        <TextBlock Grid.Row="0"
+            Style="{StaticResource Header}"
+            Text="Login" />
 
-            <Grid Grid.Row="1" Margin="0 25 0 0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto" SharedSizeGroup="Label" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+        <Grid Grid.Row="1" Margin="0 25 0 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" SharedSizeGroup="Label" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Column="0" Text="Username" />
+            <TextBlock Grid.Column="0" Text="Username" />
 
-                <TextBox Grid.Column="1" Text="{Binding Username}" />
-            </Grid>
-
-            <Grid Grid.Row="2" Margin="0 20 0 0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto" SharedSizeGroup="Label" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-
-                <TextBlock Grid.Column="0" Text="Password" />
-
-                <pb:BindablePasswordBox Grid.Column="1" Password="{Binding Password}" />
-            </Grid>
-
-            <Button Grid.Row="3" Margin="0 25 0 0" Padding="10 5"
-                HorizontalAlignment="Left"
-                Command="{Binding LoginCommand}"
-                Content="Login" />
+            <TextBox Grid.Column="1" Text="{Binding Username}" />
         </Grid>
-    </components:Layout>
+
+        <Grid Grid.Row="2" Margin="0 20 0 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" SharedSizeGroup="Label" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" Text="Password" />
+
+            <pb:BindablePasswordBox Grid.Column="1" Password="{Binding Password}" />
+        </Grid>
+
+        <Button Grid.Row="3" Margin="0 25 0 0" Padding="10 5"
+            HorizontalAlignment="Left"
+            Command="{Binding LoginCommand}"
+            Content="Login" />
+    </Grid>
 </UserControl>

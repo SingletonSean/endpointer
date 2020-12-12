@@ -42,11 +42,11 @@
                                 Content="Login" />
 
                             <Button Grid.Column="3" Margin="5 0" Padding="10 5"
-                                Command="{Binding ShowRefreshCommand}"
+                                Command="{Binding RefreshCommand}"
                                 Content="Refresh" />
 
                             <Button Grid.Column="4" Margin="5 0" Padding="10 5"
-                                Command="{Binding ShowLogoutCommand}"
+                                Command="{Binding LogoutCommand}"
                                 Content="Logout" />
                         </Grid>
                     </Grid>

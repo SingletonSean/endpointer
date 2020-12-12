@@ -13,24 +13,23 @@ namespace Endpointer.Authentication.Demos.WPF.ViewModels.Layouts
     {
         public ICommand ShowRegisterCommand { get; }
         public ICommand ShowLoginCommand { get; }
-        public ICommand ShowRefreshCommand { get; }
-        public ICommand ShowLogoutCommand { get; }
+        public ICommand RefreshCommand { get; }
+        public ICommand LogoutCommand { get; }
 
         public ViewModelBase CurrentViewModel { get; }
 
         public LayoutViewModel(ViewModelBase currentViewModel,
             CreateCommand<LayoutViewModel> createShowRegisterCommand,
             CreateCommand<LayoutViewModel> createShowLoginCommand,
-            CreateCommand<LayoutViewModel> createShowRefreshCommand,
-            CreateCommand<LayoutViewModel> createShowLogoutCommand
-            )
+            CreateCommand<LayoutViewModel> refreshCommand,
+            CreateCommand<LayoutViewModel> logoutCommand)
         {
             CurrentViewModel = currentViewModel;
 
             ShowRegisterCommand = createShowRegisterCommand(this);
             ShowLoginCommand = createShowLoginCommand(this);
-            ShowRefreshCommand = createShowRefreshCommand(this);
-            ShowLogoutCommand = createShowLogoutCommand(this);
+            RefreshCommand = refreshCommand(this);
+            LogoutCommand = logoutCommand(this);
         }
     }
 }
