@@ -1,5 +1,10 @@
 ﻿using Endpointer.Authentication.Client.Extensions;
+using Endpointer.Authentication.Client.Models;
+using Endpointer.Authentication.Client.Services;
+using Endpointer.Authentication.Demos.WPF.Commands;
 using Endpointer.Authentication.Demos.WPF.Stores;
+using Endpointer.Authentication.Demos.WPF.ViewModels;
+using Endpointer.Authentication.Demos.WPF.ViewModels.Layouts;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -21,21 +26,47 @@ namespace Endpointer.Authentication.Demos.WPF
             _host = new HostBuilder()
                 .ConfigureServices(services =>
                 {
-                    services.AddEndpointerAuthenticationClient();
+                    string baseAddress = "https://localhost:5001/";
+                    AuthenticationEndpointsConfiguration endpointConfiguration = new AuthenticationEndpointsConfiguration()
+                    {
+                        RegisterEndpoint = baseAddress + "register",
+                        LoginEndpoint = baseAddress + "login",
+                        RefreshEndpoint = baseAddress + "refresh",
+                        LogoutEndpoint = baseAddress + "logout",
+                    };
+                    services.AddEndpointerAuthenticationClient(endpointConfiguration);
 
                     services.AddSingleton<NavigationStore>();
 
-                    services.AddSingleton<MainWindow>();
+                    services.AddSingleton<MainViewModel>();
+                    services.AddSingleton<CreateLayoutViewModel>(CreateLayoutViewModelFactory);
+                    services.AddSingleton<RegisterViewModel>(CreateRegisterViewModel);
+
+                    services.AddSingleton<MainWindow>(s => new MainWindow(s.GetRequiredService<MainViewModel>()));
                 })
                 .Build();
         }
 
+        private RegisterViewModel CreateRegisterViewModel(IServiceProvider services)
+        {
+            return new RegisterViewModel(
+                vm => new RegisterCommand(vm, services.GetRequiredService<IRegisterService>())
+                );
+        }
+
+        private CreateLayoutViewModel CreateLayoutViewModelFactory(IServiceProvider services)
+        {
+            return vm => new LayoutViewModel(vm, (vm) => null, (vm) => null, (vm) => null, (vm) => null);
+        }
+
         protected override void OnStartup(StartupEventArgs e)
         {
-
             _host.Start();
 
             IServiceProvider services = _host.Services;
+
+            NavigationStore navigationStore = services.GetRequiredService<NavigationStore>();
+            navigationStore.ShowInLayout(services.GetRequiredService<RegisterViewModel>());
 
             MainWindow = services.GetRequiredService<MainWindow>();
             MainWindow.Show();

@@ -30,11 +30,6 @@ namespace Endpointer.Authentication.Demos.Web
             AuthenticationConfiguration authenticationConfiguration = new AuthenticationConfiguration();
             _configuration.Bind("Authentication", authenticationConfiguration);
 
-            SecretClient keyVaultClient = new SecretClient(
-                new Uri(_configuration.GetValue<string>("KeyVaultUri")),
-                new DefaultAzureCredential());
-            authenticationConfiguration.AccessTokenSecret = keyVaultClient.GetSecret("access-token-secret").Value.Value;
-
             TokenValidationParameters validationParameters = new TokenValidationParameters()
             {
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authenticationConfiguration.AccessTokenSecret)),

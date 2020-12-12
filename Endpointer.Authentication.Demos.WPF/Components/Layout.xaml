@@ -53,7 +53,7 @@
 
                     <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
                         <Grid Margin="20 10" Style="{StaticResource Container}">
-                            <ContentControl Content="{TemplateBinding Content}" />
+                            <ContentControl Content="{Binding CurrentViewModel}" />
                         </Grid>
                     </ScrollViewer>
                 </Grid>
