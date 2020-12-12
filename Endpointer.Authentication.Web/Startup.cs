@@ -12,7 +12,7 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Text;
 
-namespace Endpointer.Authentication.LocalSamples.Web
+namespace Endpointer.Authentication.Demos.Web
 {
     public class Startup
     {
@@ -49,7 +49,7 @@ namespace Endpointer.Authentication.LocalSamples.Web
             string connectionString = _configuration.GetConnectionString("sqlite");
             services.AddEndpointerAuthentication(authenticationConfiguration,
                 validationParameters, 
-                o => o.UseSqlite(connectionString, o => o.MigrationsAssembly("Endpointer.Authentication.LocalSamples.Web")));
+                o => o.UseSqlite(connectionString, o => o.MigrationsAssembly("Endpointer.Authentication.Demos.Web")));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

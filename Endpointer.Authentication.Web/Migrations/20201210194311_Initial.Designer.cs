@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Endpointer.Authentication.LocalSamples.Web.Migrations
+namespace Endpointer.Authentication.Demos.Web.Migrations
 {
     [DbContext(typeof(AuthenticationDbContext))]
     [Migration("20201210194311_Initial")]

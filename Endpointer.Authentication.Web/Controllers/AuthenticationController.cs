@@ -3,7 +3,7 @@ using Endpointer.Authentication.Core.Models.Requests;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
-namespace Endpointer.Authentication.LocalSamples.Web.Controllers
+namespace Endpointer.Authentication.Demos.Web.Controllers
 {
     public class AuthenticationController : Controller
     {

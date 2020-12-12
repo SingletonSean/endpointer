@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Endpointer.Authentication.LocalSamples.Web.Migrations
+namespace Endpointer.Authentication.Demos.Web.Migrations
 {
     [DbContext(typeof(AuthenticationDbContext))]
     partial class AuthenticationDbContextModelSnapshot : ModelSnapshot

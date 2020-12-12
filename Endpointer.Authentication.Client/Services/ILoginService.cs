@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Endpointer.Authentication.Client.Services
 {
-    public interface IAuthenticationService
+    public interface ILoginService
     {
         Task<Response<AuthenticatedUserResponse>> Login(LoginRequest request);
     }

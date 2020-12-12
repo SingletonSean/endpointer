@@ -3,7 +3,7 @@ using Endpointer.Authentication.API.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace Endpointer.Authentication.LocalSamples.Web
+namespace Endpointer.Authentication.Demos.Web
 {
     public class Program
     {
