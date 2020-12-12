@@ -2,6 +2,7 @@
 using Endpointer.Authentication.Client.Models;
 using Endpointer.Authentication.Client.Services;
 using Endpointer.Authentication.Demos.WPF.Commands;
+using Endpointer.Authentication.Demos.WPF.Services;
 using Endpointer.Authentication.Demos.WPF.Stores;
 using Endpointer.Authentication.Demos.WPF.ViewModels;
 using Endpointer.Authentication.Demos.WPF.ViewModels.Layouts;
@@ -41,6 +42,8 @@ namespace Endpointer.Authentication.Demos.WPF
 
                     services.AddSingleton<NavigateCommand<RegisterViewModel>>();
                     services.AddSingleton<NavigateCommand<LoginViewModel>>();
+                    services.AddSingleton<RenavigationService<RegisterViewModel>>();
+                    services.AddSingleton<RenavigationService<LoginViewModel>>();
                     services.AddSingleton<RefreshCommand>();
                     services.AddSingleton<LogoutCommand>();
 
@@ -66,7 +69,9 @@ namespace Endpointer.Authentication.Demos.WPF
 
         private RegisterViewModel CreateRegisterViewModel(IServiceProvider services)
         {
-            return new RegisterViewModel(vm => new RegisterCommand(vm, services.GetRequiredService<IRegisterService>()));
+            return new RegisterViewModel(vm => new RegisterCommand(vm, 
+                services.GetRequiredService<IRegisterService>(),
+                services.GetRequiredService<RenavigationService<LoginViewModel>>()));
         }
 
         private CreateLayoutViewModel CreateLayoutViewModelFactory(IServiceProvider services)

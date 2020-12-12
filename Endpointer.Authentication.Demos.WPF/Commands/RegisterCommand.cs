@@ -1,6 +1,7 @@
 ﻿using Endpointer.Authentication.Client.Services;
 using Endpointer.Authentication.Core.Models.Requests;
 using Endpointer.Authentication.Core.Models.Responses;
+using Endpointer.Authentication.Demos.WPF.Services;
 using Endpointer.Authentication.Demos.WPF.ViewModels;
 using Refit;
 using System.Linq;
@@ -13,11 +14,15 @@ namespace Endpointer.Authentication.Demos.WPF.Commands
     {
         private readonly RegisterViewModel _viewModel;
         private readonly IRegisterService _registerService;
+        private readonly RenavigationService<LoginViewModel> _loginRenavigationService;
 
-        public RegisterCommand(RegisterViewModel viewModel, IRegisterService registerService)
+        public RegisterCommand(RegisterViewModel viewModel,
+            IRegisterService registerService, 
+            RenavigationService<LoginViewModel> loginRenavigationService)
         {
             _viewModel = viewModel;
             _registerService = registerService;
+            _loginRenavigationService = loginRenavigationService;
         }
 
         protected override async Task ExecuteAsync(object parameter)
@@ -34,6 +39,8 @@ namespace Endpointer.Authentication.Demos.WPF.Commands
             {
                 await _registerService.Register(request);
                 MessageBox.Show("Successfully registered.", "Success");
+
+                _loginRenavigationService.Renavigate();
             }
             catch (ApiException ex)
             {

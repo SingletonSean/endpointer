@@ -1,4 +1,5 @@
-﻿using Endpointer.Authentication.Demos.WPF.Stores;
+﻿using Endpointer.Authentication.Demos.WPF.Services;
+using Endpointer.Authentication.Demos.WPF.Stores;
 using Endpointer.Authentication.Demos.WPF.ViewModels;
 using System;
 
@@ -6,20 +7,16 @@ namespace Endpointer.Authentication.Demos.WPF.Commands
 {
     public class NavigateCommand<TViewModel> : CommandBase where TViewModel : ViewModelBase
     {
-        private readonly CreateViewModel<TViewModel> _createViewModel;
-        private readonly NavigationStore _navigationStore;
+        private readonly RenavigationService<TViewModel> _renavigationService;
 
-        public NavigateCommand(CreateViewModel<TViewModel> createViewModel,
-            NavigationStore navigationStore)
+        public NavigateCommand(RenavigationService<TViewModel> renavigationService)
         {
-            _createViewModel = createViewModel;
-            _navigationStore = navigationStore;
+            _renavigationService = renavigationService;
         }
 
         public override void Execute(object parameter)
         {
-            ViewModelBase viewModel = _createViewModel();
-            _navigationStore.ShowInLayout(viewModel);
+            _renavigationService.Renavigate();
         }
     }
 }
