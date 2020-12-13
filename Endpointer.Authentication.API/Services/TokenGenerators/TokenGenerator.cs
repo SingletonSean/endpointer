@@ -9,7 +9,7 @@ namespace Endpointer.Authentication.API.Services.TokenGenerators
 {
     public class TokenGenerator
     {
-        public string GenerateToken(string secretKey, string issuer, string audience, double expirationMinutes, 
+        public string GenerateToken(string secretKey, string issuer, string audience, DateTime expires, 
             IEnumerable<Claim> claims = null)
         {
             SecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
@@ -20,7 +20,7 @@ namespace Endpointer.Authentication.API.Services.TokenGenerators
                 audience,
                 claims,
                 DateTime.UtcNow,
-                DateTime.UtcNow.AddMinutes(expirationMinutes),
+                expires,
                 credentials);
 
             return new JwtSecurityTokenHandler().WriteToken(token);

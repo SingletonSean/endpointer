@@ -1,4 +1,5 @@
 ﻿using Endpointer.Authentication.API.Models;
+using System;
 
 namespace Endpointer.Authentication.API.Services.TokenGenerators
 {
@@ -19,7 +20,7 @@ namespace Endpointer.Authentication.API.Services.TokenGenerators
                 _configuration.RefreshTokenSecret,
                 _configuration.Issuer,
                 _configuration.Audience,
-                _configuration.RefreshTokenExpirationMinutes);
+                DateTime.UtcNow.AddMinutes(_configuration.RefreshTokenExpirationMinutes));
         }
     }
 }

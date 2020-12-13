@@ -1,4 +1,5 @@
 ﻿using Endpointer.Authentication.API.Models;
+using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 
@@ -15,7 +16,7 @@ namespace Endpointer.Authentication.API.Services.TokenGenerators
             _tokenGenerator = tokenGenerator;
         }
 
-        public string GenerateToken(User user)
+        public string GenerateToken(User user, DateTime expirationTime)
         {
             List<Claim> claims = new List<Claim>()
             {
@@ -28,7 +29,7 @@ namespace Endpointer.Authentication.API.Services.TokenGenerators
                 _configuration.AccessTokenSecret,
                 _configuration.Issuer,
                 _configuration.Audience,
-                _configuration.AccessTokenExpirationMinutes,
+                expirationTime,
                 claims);
         }
     }
