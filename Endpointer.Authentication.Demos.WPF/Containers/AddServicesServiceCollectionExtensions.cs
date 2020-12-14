@@ -1,6 +1,7 @@
 ﻿using Endpointer.Authentication.Client.Extensions;
 using Endpointer.Authentication.Client.Models;
 using Endpointer.Authentication.Demos.WPF.Services;
+using Endpointer.Authentication.Demos.WPF.Stores;
 using Endpointer.Authentication.Demos.WPF.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -21,7 +22,8 @@ namespace Endpointer.Authentication.Demos.WPF.Containers
                 RefreshEndpoint = baseAddress + "refresh",
                 LogoutEndpoint = baseAddress + "logout",
             };
-            services.AddEndpointerAuthenticationClient(endpointConfiguration);
+
+            services.AddEndpointerAuthenticationClient(endpointConfiguration, s => s.GetRequiredService<TokenStore>());
 
             services.AddSingleton<RenavigationService<RegisterViewModel>>();
             services.AddSingleton<RenavigationService<LoginViewModel>>();

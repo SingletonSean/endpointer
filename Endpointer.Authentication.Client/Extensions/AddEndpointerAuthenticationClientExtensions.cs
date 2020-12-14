@@ -1,39 +1,54 @@
-﻿using Endpointer.Authentication.Client.Models;
+﻿using Endpointer.Authentication.Client.Http;
+using Endpointer.Authentication.Client.Models;
 using Endpointer.Authentication.Client.Services;
+using Endpointer.Authentication.Client.Stores;
 using Microsoft.Extensions.DependencyInjection;
 using Refit;
 using System;
+using System.Net.Http;
 
 namespace Endpointer.Authentication.Client.Extensions
 {
     public static class AddEndpointerAuthenticationClientExtensions
     {
-        public static IServiceCollection AddEndpointerAuthenticationClient(this IServiceCollection services, 
-            AuthenticationEndpointsConfiguration endpointConfiguration)
+        public static IServiceCollection AddEndpointerAuthenticationClient(this IServiceCollection services,
+            AuthenticationEndpointsConfiguration endpointConfiguration,
+            IAutoRefreshTokenStore tokenStore)
         {
-            RefitSettings refitSettings = new RefitSettings(new NewtonsoftJsonContentSerializer()); 
+            return services.AddEndpointerAuthenticationClient(endpointConfiguration, (s) => tokenStore);
+        }
 
-            services.AddRefitClient<IRegisterService>(refitSettings).ConfigureHttpClient(o =>
-            {
-                o.BaseAddress = new Uri(endpointConfiguration.RegisterEndpoint);
-            });
+        public static IServiceCollection AddEndpointerAuthenticationClient(this IServiceCollection services, 
+            AuthenticationEndpointsConfiguration endpointConfiguration,
+            Func<IServiceProvider, IAutoRefreshTokenStore> getTokenStore)
+        {
+            RefitSettings refitSettings = new RefitSettings(new NewtonsoftJsonContentSerializer());
 
-            services.AddRefitClient<ILoginService>(refitSettings).ConfigureHttpClient(o =>
-            {
-                o.BaseAddress = new Uri(endpointConfiguration.LoginEndpoint);
-            });
-
-            services.AddRefitClient<IRefreshService>(refitSettings).ConfigureHttpClient(o =>
-            {
-                o.BaseAddress = new Uri(endpointConfiguration.RefreshEndpoint);
-            });
-
-            services.AddRefitClient<ILogoutService>(refitSettings).ConfigureHttpClient(o =>
-            {
-                o.BaseAddress = new Uri(endpointConfiguration.LogoutEndpoint);
-            });
+            services.AddRefitClient<IRegisterService>(refitSettings, endpointConfiguration.RegisterEndpoint);
+            services.AddRefitClient<ILoginService>(refitSettings, endpointConfiguration.LoginEndpoint);
+            services.AddRefitClient<IRefreshService>(refitSettings, endpointConfiguration.RefreshEndpoint);
+            services.AddAutoRefreshRefitClient<ILogoutService>(refitSettings, endpointConfiguration.LogoutEndpoint, getTokenStore);
 
             return services;
+        }
+
+        private static IHttpClientBuilder AddRefitClient<TService>(this IServiceCollection services,
+            RefitSettings settings,
+            string endpoint) where TService : class
+        {
+            return services.AddRefitClient<TService>(settings)
+                .ConfigureHttpClient(o => o.BaseAddress = new Uri(endpoint));
+        }
+
+        private static IHttpClientBuilder AddAutoRefreshRefitClient<TService>(this IServiceCollection services, 
+            RefitSettings settings,
+            string endpoint,
+            Func<IServiceProvider, IAutoRefreshTokenStore> getTokenStore) where TService : class
+        {
+            return services.AddRefitClient<TService>(settings, endpoint)
+                .AddHttpMessageHandler(s => new AutoRefreshHttpMessageHandler(
+                    getTokenStore(s), 
+                    s.GetRequiredService<IRefreshService>()));
         }
     }
 }

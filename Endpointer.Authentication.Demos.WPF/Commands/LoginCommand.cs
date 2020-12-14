@@ -38,8 +38,7 @@ namespace Endpointer.Authentication.Demos.WPF.Commands
 
                 if (data != null)
                 {
-                    _tokenStore.AccessToken = data.AccessToken;
-                    _tokenStore.RefreshToken = data.RefreshToken;
+                    await _tokenStore.SetTokens(data.AccessToken, data.RefreshToken, data.AccessTokenExpirationTime);
                     MessageBox.Show("Successfully logged in.", "Success");
                 }
             }

@@ -25,7 +25,7 @@ namespace Endpointer.Authentication.Demos.WPF.Commands
         {
             RefreshRequest request = new RefreshRequest()
             {
-                RefreshToken = _tokenStore.RefreshToken
+                RefreshToken = await _tokenStore.GetRefreshToken()
             };
 
             try
@@ -35,8 +35,7 @@ namespace Endpointer.Authentication.Demos.WPF.Commands
 
                 if(data != null)
                 {
-                    _tokenStore.AccessToken = data.AccessToken;
-                    _tokenStore.RefreshToken = data.RefreshToken;
+                    await _tokenStore.SetTokens(data.AccessToken, data.RefreshToken, data.AccessTokenExpirationTime);
                     MessageBox.Show("Successfully refreshed.", "Success");
                 }
             }
