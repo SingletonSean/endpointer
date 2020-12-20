@@ -25,6 +25,11 @@ namespace Endpointer.Authentication.API.EndpointHandlers
             {
                 User user = await _requestAuthenticator.Authenticate(request);
 
+                if(user == null)
+                {
+                    return new UnauthorizedResult();
+                }
+
                 await _refreshTokenRepository.DeleteAll(user.Id);
 
                 return new NoContentResult();

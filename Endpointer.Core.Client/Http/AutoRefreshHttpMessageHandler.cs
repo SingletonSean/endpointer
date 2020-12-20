@@ -2,6 +2,7 @@
 using Endpointer.Core.Client.Stores;
 using Endpointer.Core.Models.Requests;
 using Endpointer.Core.Models.Responses;
+using Refit;
 using System;
 using System.Net;
 using System.Net.Http;
@@ -38,7 +39,7 @@ namespace Endpointer.Core.Client.Http
 
                     if(userResponse == null)
                     {
-                        return new HttpResponseMessage(HttpStatusCode.Unauthorized);
+                        throw await CreateUnauthorizedException(request);
                     }
 
                     await _tokenStore.SetTokens(userResponse.AccessToken, userResponse.RefreshToken, userResponse.AccessTokenExpirationTime);
@@ -46,11 +47,16 @@ namespace Endpointer.Core.Client.Http
                 }
                 catch (Exception)
                 {
-                    return new HttpResponseMessage(HttpStatusCode.Unauthorized);
+                    throw await CreateUnauthorizedException(request);
                 }
             }
 
             return await base.SendAsync(request, cancellationToken);
+        }
+
+        private static async Task<ApiException> CreateUnauthorizedException(HttpRequestMessage request)
+        {
+            return await ApiException.Create(request, HttpMethod.Post, new HttpResponseMessage(HttpStatusCode.Unauthorized));
         }
     }
 }

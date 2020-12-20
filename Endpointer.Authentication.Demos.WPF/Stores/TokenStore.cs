@@ -9,7 +9,7 @@ namespace Endpointer.Authentication.Demos.WPF.Stores
         private string _accessToken;
         private string _refreshToken;
 
-        public override string AccessToken => _accessToken;
+        public override string AccessToken => _accessToken ?? string.Empty;
 
         public override Task<string> GetRefreshToken()
         {
