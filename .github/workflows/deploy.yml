@@ -24,10 +24,9 @@ jobs:
         with:
           dotnet-version: '3.1.x'
 
-      - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1
-        with:
-            dotnet-version: '5.0.x'
+      # Fix annoying packages not being found
+      - name: Clean
+        run: dotnet clean -c Release && dotnet nuget locals all --clear
 
       # .NET
       - name: Restore .NET packages
