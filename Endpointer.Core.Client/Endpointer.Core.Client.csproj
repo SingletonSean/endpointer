@@ -6,7 +6,7 @@
 
   <PropertyGroup>
     <PackageId>Endpointer.Core.Client</PackageId>
-    <Version>1.0.3</Version>
+    <Version>1.0.4</Version>
     <Authors>SingletonSean</Authors>
     <RepositoryUrl>https://github.com/SingletonSean/endpointer</RepositoryUrl>
     <PackageProjectUrl>https://github.com/SingletonSean/endpointer</PackageProjectUrl>
