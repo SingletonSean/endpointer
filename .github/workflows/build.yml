@@ -36,6 +36,3 @@ jobs:
 
       - name: Test .NET projects
         run: dotnet test --no-restore --no-build -c ${{ env.BUILD_CONFIGURATION }}
-
-      - name: Test .NET projects
-        run: dotnet test --no-restore --no-build -c ${{ env.BUILD_CONFIGURATION }}

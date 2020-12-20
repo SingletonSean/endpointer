@@ -5,19 +5,19 @@ VisualStudioVersion = 16.0.30503.244
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Endpointer.Authentication.API", "Endpointer.Authentication.API\Endpointer.Authentication.API.csproj", "{9980EAE8-9EFD-4DB5-8F34-62998F60D4EE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Endpointer.Authentication.Demos.Web", "Endpointer.Authentication.Web\Endpointer.Authentication.Demos.Web.csproj", "{4314BBE8-5861-4100-8F2B-0463BE99D208}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{D3F32D9E-8A35-475A-9F88-E1B54F59D3B9}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demos", "Demos", "{D3F32D9E-8A35-475A-9F88-E1B54F59D3B9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Endpointer.Authentication.Client", "Endpointer.Authentication.Client\Endpointer.Authentication.Client.csproj", "{3E1834A9-3980-49A8-BD2C-3E58EBD3B947}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Endpointer.Authentication.Core", "Endpointer.Authentication.Core\Endpointer.Authentication.Core.csproj", "{8C110ECF-587F-40C0-B38C-D17B76BB8BBB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Endpointer.Authentication.Demos.WPF", "Endpointer.Authentication.Demos.WPF\Endpointer.Authentication.Demos.WPF.csproj", "{81A6E52E-0F06-4984-8BD4-A55ED0113054}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Endpointer.Core.Client", "Endpointer.Core.Client\Endpointer.Core.Client.csproj", "{B751812C-FE66-4241-9B94-E35A0955D8E4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Endpointer.Core", "Endpointer.Core\Endpointer.Core.csproj", "{89C29BFA-CD37-484D-B595-DBC49DE5EA5D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Endpointer.Authentication.Demos.Web", "Demos\Endpointer.Authentication.Demos.Web\Endpointer.Authentication.Demos.Web.csproj", "{C2225535-599B-44B5-942C-EDAC62F541F1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Endpointer.Authentication.Demos.WPF", "Demos\Endpointer.Authentication.Demos.WPF\Endpointer.Authentication.Demos.WPF.csproj", "{88D28638-D8E6-4AE7-8754-73DE6ABC5105}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,6 @@ Global
 		{9980EAE8-9EFD-4DB5-8F34-62998F60D4EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9980EAE8-9EFD-4DB5-8F34-62998F60D4EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9980EAE8-9EFD-4DB5-8F34-62998F60D4EE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4314BBE8-5861-4100-8F2B-0463BE99D208}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4314BBE8-5861-4100-8F2B-0463BE99D208}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4314BBE8-5861-4100-8F2B-0463BE99D208}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4314BBE8-5861-4100-8F2B-0463BE99D208}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3E1834A9-3980-49A8-BD2C-3E58EBD3B947}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3E1834A9-3980-49A8-BD2C-3E58EBD3B947}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E1834A9-3980-49A8-BD2C-3E58EBD3B947}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -41,10 +37,6 @@ Global
 		{8C110ECF-587F-40C0-B38C-D17B76BB8BBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C110ECF-587F-40C0-B38C-D17B76BB8BBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8C110ECF-587F-40C0-B38C-D17B76BB8BBB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{81A6E52E-0F06-4984-8BD4-A55ED0113054}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{81A6E52E-0F06-4984-8BD4-A55ED0113054}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{81A6E52E-0F06-4984-8BD4-A55ED0113054}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{81A6E52E-0F06-4984-8BD4-A55ED0113054}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B751812C-FE66-4241-9B94-E35A0955D8E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B751812C-FE66-4241-9B94-E35A0955D8E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B751812C-FE66-4241-9B94-E35A0955D8E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -53,13 +45,21 @@ Global
 		{89C29BFA-CD37-484D-B595-DBC49DE5EA5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89C29BFA-CD37-484D-B595-DBC49DE5EA5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89C29BFA-CD37-484D-B595-DBC49DE5EA5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2225535-599B-44B5-942C-EDAC62F541F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2225535-599B-44B5-942C-EDAC62F541F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2225535-599B-44B5-942C-EDAC62F541F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2225535-599B-44B5-942C-EDAC62F541F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88D28638-D8E6-4AE7-8754-73DE6ABC5105}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88D28638-D8E6-4AE7-8754-73DE6ABC5105}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88D28638-D8E6-4AE7-8754-73DE6ABC5105}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88D28638-D8E6-4AE7-8754-73DE6ABC5105}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{4314BBE8-5861-4100-8F2B-0463BE99D208} = {D3F32D9E-8A35-475A-9F88-E1B54F59D3B9}
-		{81A6E52E-0F06-4984-8BD4-A55ED0113054} = {D3F32D9E-8A35-475A-9F88-E1B54F59D3B9}
+		{C2225535-599B-44B5-942C-EDAC62F541F1} = {D3F32D9E-8A35-475A-9F88-E1B54F59D3B9}
+		{88D28638-D8E6-4AE7-8754-73DE6ABC5105} = {D3F32D9E-8A35-475A-9F88-E1B54F59D3B9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {22080EC3-FAA9-448A-B298-F86B819E92D0}
