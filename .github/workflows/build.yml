@@ -1,14 +1,9 @@
 name: Build
 
 on:
-  push:
-    branches:
-      - 'master'
-    paths-ignore:
-      - '**/README.md'
   pull_request:
     branches:
-      - '*'
+      - 'master'
 
 env:
   BUILD_CONFIGURATION: Release
