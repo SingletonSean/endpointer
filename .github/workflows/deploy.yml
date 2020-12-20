@@ -51,4 +51,4 @@ jobs:
         run: dotnet pack Endpointer.Authentication.Client --no-restore --no-build -c ${{ env.BUILD_CONFIGURATION }} --include-symbols --include-source --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
 
       - name: 'Push packages'
-        run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIRECTORY }}\*.nupkg -k ${{ secrets.NUGET_AUTH_TOKEN }} -s ${{ env.NUGET_SOURCE_URL }} --skip-duplicate
+        run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIRECTORY }}\*.nupkg -k ${{ secrets.NUGET_AUTH_TOKEN }} -s ${{ env.NUGET_SOURCE_URL }}
