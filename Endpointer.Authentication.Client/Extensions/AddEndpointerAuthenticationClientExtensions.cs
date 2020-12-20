@@ -47,8 +47,9 @@ namespace Endpointer.Authentication.Client.Extensions
         {
             return services.AddRefitClient<TService>(settings, endpoint)
                 .AddHttpMessageHandler(s => new AutoRefreshHttpMessageHandler(
-                    getTokenStore(s), 
-                    s.GetRequiredService<IRefreshService>()));
+                    getTokenStore(s),
+                    s.GetRequiredService<IRefreshService>()))
+                .AddHttpMessageHandler(s => new AccessTokenHttpMessageHandler(getTokenStore(s)));
         }
     }
 }

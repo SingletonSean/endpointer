@@ -17,7 +17,8 @@ namespace Endpointer.Core.Client.Http
         private readonly IAutoRefreshTokenStore _tokenStore;
         private readonly IRefreshService _refreshService;
 
-        public AutoRefreshHttpMessageHandler(IAutoRefreshTokenStore tokenStore, IRefreshService refreshService)
+        public AutoRefreshHttpMessageHandler(IAutoRefreshTokenStore tokenStore, 
+            IRefreshService refreshService)
         {
             _tokenStore = tokenStore;
             _refreshService = refreshService;
@@ -25,7 +26,7 @@ namespace Endpointer.Core.Client.Http
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            if(_tokenStore.IsAccessTokenExpired)
+            if(!_tokenStore.HasAccessToken || _tokenStore.IsAccessTokenExpired)
             {
                 try
                 {
@@ -43,7 +44,7 @@ namespace Endpointer.Core.Client.Http
                     }
 
                     await _tokenStore.SetTokens(userResponse.AccessToken, userResponse.RefreshToken, userResponse.AccessTokenExpirationTime);
-                    request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", userResponse.AccessToken);
+                    request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _tokenStore.AccessToken);
                 }
                 catch (Exception)
                 {

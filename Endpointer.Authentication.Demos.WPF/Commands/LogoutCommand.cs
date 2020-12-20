@@ -21,7 +21,7 @@ namespace Endpointer.Authentication.Demos.WPF.Commands
         {
             try
             {
-                await _logoutService.Logout($"Bearer {_tokenStore.AccessToken}");
+                await _logoutService.Logout();
 
                 MessageBox.Show("Successfully logged out.", "Success");
             }

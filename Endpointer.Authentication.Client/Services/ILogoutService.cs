@@ -6,6 +6,6 @@ namespace Endpointer.Authentication.Client.Services
     public interface ILogoutService
     {
         [Delete("/")]
-        Task Logout([Header("Authorization")] string token);
+        Task Logout();
     }
 }

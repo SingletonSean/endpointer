@@ -3,9 +3,8 @@ using System.Threading.Tasks;
 
 namespace Endpointer.Core.Client.Stores
 {
-    public interface IAutoRefreshTokenStore
+    public interface IAutoRefreshTokenStore : IAccessTokenStore
     {
-        string AccessToken { get; }
         bool HasAccessToken { get; }
         bool IsAccessTokenExpired { get; }
 
