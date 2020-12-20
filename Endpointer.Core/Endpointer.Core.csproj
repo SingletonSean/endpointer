@@ -4,6 +4,18 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <PackageId>Endpointer.Core</PackageId>
+    <Version>1.0.3</Version>
+    <Authors>SingletonSean</Authors>
+    <RepositoryUrl>https://github.com/SingletonSean/endpointer</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/SingletonSean/endpointer</PackageProjectUrl>
+    <PackageTags>asp net core model endpointer functions</PackageTags>
+    <Description>
+      Core models for Endpointer.
+    </Description>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
   </ItemGroup>

@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Endpointer.Authentication.Client\Endpointer.Authentication.Client.csproj" />
+    <ProjectReference Include="..\..\Endpointer.Authentication.Client\Endpointer.Authentication.Client.csproj" />
   </ItemGroup>
 
 </Project>

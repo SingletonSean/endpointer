@@ -1,0 +1,50 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - 'master'
+    paths-ignore:
+      - '**/README.md'
+
+env:
+  BUILD_CONFIGURATION: Release
+  PACKAGE_OUTPUT_DIRECTORY: ${{ github.workspace }}\output
+  NUGET_SOURCE_URL: 'https://api.nuget.org/v3/index.json'
+
+jobs:
+  deploy:
+    runs-on: windows-latest
+    steps:
+      # Setup
+      - uses: actions/checkout@v2
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '3.1.x'
+
+      # .NET
+      - name: Restore .NET packages
+        run: dotnet restore
+
+      - name: Build .NET projects
+        run: dotnet build --no-restore -c ${{ env.BUILD_CONFIGURATION }}
+
+      - name: 'Pack projects'
+        run: dotnet pack --no-restore --no-build -c ${{ env.BUILD_CONFIGURATION }} --include-symbols --include-source --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
+
+      - name: 'Push Core package'
+        run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIRECTORY }}\Endpointer.Core.*.nupkg -k ${{ secrets.NUGET_AUTH_TOKEN }} -s ${{ env.NUGET_SOURCE_URL }}
+
+      - name: 'Push Core Client package'
+        run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIRECTORY }}\Endpointer.Core.Client.*.nupkg -k ${{ secrets.NUGET_AUTH_TOKEN }} -s ${{ env.NUGET_SOURCE_URL }}
+
+      - name: 'Push Authentication Core package'
+        run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIRECTORY }}\Endpointer.Authentication.Core.*.nupkg -k ${{ secrets.NUGET_AUTH_TOKEN }} -s ${{ env.NUGET_SOURCE_URL }}
+
+      - name: 'Push Authentication API package'
+        run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIRECTORY }}\Endpointer.Authentication.API.*.nupkg -k ${{ secrets.NUGET_AUTH_TOKEN }} -s ${{ env.NUGET_SOURCE_URL }}
+
+      - name: 'Push Authentication Client package'
+        run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIRECTORY }}\Endpointer.Authentication.Client.*.nupkg -k ${{ secrets.NUGET_AUTH_TOKEN }} -s ${{ env.NUGET_SOURCE_URL }}
