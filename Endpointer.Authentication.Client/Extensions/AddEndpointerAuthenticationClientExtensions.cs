@@ -11,23 +11,31 @@ namespace Endpointer.Authentication.Client.Extensions
 {
     public static class AddEndpointerAuthenticationClientExtensions
     {
-        public static IServiceCollection AddEndpointerAuthenticationClient(this IServiceCollection services,
-            AuthenticationEndpointsConfiguration endpointConfiguration,
-            IAutoRefreshTokenStore tokenStore)
-        {
-            return services.AddEndpointerAuthenticationClient(endpointConfiguration, (s) => tokenStore);
-        }
-
         public static IServiceCollection AddEndpointerAuthenticationClient(this IServiceCollection services, 
-            AuthenticationEndpointsConfiguration endpointConfiguration,
-            Func<IServiceProvider, IAutoRefreshTokenStore> getTokenStore)
+            AuthenticationEndpointsConfiguration endpointsConfiguration,
+            Func<IServiceProvider, IAccessTokenStore> getTokenStore,
+            Func<EndpointerAuthenticationOptionsBuilder, EndpointerAuthenticationOptionsBuilder> configureOptions = null)
         {
-            RefitSettings refitSettings = new RefitSettings(new NewtonsoftJsonContentSerializer());
+            EndpointerAuthenticationOptionsBuilder optionsBuilder = new EndpointerAuthenticationOptionsBuilder();
+            configureOptions?.Invoke(optionsBuilder);
+            EndpointerAuthenticationOptions options = optionsBuilder.Build();
 
-            services.AddRefitClient<IRegisterService>(refitSettings, endpointConfiguration.RegisterEndpoint);
-            services.AddRefitClient<ILoginService>(refitSettings, endpointConfiguration.LoginEndpoint);
-            services.AddRefitClient<IRefreshService>(refitSettings, endpointConfiguration.RefreshEndpoint);
-            services.AddAutoRefreshRefitClient<ILogoutService>(refitSettings, endpointConfiguration.LogoutEndpoint, getTokenStore);
+            services.AddRefitClient<IRegisterService>(options.RefitSettings, endpointsConfiguration.RegisterEndpoint);
+            services.AddRefitClient<ILoginService>(options.RefitSettings, endpointsConfiguration.LoginEndpoint);
+            services.AddRefitClient<IRefreshService>(options.RefitSettings, endpointsConfiguration.RefreshEndpoint);
+
+            if(options.AutoTokenRefresh)
+            {
+                services.AddAutoRefreshRefitClient<ILogoutService>(options.RefitSettings, 
+                    endpointsConfiguration.LogoutEndpoint, 
+                    options.GetAutoRefreshTokenStore);
+            }
+            else
+            {
+                services.AddAccessTokenRefitClient<ILogoutService>(options.RefitSettings,
+                    endpointsConfiguration.LogoutEndpoint,
+                    getTokenStore);
+            }
 
             return services;
         }
@@ -40,16 +48,26 @@ namespace Endpointer.Authentication.Client.Extensions
                 .ConfigureHttpClient(o => o.BaseAddress = new Uri(endpoint));
         }
 
+        private static IHttpClientBuilder AddAccessTokenRefitClient<TService>(this IServiceCollection services,
+            RefitSettings settings,
+            string endpoint,
+            Func<IServiceProvider, IAccessTokenStore> getTokenStore) where TService : class
+        {
+            return services.AddRefitClient<TService>(settings)
+                .ConfigureHttpClient(o => o.BaseAddress = new Uri(endpoint))
+                .AddHttpMessageHandler(s => new AccessTokenHttpMessageHandler(getTokenStore(s)));
+        }
+
         private static IHttpClientBuilder AddAutoRefreshRefitClient<TService>(this IServiceCollection services, 
             RefitSettings settings,
             string endpoint,
-            Func<IServiceProvider, IAutoRefreshTokenStore> getTokenStore) where TService : class
+            Func<IServiceProvider, IAutoRefreshTokenStore> getRefreshTokenStore) where TService : class
         {
             return services.AddRefitClient<TService>(settings, endpoint)
                 .AddHttpMessageHandler(s => new AutoRefreshHttpMessageHandler(
-                    getTokenStore(s),
+                    getRefreshTokenStore(s),
                     s.GetRequiredService<IRefreshService>()))
-                .AddHttpMessageHandler(s => new AccessTokenHttpMessageHandler(getTokenStore(s)));
+                .AddHttpMessageHandler(s => new AccessTokenHttpMessageHandler(getRefreshTokenStore(s)));
         }
     }
 }

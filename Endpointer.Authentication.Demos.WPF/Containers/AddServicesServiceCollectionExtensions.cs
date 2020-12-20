@@ -20,7 +20,9 @@ namespace Endpointer.Authentication.Demos.WPF.Containers
                 LogoutEndpoint = baseAddress + "logout",
             };
 
-            services.AddEndpointerAuthenticationClient(endpointConfiguration, s => s.GetRequiredService<TokenStore>());
+            services.AddEndpointerAuthenticationClient(endpointConfiguration, 
+                s => s.GetRequiredService<TokenStore>(),
+                o => o.WithAutoTokenRefresh(s => s.GetRequiredService<TokenStore>()));
 
             services.AddSingleton<RenavigationService<RegisterViewModel>>();
             services.AddSingleton<RenavigationService<LoginViewModel>>();
