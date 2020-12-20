@@ -1,30 +1,26 @@
-﻿using Endpointer.Authentication.Client.Stores;
+﻿using Endpointer.Core.Client.Stores;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Endpointer.Authentication.Demos.WPF.Stores
 {
-    public class TokenStore : IAutoRefreshTokenStore
+    public class TokenStore : AutoRefreshTokenStoreBase
     {
         private string _accessToken;
         private string _refreshToken;
-        private DateTime _accessTokenExpirationTime;
 
-        public string AccessToken => _accessToken;
-        public bool IsAccessTokenExpired => DateTime.UtcNow >= _accessTokenExpirationTime;
+        public override string AccessToken => _accessToken;
 
-        public Task<string> GetRefreshToken()
+        public override Task<string> GetRefreshToken()
         {
             return Task.FromResult(_refreshToken);
         }
 
-        public Task SetTokens(string accessToken, string refreshToken, DateTime accessTokenExpirationTime)
+        public override Task SetTokens(string accessToken, string refreshToken, DateTime accessTokenExpirationTime)
         {
             _accessToken = accessToken;
             _refreshToken = refreshToken;
-            _accessTokenExpirationTime = accessTokenExpirationTime;
+            AccessTokenExpirationTime = accessTokenExpirationTime;
 
             return Task.CompletedTask;
         }

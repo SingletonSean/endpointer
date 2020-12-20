@@ -1,11 +1,11 @@
-﻿using Endpointer.Authentication.Client.Http;
-using Endpointer.Authentication.Client.Models;
+﻿using Endpointer.Authentication.Client.Models;
 using Endpointer.Authentication.Client.Services;
-using Endpointer.Authentication.Client.Stores;
+using Endpointer.Core.Client.Http;
+using Endpointer.Core.Client.Services;
+using Endpointer.Core.Client.Stores;
 using Microsoft.Extensions.DependencyInjection;
 using Refit;
 using System;
-using System.Net.Http;
 
 namespace Endpointer.Authentication.Client.Extensions
 {

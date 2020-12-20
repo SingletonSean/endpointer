@@ -1,5 +1,6 @@
 ﻿using Endpointer.Authentication.API.EndpointHandlers;
 using Endpointer.Authentication.Core.Models.Requests;
+using Endpointer.Core.Models.Requests;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 

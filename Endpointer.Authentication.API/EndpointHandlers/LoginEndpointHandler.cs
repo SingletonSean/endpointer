@@ -4,12 +4,9 @@ using Endpointer.Authentication.API.Services.Authenticators;
 using Endpointer.Authentication.API.Services.PasswordHashers;
 using Endpointer.Authentication.API.Services.UserRepositories;
 using Endpointer.Authentication.Core.Models.Requests;
-using Endpointer.Authentication.Core.Models.Responses;
+using Endpointer.Core.Models.Responses;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Endpointer.Authentication.API.EndpointHandlers

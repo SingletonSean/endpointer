@@ -1,5 +1,5 @@
 ﻿using Endpointer.Authentication.Core.Models.Requests;
-using Endpointer.Authentication.Core.Models.Responses;
+using Endpointer.Core.Models.Responses;
 using Refit;
 using System.Threading.Tasks;
 

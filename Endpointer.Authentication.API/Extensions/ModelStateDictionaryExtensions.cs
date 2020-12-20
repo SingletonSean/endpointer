@@ -1,9 +1,8 @@
 ﻿using Endpointer.Authentication.Core.Models.Responses;
+using Endpointer.Core.Models.Responses;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Endpointer.Authentication.API.Extensions
 {

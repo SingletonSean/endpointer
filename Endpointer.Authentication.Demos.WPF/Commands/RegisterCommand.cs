@@ -1,8 +1,8 @@
 ﻿using Endpointer.Authentication.Client.Services;
 using Endpointer.Authentication.Core.Models.Requests;
-using Endpointer.Authentication.Core.Models.Responses;
 using Endpointer.Authentication.Demos.WPF.Services;
 using Endpointer.Authentication.Demos.WPF.ViewModels;
+using Endpointer.Core.Models.Responses;
 using Refit;
 using System.Linq;
 using System.Threading.Tasks;

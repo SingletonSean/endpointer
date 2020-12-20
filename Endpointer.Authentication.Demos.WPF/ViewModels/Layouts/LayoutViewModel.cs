@@ -1,8 +1,4 @@
 ﻿using Endpointer.Authentication.Demos.WPF.Commands;
-using Endpointer.Authentication.Demos.WPF.Stores;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Input;
 
 namespace Endpointer.Authentication.Demos.WPF.ViewModels.Layouts

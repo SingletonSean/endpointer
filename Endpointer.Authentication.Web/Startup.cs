@@ -1,5 +1,3 @@
-using Azure.Identity;
-using Azure.Security.KeyVault.Secrets;
 using Endpointer.Authentication.API.Extensions;
 using Endpointer.Authentication.API.Models;
 using Microsoft.AspNetCore.Builder;

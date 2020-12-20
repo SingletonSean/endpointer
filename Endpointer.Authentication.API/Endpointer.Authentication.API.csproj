@@ -28,6 +28,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Endpointer.Authentication.Core\Endpointer.Authentication.Core.csproj" />
+    <ProjectReference Include="..\Endpointer.Core\Endpointer.Core.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,17 +1,15 @@
-﻿using Endpointer.Authentication.Client.Services;
-using Endpointer.Authentication.Client.Stores;
-using Endpointer.Authentication.Core.Models.Requests;
-using Endpointer.Authentication.Core.Models.Responses;
+﻿using Endpointer.Core.Client.Services;
+using Endpointer.Core.Client.Stores;
+using Endpointer.Core.Models.Requests;
+using Endpointer.Core.Models.Responses;
 using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Endpointer.Authentication.Client.Http
+namespace Endpointer.Core.Client.Http
 {
     public class AutoRefreshHttpMessageHandler : DelegatingHandler
     {

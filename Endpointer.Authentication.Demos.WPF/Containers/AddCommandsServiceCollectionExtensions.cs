@@ -1,9 +1,6 @@
 ﻿using Endpointer.Authentication.Demos.WPF.Commands;
 using Endpointer.Authentication.Demos.WPF.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Endpointer.Authentication.Demos.WPF.Containers
 {

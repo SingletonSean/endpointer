@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Endpointer.Authentication.Client.Models
+﻿namespace Endpointer.Authentication.Client.Models
 {
     public class AuthenticationEndpointsConfiguration
     {

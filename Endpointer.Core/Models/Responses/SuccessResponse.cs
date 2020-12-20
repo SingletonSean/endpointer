@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Endpointer.Authentication.Core.Models.Responses
+﻿namespace Endpointer.Core.Models.Responses
 {
     public class SuccessResponse<T>
     {

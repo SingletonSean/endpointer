@@ -1,8 +1,6 @@
 ﻿using Endpointer.Authentication.Demos.WPF.ViewModels;
 using Endpointer.Authentication.Demos.WPF.ViewModels.Layouts;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Endpointer.Authentication.Demos.WPF.Stores
 {

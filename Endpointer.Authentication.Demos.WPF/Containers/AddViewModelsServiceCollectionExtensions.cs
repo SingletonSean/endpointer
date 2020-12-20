@@ -6,8 +6,6 @@ using Endpointer.Authentication.Demos.WPF.ViewModels;
 using Endpointer.Authentication.Demos.WPF.ViewModels.Layouts;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Endpointer.Authentication.Demos.WPF.Containers
 {

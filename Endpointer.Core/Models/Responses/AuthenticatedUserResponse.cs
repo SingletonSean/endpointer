@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Endpointer.Authentication.Core.Models.Responses
+namespace Endpointer.Core.Models.Responses
 {
     public class AuthenticatedUserResponse
     {

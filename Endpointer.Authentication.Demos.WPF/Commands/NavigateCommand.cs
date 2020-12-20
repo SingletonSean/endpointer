@@ -1,7 +1,5 @@
 ﻿using Endpointer.Authentication.Demos.WPF.Services;
-using Endpointer.Authentication.Demos.WPF.Stores;
 using Endpointer.Authentication.Demos.WPF.ViewModels;
-using System;
 
 namespace Endpointer.Authentication.Demos.WPF.Commands
 {

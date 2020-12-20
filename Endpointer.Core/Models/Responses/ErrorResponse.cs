@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
-namespace Endpointer.Authentication.Core.Models.Responses
+namespace Endpointer.Core.Models.Responses
 {
     public class ErrorResponse
     {

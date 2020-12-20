@@ -4,9 +4,6 @@ using Endpointer.Authentication.Demos.WPF.Services;
 using Endpointer.Authentication.Demos.WPF.Stores;
 using Endpointer.Authentication.Demos.WPF.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Endpointer.Authentication.Demos.WPF.Containers
 {
