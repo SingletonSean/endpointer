@@ -38,7 +38,7 @@ namespace Endpointer.Authentication.Demos.WPF.Containers
         private static RegisterViewModel CreateRegisterViewModel(IServiceProvider services)
         {
             return new RegisterViewModel(vm => new RegisterCommand(vm,
-                services.GetRequiredService<IAPIRegisterService>(),
+                services.GetRequiredService<IRegisterService>(),
                 services.GetRequiredService<RenavigationService<LoginViewModel>>()));
         }
 

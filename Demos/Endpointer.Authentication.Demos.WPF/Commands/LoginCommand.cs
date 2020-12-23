@@ -38,11 +38,16 @@ namespace Endpointer.Authentication.Demos.WPF.Commands
             {
                 AuthenticatedUserResponse response = await _loginService.Login(request);
                 await _tokenStore.SetTokens(response.AccessToken, response.RefreshToken, response.AccessTokenExpirationTime);
+                
                 MessageBox.Show("Successfully logged in.", "Success");
             }
             catch (UnauthorizedException)
             {
                 MessageBox.Show($"Login failed. Invalid credentials.", "Error");
+            }
+            catch (ValidationException)
+            {
+                MessageBox.Show($"Login failed. Invalid request.", "Error");
             }
             catch (Exception)
             {

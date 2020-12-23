@@ -12,7 +12,7 @@ namespace Endpointer.Authentication.Client.Services.Logout
         /// Logout the current user.
         /// </summary>
         /// <exception cref="UnauthorizedException">Thrown if user has invalid access token.</exception>
-        /// <exception cref="Exception">Thrown if logout fails.</returns>
+        /// <exception cref="Exception">Thrown if logout fails.</exception>
         Task Logout();
     }
 }

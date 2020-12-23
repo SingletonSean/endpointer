@@ -41,6 +41,7 @@ namespace Endpointer.Authentication.Client.Extensions
                     getTokenStore);
             }
 
+            services.AddSingleton<IRegisterService, RegisterService>();
             services.AddSingleton<ILoginService, LoginService>();
             services.AddSingleton<ILogoutService, LogoutService>();
 

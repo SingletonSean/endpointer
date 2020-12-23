@@ -16,6 +16,7 @@ namespace Endpointer.Authentication.Client.Services.Login
         /// <param name="request">The request containing the login information.</param>
         /// <returns>The response with the user's tokens.</returns>
         /// <exception cref="UnauthorizedException">Thrown if user has invalid username or password.</exception>
+        /// <exception cref="ValidationException">Thrown if request has validation errors.</exception>
         /// <exception cref="Exception">Thrown if login fails.</exception>
         Task<AuthenticatedUserResponse> Login(LoginRequest request);
     }
