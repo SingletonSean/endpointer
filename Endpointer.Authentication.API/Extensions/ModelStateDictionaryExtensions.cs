@@ -1,5 +1,4 @@
-﻿using Endpointer.Authentication.Core.Models.Responses;
-using Endpointer.Core.Models.Responses;
+﻿using Endpointer.Core.Models.Responses;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Collections.Generic;
 using System.Linq;

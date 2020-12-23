@@ -20,6 +20,10 @@ jobs:
         with:
           dotnet-version: '3.1.x'
 
+      # Fix annoying packages not being found
+      - name: Clean
+        run: dotnet clean -c Release && dotnet nuget locals all --clear
+
       # .NET
       - name: Restore .NET packages
         run: dotnet restore

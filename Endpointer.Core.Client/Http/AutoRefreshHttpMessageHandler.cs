@@ -1,4 +1,4 @@
-﻿using Endpointer.Core.Client.Services;
+﻿using Endpointer.Core.Client.Services.Refresh;
 using Endpointer.Core.Client.Stores;
 using Endpointer.Core.Models.Requests;
 using Endpointer.Core.Models.Responses;
@@ -32,18 +32,12 @@ namespace Endpointer.Core.Client.Http
                 {
                     string refreshToken = await _tokenStore.GetRefreshToken();
 
-                    SuccessResponse<AuthenticatedUserResponse> response = await _refreshService.Refresh(new RefreshRequest()
+                    AuthenticatedUserResponse response = await _refreshService.Refresh(new RefreshRequest()
                     {
                         RefreshToken = refreshToken
                     });
-                    AuthenticatedUserResponse userResponse = response.Data;
 
-                    if(userResponse == null)
-                    {
-                        throw await CreateUnauthorizedException(request);
-                    }
-
-                    await _tokenStore.SetTokens(userResponse.AccessToken, userResponse.RefreshToken, userResponse.AccessTokenExpirationTime);
+                    await _tokenStore.SetTokens(response.AccessToken, response.RefreshToken, response.AccessTokenExpirationTime);
                     request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _tokenStore.AccessToken);
                 }
                 catch (Exception)

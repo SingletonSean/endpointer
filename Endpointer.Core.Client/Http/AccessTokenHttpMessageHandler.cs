@@ -1,10 +1,4 @@
-﻿using Endpointer.Core.Client.Services;
-using Endpointer.Core.Client.Stores;
-using Endpointer.Core.Models.Requests;
-using Endpointer.Core.Models.Responses;
-using Refit;
-using System;
-using System.Net;
+﻿using Endpointer.Core.Client.Stores;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;

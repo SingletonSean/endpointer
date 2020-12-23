@@ -1,10 +1,10 @@
-﻿using Endpointer.Authentication.Client.Services;
+﻿using Endpointer.Authentication.Client.Exceptions;
+using Endpointer.Authentication.Client.Services.Register;
 using Endpointer.Authentication.Core.Models.Requests;
 using Endpointer.Authentication.Demos.WPF.Services;
 using Endpointer.Authentication.Demos.WPF.ViewModels;
-using Endpointer.Core.Models.Responses;
-using Refit;
-using System.Linq;
+using Endpointer.Core.Client.Exceptions;
+using System;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -42,10 +42,25 @@ namespace Endpointer.Authentication.Demos.WPF.Commands
 
                 _loginRenavigationService.Renavigate();
             }
-            catch (ApiException ex)
+            catch (ConfirmPasswordException)
             {
-                ErrorResponse response = await ex.GetContentAsAsync<ErrorResponse>();
-                MessageBox.Show($"Register failed. (Error Code: {response.Errors.FirstOrDefault()?.Code})", "Error");
+                MessageBox.Show($"Register failed. Password must match confirm password.", "Error");
+            }
+            catch (EmailAlreadyExistsException ex)
+            {
+                MessageBox.Show($"Register failed. Email {ex.Email} is already taken.", "Error");
+            }
+            catch (UsernameAlreadyExistsException ex)
+            {
+                MessageBox.Show($"Register failed. Username {ex.Username} is already taken.", "Error");
+            }
+            catch (ValidationFailedException)
+            {
+                MessageBox.Show($"Register failed. Invalid register request.", "Error");
+            }
+            catch (Exception)
+            {
+                MessageBox.Show($"Register failed. Not sure why...", "Error");
             }
         }
     }

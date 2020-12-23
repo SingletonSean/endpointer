@@ -1,6 +1,7 @@
-﻿using Endpointer.Authentication.Client.Services;
+﻿using Endpointer.Authentication.Client.Exceptions;
+using Endpointer.Authentication.Client.Services.Logout;
 using Endpointer.Authentication.Demos.WPF.Stores;
-using Refit;
+using System;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -25,9 +26,13 @@ namespace Endpointer.Authentication.Demos.WPF.Commands
 
                 MessageBox.Show("Successfully logged out.", "Success");
             }
-            catch (ApiException ex)
+            catch (UnauthorizedException)
             {
-                MessageBox.Show($"Logout failed. (Status Code: {ex.StatusCode})", "Error");
+                MessageBox.Show($"Logout failed. Must be logged in to logout.", "Error");
+            }
+            catch (Exception)
+            {
+                MessageBox.Show($"Logout failed. Not sure why...", "Error");
             }
         }
     }

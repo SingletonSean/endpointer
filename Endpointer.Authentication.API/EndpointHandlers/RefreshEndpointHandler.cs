@@ -4,7 +4,6 @@ using Endpointer.Authentication.API.Services.Authenticators;
 using Endpointer.Authentication.API.Services.RefreshTokenRepositories;
 using Endpointer.Authentication.API.Services.TokenValidators;
 using Endpointer.Authentication.API.Services.UserRepositories;
-using Endpointer.Authentication.Core.Models.Responses;
 using Endpointer.Core.Models.Requests;
 using Endpointer.Core.Models.Responses;
 using Microsoft.AspNetCore.Mvc;

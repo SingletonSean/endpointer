@@ -1,10 +1,11 @@
-﻿using Endpointer.Authentication.Client.Services;
+﻿using Endpointer.Authentication.Client.Exceptions;
+using Endpointer.Authentication.Client.Services.Login;
 using Endpointer.Authentication.Core.Models.Requests;
 using Endpointer.Authentication.Demos.WPF.Stores;
 using Endpointer.Authentication.Demos.WPF.ViewModels;
+using Endpointer.Core.Client.Exceptions;
 using Endpointer.Core.Models.Responses;
-using Refit;
-using System.Linq;
+using System;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -33,19 +34,22 @@ namespace Endpointer.Authentication.Demos.WPF.Commands
 
             try
             {
-                SuccessResponse<AuthenticatedUserResponse> response = await _loginService.Login(request);
-                AuthenticatedUserResponse data = response.Data;
-
-                if (data != null)
-                {
-                    await _tokenStore.SetTokens(data.AccessToken, data.RefreshToken, data.AccessTokenExpirationTime);
-                    MessageBox.Show("Successfully logged in.", "Success");
-                }
+                AuthenticatedUserResponse response = await _loginService.Login(request);
+                await _tokenStore.SetTokens(response.AccessToken, response.RefreshToken, response.AccessTokenExpirationTime);
+                
+                MessageBox.Show("Successfully logged in.", "Success");
             }
-            catch (ApiException ex)
+            catch (UnauthorizedException)
             {
-                ErrorResponse response = await ex.GetContentAsAsync<ErrorResponse>();
-                MessageBox.Show($"Login failed. (Error Code: {response.Errors.FirstOrDefault()?.Code})", "Error");
+                MessageBox.Show($"Login failed. Invalid credentials.", "Error");
+            }
+            catch (ValidationFailedException)
+            {
+                MessageBox.Show($"Login failed. Invalid request.", "Error");
+            }
+            catch (Exception)
+            {
+                MessageBox.Show($"Login failed. Not sure why...", "Error");
             }
         }
     }

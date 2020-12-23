@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-
-namespace Endpointer.Core.Client.Stores
+﻿namespace Endpointer.Core.Client.Stores
 {
     public interface IAccessTokenStore
     {
