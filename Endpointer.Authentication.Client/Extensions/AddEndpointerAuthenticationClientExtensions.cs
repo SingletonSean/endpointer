@@ -1,7 +1,11 @@
 ﻿using Endpointer.Authentication.Client.Models;
 using Endpointer.Authentication.Client.Services;
+using Endpointer.Authentication.Client.Services.Login;
+using Endpointer.Authentication.Client.Services.Logout;
+using Endpointer.Authentication.Client.Services.Register;
 using Endpointer.Core.Client.Http;
 using Endpointer.Core.Client.Services;
+using Endpointer.Core.Client.Services.Refresh;
 using Endpointer.Core.Client.Stores;
 using Microsoft.Extensions.DependencyInjection;
 using Refit;
@@ -20,19 +24,19 @@ namespace Endpointer.Authentication.Client.Extensions
             configureOptions?.Invoke(optionsBuilder);
             EndpointerAuthenticationOptions options = optionsBuilder.Build();
 
-            services.AddRefitClient<IRegisterService>(options.RefitSettings, endpointsConfiguration.RegisterEndpoint);
-            services.AddRefitClient<ILoginService>(options.RefitSettings, endpointsConfiguration.LoginEndpoint);
-            services.AddRefitClient<IRefreshService>(options.RefitSettings, endpointsConfiguration.RefreshEndpoint);
+            services.AddRefitClient<IAPIRegisterService>(options.RefitSettings, endpointsConfiguration.RegisterEndpoint);
+            services.AddRefitClient<IAPILoginService>(options.RefitSettings, endpointsConfiguration.LoginEndpoint);
+            services.AddRefitClient<IAPIRefreshService>(options.RefitSettings, endpointsConfiguration.RefreshEndpoint);
 
             if(options.AutoTokenRefresh)
             {
-                services.AddAutoRefreshRefitClient<ILogoutService>(options.RefitSettings, 
+                services.AddAutoRefreshRefitClient<IAPILogoutService>(options.RefitSettings, 
                     endpointsConfiguration.LogoutEndpoint, 
                     options.GetAutoRefreshTokenStore);
             }
             else
             {
-                services.AddAccessTokenRefitClient<ILogoutService>(options.RefitSettings,
+                services.AddAccessTokenRefitClient<IAPILogoutService>(options.RefitSettings,
                     endpointsConfiguration.LogoutEndpoint,
                     getTokenStore);
             }
@@ -66,7 +70,7 @@ namespace Endpointer.Authentication.Client.Extensions
             return services.AddRefitClient<TService>(settings, endpoint)
                 .AddHttpMessageHandler(s => new AutoRefreshHttpMessageHandler(
                     getRefreshTokenStore(s),
-                    s.GetRequiredService<IRefreshService>()))
+                    s.GetRequiredService<IAPIRefreshService>()))
                 .AddHttpMessageHandler(s => new AccessTokenHttpMessageHandler(getRefreshTokenStore(s)));
         }
     }

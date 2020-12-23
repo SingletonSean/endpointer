@@ -1,4 +1,4 @@
-﻿using Endpointer.Core.Client.Services;
+﻿using Endpointer.Core.Client.Services.Refresh;
 using Endpointer.Core.Client.Stores;
 using Endpointer.Core.Models.Requests;
 using Endpointer.Core.Models.Responses;
@@ -15,10 +15,10 @@ namespace Endpointer.Core.Client.Http
     public class AutoRefreshHttpMessageHandler : DelegatingHandler
     {
         private readonly IAutoRefreshTokenStore _tokenStore;
-        private readonly IRefreshService _refreshService;
+        private readonly IAPIRefreshService _refreshService;
 
         public AutoRefreshHttpMessageHandler(IAutoRefreshTokenStore tokenStore, 
-            IRefreshService refreshService)
+            IAPIRefreshService refreshService)
         {
             _tokenStore = tokenStore;
             _refreshService = refreshService;
@@ -52,7 +52,9 @@ namespace Endpointer.Core.Client.Http
                 }
             }
 
-            return await base.SendAsync(request, cancellationToken);
+            var message = await base.SendAsync(request, cancellationToken);
+
+            return message;
         }
 
         private static async Task<ApiException> CreateUnauthorizedException(HttpRequestMessage request)

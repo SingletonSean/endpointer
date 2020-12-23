@@ -1,4 +1,5 @@
 ﻿using Endpointer.Authentication.Client.Services;
+using Endpointer.Authentication.Client.Services.Register;
 using Endpointer.Authentication.Core.Models.Requests;
 using Endpointer.Authentication.Demos.WPF.Services;
 using Endpointer.Authentication.Demos.WPF.ViewModels;
@@ -13,11 +14,11 @@ namespace Endpointer.Authentication.Demos.WPF.Commands
     public class RegisterCommand : AsyncCommandBase
     {
         private readonly RegisterViewModel _viewModel;
-        private readonly IRegisterService _registerService;
+        private readonly IAPIRegisterService _registerService;
         private readonly RenavigationService<LoginViewModel> _loginRenavigationService;
 
         public RegisterCommand(RegisterViewModel viewModel,
-            IRegisterService registerService, 
+            IAPIRegisterService registerService, 
             RenavigationService<LoginViewModel> loginRenavigationService)
         {
             _viewModel = viewModel;

@@ -1,4 +1,5 @@
 ﻿using Endpointer.Authentication.Client.Services;
+using Endpointer.Authentication.Client.Services.Login;
 using Endpointer.Authentication.Core.Models.Requests;
 using Endpointer.Authentication.Demos.WPF.Stores;
 using Endpointer.Authentication.Demos.WPF.ViewModels;
@@ -14,9 +15,9 @@ namespace Endpointer.Authentication.Demos.WPF.Commands
     {
         private readonly LoginViewModel _viewModel;
         private readonly TokenStore _tokenStore;
-        private readonly ILoginService _loginService;
+        private readonly IAPILoginService _loginService;
 
-        public LoginCommand(LoginViewModel viewModel, TokenStore tokenStore, ILoginService loginService)
+        public LoginCommand(LoginViewModel viewModel, TokenStore tokenStore, IAPILoginService loginService)
         {
             _viewModel = viewModel;
             _tokenStore = tokenStore;

@@ -1,4 +1,6 @@
 ﻿using Endpointer.Authentication.Client.Services;
+using Endpointer.Authentication.Client.Services.Login;
+using Endpointer.Authentication.Client.Services.Register;
 using Endpointer.Authentication.Demos.WPF.Commands;
 using Endpointer.Authentication.Demos.WPF.Services;
 using Endpointer.Authentication.Demos.WPF.Stores;
@@ -36,7 +38,7 @@ namespace Endpointer.Authentication.Demos.WPF.Containers
         private static RegisterViewModel CreateRegisterViewModel(IServiceProvider services)
         {
             return new RegisterViewModel(vm => new RegisterCommand(vm,
-                services.GetRequiredService<IRegisterService>(),
+                services.GetRequiredService<IAPIRegisterService>(),
                 services.GetRequiredService<RenavigationService<LoginViewModel>>()));
         }
 
@@ -44,7 +46,7 @@ namespace Endpointer.Authentication.Demos.WPF.Containers
         {
             return new LoginViewModel(vm => new LoginCommand(vm,
                 services.GetRequiredService<TokenStore>(),
-                services.GetRequiredService<ILoginService>()));
+                services.GetRequiredService<IAPILoginService>()));
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Endpointer.Authentication.Client.Services;
+using Endpointer.Authentication.Client.Services.Logout;
 using Endpointer.Authentication.Demos.WPF.Stores;
 using Refit;
 using System.Threading.Tasks;
@@ -9,9 +10,9 @@ namespace Endpointer.Authentication.Demos.WPF.Commands
     public class LogoutCommand : AsyncCommandBase
     {
         private readonly TokenStore _tokenStore;
-        private readonly ILogoutService _logoutService;
+        private readonly IAPILogoutService _logoutService;
 
-        public LogoutCommand(TokenStore tokenStore, ILogoutService logoutService)
+        public LogoutCommand(TokenStore tokenStore, IAPILogoutService logoutService)
         {
             _tokenStore = tokenStore;
             _logoutService = logoutService;

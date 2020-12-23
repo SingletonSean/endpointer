@@ -1,5 +1,6 @@
 ﻿using Endpointer.Authentication.Demos.WPF.Stores;
 using Endpointer.Core.Client.Services;
+using Endpointer.Core.Client.Services.Refresh;
 using Endpointer.Core.Models.Requests;
 using Endpointer.Core.Models.Responses;
 using Refit;
@@ -12,9 +13,9 @@ namespace Endpointer.Authentication.Demos.WPF.Commands
     public class RefreshCommand : AsyncCommandBase
     {
         private readonly TokenStore _tokenStore;
-        private readonly IRefreshService _refreshService;
+        private readonly IAPIRefreshService _refreshService;
 
-        public RefreshCommand(TokenStore tokenStore, IRefreshService refreshService)
+        public RefreshCommand(TokenStore tokenStore, IAPIRefreshService refreshService)
         {
             _tokenStore = tokenStore;
             _refreshService = refreshService;
