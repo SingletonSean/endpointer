@@ -12,7 +12,7 @@ namespace Endpointer.Core.Client.Services.Refresh
         /// </summary>
         /// <param name="request">The request containing the refresh token.</param>
         /// <returns>The successful response with the new tokens.</returns>
-        /// <exception cref="ApiException">Thrown if request fails.</returns>
+        /// <exception cref="ApiException">Thrown if request fails.</exception>
         [Post("/")]
         Task<SuccessResponse<AuthenticatedUserResponse>> Refresh([Body] RefreshRequest request);
     }

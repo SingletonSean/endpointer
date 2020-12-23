@@ -36,19 +36,19 @@ namespace Endpointer.Authentication.API.EndpointHandlers
         {
             if (registerRequest.Password != registerRequest.ConfirmPassword)
             {
-                return new BadRequestObjectResult(new ErrorResponse(ErrorCode.PASSWORDS_DO_NOT_MATCH, "Password does not match confirm password."));
+                return new BadRequestObjectResult(new ErrorResponse(AuthenticationErrorCode.PASSWORDS_DO_NOT_MATCH, "Password does not match confirm password."));
             }
 
             User existingUserByEmail = await _userRepository.GetByEmail(registerRequest.Email);
             if (existingUserByEmail != null)
             {
-                return new ConflictObjectResult(new ErrorResponse(ErrorCode.EMAIL_ALREADY_EXISTS, "Email already exists."));
+                return new ConflictObjectResult(new ErrorResponse(AuthenticationErrorCode.EMAIL_ALREADY_EXISTS, "Email already exists."));
             }
 
             User existingUserByUsername = await _userRepository.GetByUsername(registerRequest.Username);
             if (existingUserByUsername != null)
             {
-                return new ConflictObjectResult(new ErrorResponse(ErrorCode.USERNAME_ALREADY_EXISTS, "Username already exists."));
+                return new ConflictObjectResult(new ErrorResponse(AuthenticationErrorCode.USERNAME_ALREADY_EXISTS, "Username already exists."));
             }
 
             string passwordHash = _passwordHasher.HashPassword(registerRequest.Password);

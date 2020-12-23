@@ -1,12 +1,10 @@
 ﻿using Endpointer.Authentication.Client.Exceptions;
 using Endpointer.Authentication.Core.Models.Requests;
 using Endpointer.Authentication.Core.Models.Responses;
+using Endpointer.Core.Client.Exceptions;
 using Endpointer.Core.Models.Responses;
 using Refit;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Endpointer.Authentication.Client.Services.Register
@@ -36,14 +34,14 @@ namespace Endpointer.Authentication.Client.Services.Register
                 ErrorMessageResponse firstError = error.Errors.First();
                 switch(firstError.Code)
                 {
-                    case ErrorCode.PASSWORDS_DO_NOT_MATCH:
+                    case AuthenticationErrorCode.PASSWORDS_DO_NOT_MATCH:
                         throw new ConfirmPasswordException();
-                    case ErrorCode.EMAIL_ALREADY_EXISTS:
+                    case AuthenticationErrorCode.EMAIL_ALREADY_EXISTS:
                         throw new EmailAlreadyExistsException(request.Email);
-                    case ErrorCode.USERNAME_ALREADY_EXISTS:
+                    case AuthenticationErrorCode.USERNAME_ALREADY_EXISTS:
                         throw new UsernameAlreadyExistsException(request.Username);
                     case ErrorCode.VALIDATION_FAILURE:
-                        throw new ValidationException(error.Errors
+                        throw new ValidationFailedException(error.Errors
                             .Where(e => e.Code == ErrorCode.VALIDATION_FAILURE)
                             .Select(e => e.Message));
                     default:

@@ -1,10 +1,6 @@
 ﻿using Endpointer.Authentication.Client.Exceptions;
-using Endpointer.Core.Models.Responses;
 using Refit;
-using System;
-using System.Collections.Generic;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Endpointer.Authentication.Client.Services.Logout

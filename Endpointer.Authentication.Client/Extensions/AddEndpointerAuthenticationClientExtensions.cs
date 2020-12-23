@@ -1,10 +1,8 @@
 ﻿using Endpointer.Authentication.Client.Models;
-using Endpointer.Authentication.Client.Services;
 using Endpointer.Authentication.Client.Services.Login;
 using Endpointer.Authentication.Client.Services.Logout;
 using Endpointer.Authentication.Client.Services.Register;
 using Endpointer.Core.Client.Http;
-using Endpointer.Core.Client.Services;
 using Endpointer.Core.Client.Services.Refresh;
 using Endpointer.Core.Client.Stores;
 using Microsoft.Extensions.DependencyInjection;
@@ -44,6 +42,7 @@ namespace Endpointer.Authentication.Client.Extensions
             services.AddSingleton<IRegisterService, RegisterService>();
             services.AddSingleton<ILoginService, LoginService>();
             services.AddSingleton<ILogoutService, LogoutService>();
+            services.AddSingleton<IRefreshService, RefreshService>();
 
             return services;
         }
@@ -74,7 +73,7 @@ namespace Endpointer.Authentication.Client.Extensions
             return services.AddRefitClient<TService>(settings, endpoint)
                 .AddHttpMessageHandler(s => new AutoRefreshHttpMessageHandler(
                     getRefreshTokenStore(s),
-                    s.GetRequiredService<IAPIRefreshService>()))
+                    s.GetRequiredService<IRefreshService>()))
                 .AddHttpMessageHandler(s => new AccessTokenHttpMessageHandler(getRefreshTokenStore(s)));
         }
     }

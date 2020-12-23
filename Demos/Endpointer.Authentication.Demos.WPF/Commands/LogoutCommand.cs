@@ -1,8 +1,6 @@
 ﻿using Endpointer.Authentication.Client.Exceptions;
-using Endpointer.Authentication.Client.Services;
 using Endpointer.Authentication.Client.Services.Logout;
 using Endpointer.Authentication.Demos.WPF.Stores;
-using Refit;
 using System;
 using System.Threading.Tasks;
 using System.Windows;

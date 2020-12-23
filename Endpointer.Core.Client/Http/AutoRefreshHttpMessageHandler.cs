@@ -15,10 +15,10 @@ namespace Endpointer.Core.Client.Http
     public class AutoRefreshHttpMessageHandler : DelegatingHandler
     {
         private readonly IAutoRefreshTokenStore _tokenStore;
-        private readonly IAPIRefreshService _refreshService;
+        private readonly IRefreshService _refreshService;
 
         public AutoRefreshHttpMessageHandler(IAutoRefreshTokenStore tokenStore, 
-            IAPIRefreshService refreshService)
+            IRefreshService refreshService)
         {
             _tokenStore = tokenStore;
             _refreshService = refreshService;
@@ -32,18 +32,12 @@ namespace Endpointer.Core.Client.Http
                 {
                     string refreshToken = await _tokenStore.GetRefreshToken();
 
-                    SuccessResponse<AuthenticatedUserResponse> response = await _refreshService.Refresh(new RefreshRequest()
+                    AuthenticatedUserResponse response = await _refreshService.Refresh(new RefreshRequest()
                     {
                         RefreshToken = refreshToken
                     });
-                    AuthenticatedUserResponse userResponse = response.Data;
 
-                    if(userResponse == null)
-                    {
-                        throw await CreateUnauthorizedException(request);
-                    }
-
-                    await _tokenStore.SetTokens(userResponse.AccessToken, userResponse.RefreshToken, userResponse.AccessTokenExpirationTime);
+                    await _tokenStore.SetTokens(response.AccessToken, response.RefreshToken, response.AccessTokenExpirationTime);
                     request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _tokenStore.AccessToken);
                 }
                 catch (Exception)
@@ -52,9 +46,7 @@ namespace Endpointer.Core.Client.Http
                 }
             }
 
-            var message = await base.SendAsync(request, cancellationToken);
-
-            return message;
+            return await base.SendAsync(request, cancellationToken);
         }
 
         private static async Task<ApiException> CreateUnauthorizedException(HttpRequestMessage request)

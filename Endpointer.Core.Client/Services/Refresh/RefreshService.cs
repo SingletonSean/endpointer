@@ -1,6 +1,5 @@
-﻿using Endpointer.Authentication.Client.Exceptions;
-using Endpointer.Authentication.Core.Models.Requests;
-using Endpointer.Core.Client.Exceptions;
+﻿using Endpointer.Core.Client.Exceptions;
+using Endpointer.Core.Models.Requests;
 using Endpointer.Core.Models.Responses;
 using Refit;
 using System;
@@ -8,25 +7,25 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace Endpointer.Authentication.Client.Services.Login
+namespace Endpointer.Core.Client.Services.Refresh
 {
-    public class LoginService : ILoginService
+    public class RefreshService : IRefreshService
     {
-        private readonly IAPILoginService _api;
+        private readonly IAPIRefreshService _api;
 
-        public LoginService(IAPILoginService api)
+        public RefreshService(IAPIRefreshService api)
         {
             _api = api;
         }
 
         /// <inheritdoc/>
-        public async Task<AuthenticatedUserResponse> Login(LoginRequest request)
+        public async Task<AuthenticatedUserResponse> Refresh(RefreshRequest request)
         {
             try
             {
-                SuccessResponse<AuthenticatedUserResponse> response = await _api.Login(request);
+                SuccessResponse<AuthenticatedUserResponse> response = await _api.Refresh(request);
 
-                if(response == null || response.Data == null)
+                if (response == null || response.Data == null)
                 {
                     throw new Exception("Failed to deserialize API response.");
                 }
@@ -35,9 +34,9 @@ namespace Endpointer.Authentication.Client.Services.Login
             }
             catch (ApiException ex)
             {
-                if(ex.StatusCode == HttpStatusCode.Unauthorized)
+                if (ex.StatusCode == HttpStatusCode.NotFound)
                 {
-                    throw new UnauthorizedException(ex.Message, ex.InnerException);
+                    throw new InvalidRefreshTokenException();
                 }
 
                 ErrorResponse error = await ex.GetContentAsAsync<ErrorResponse>();
@@ -51,6 +50,8 @@ namespace Endpointer.Authentication.Client.Services.Login
                         throw new ValidationFailedException(error.Errors
                             .Where(e => e.Code == ErrorCode.VALIDATION_FAILURE)
                             .Select(e => e.Message));
+                    case ErrorCode.INVALID_REFRESH_TOKEN:
+                        throw new InvalidRefreshTokenException();
                     default:
                         throw;
                 }

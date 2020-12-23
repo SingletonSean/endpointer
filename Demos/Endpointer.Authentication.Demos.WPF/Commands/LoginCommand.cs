@@ -1,13 +1,11 @@
 ﻿using Endpointer.Authentication.Client.Exceptions;
-using Endpointer.Authentication.Client.Services;
 using Endpointer.Authentication.Client.Services.Login;
 using Endpointer.Authentication.Core.Models.Requests;
 using Endpointer.Authentication.Demos.WPF.Stores;
 using Endpointer.Authentication.Demos.WPF.ViewModels;
+using Endpointer.Core.Client.Exceptions;
 using Endpointer.Core.Models.Responses;
-using Refit;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -45,7 +43,7 @@ namespace Endpointer.Authentication.Demos.WPF.Commands
             {
                 MessageBox.Show($"Login failed. Invalid credentials.", "Error");
             }
-            catch (ValidationException)
+            catch (ValidationFailedException)
             {
                 MessageBox.Show($"Login failed. Invalid request.", "Error");
             }

@@ -1,10 +1,9 @@
 ﻿using Endpointer.Authentication.Demos.WPF.Stores;
-using Endpointer.Core.Client.Services;
+using Endpointer.Core.Client.Exceptions;
 using Endpointer.Core.Client.Services.Refresh;
 using Endpointer.Core.Models.Requests;
 using Endpointer.Core.Models.Responses;
-using Refit;
-using System.Linq;
+using System;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -13,9 +12,9 @@ namespace Endpointer.Authentication.Demos.WPF.Commands
     public class RefreshCommand : AsyncCommandBase
     {
         private readonly TokenStore _tokenStore;
-        private readonly IAPIRefreshService _refreshService;
+        private readonly IRefreshService _refreshService;
 
-        public RefreshCommand(TokenStore tokenStore, IAPIRefreshService refreshService)
+        public RefreshCommand(TokenStore tokenStore, IRefreshService refreshService)
         {
             _tokenStore = tokenStore;
             _refreshService = refreshService;
@@ -30,19 +29,22 @@ namespace Endpointer.Authentication.Demos.WPF.Commands
 
             try
             {
-                SuccessResponse<AuthenticatedUserResponse> response = await _refreshService.Refresh(request);
-                AuthenticatedUserResponse data = response.Data;
+                AuthenticatedUserResponse response = await _refreshService.Refresh(request);
+                await _tokenStore.SetTokens(response.AccessToken, response.RefreshToken, response.AccessTokenExpirationTime);
 
-                if(data != null)
-                {
-                    await _tokenStore.SetTokens(data.AccessToken, data.RefreshToken, data.AccessTokenExpirationTime);
-                    MessageBox.Show("Successfully refreshed.", "Success");
-                }
+                MessageBox.Show("Successfully refreshed.", "Success");
             }
-            catch (ApiException ex)
+            catch (InvalidRefreshTokenException)
             {
-                ErrorResponse response = await ex.GetContentAsAsync<ErrorResponse>();
-                MessageBox.Show($"Refresh failed. (Error Code: {response.Errors.FirstOrDefault()?.Code})", "Error");
+                MessageBox.Show($"Refresh failed. Refresh token invalid/expired.", "Error");
+            }
+            catch (ValidationFailedException)
+            {
+                MessageBox.Show($"Refresh failed. Please provide a refresh token.", "Error");
+            }
+            catch (Exception)
+            {
+                MessageBox.Show($"Refresh failed. Not sure why...", "Error");
             }
         }
     }

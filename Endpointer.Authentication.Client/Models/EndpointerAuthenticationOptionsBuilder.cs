@@ -1,11 +1,6 @@
-﻿using Endpointer.Authentication.Client.Services;
-using Endpointer.Core.Client.Services;
-using Endpointer.Core.Client.Stores;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Endpointer.Core.Client.Stores;
 using Refit;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Endpointer.Authentication.Client.Models
 {

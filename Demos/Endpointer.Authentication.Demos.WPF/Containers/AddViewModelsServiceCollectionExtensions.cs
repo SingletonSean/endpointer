@@ -1,5 +1,4 @@
-﻿using Endpointer.Authentication.Client.Services;
-using Endpointer.Authentication.Client.Services.Login;
+﻿using Endpointer.Authentication.Client.Services.Login;
 using Endpointer.Authentication.Client.Services.Register;
 using Endpointer.Authentication.Demos.WPF.Commands;
 using Endpointer.Authentication.Demos.WPF.Services;

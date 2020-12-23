@@ -1,13 +1,10 @@
 ﻿using Endpointer.Authentication.Client.Exceptions;
-using Endpointer.Authentication.Client.Services;
 using Endpointer.Authentication.Client.Services.Register;
 using Endpointer.Authentication.Core.Models.Requests;
 using Endpointer.Authentication.Demos.WPF.Services;
 using Endpointer.Authentication.Demos.WPF.ViewModels;
-using Endpointer.Core.Models.Responses;
-using Refit;
+using Endpointer.Core.Client.Exceptions;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -57,7 +54,7 @@ namespace Endpointer.Authentication.Demos.WPF.Commands
             {
                 MessageBox.Show($"Register failed. Username {ex.Username} is already taken.", "Error");
             }
-            catch (ValidationException)
+            catch (ValidationFailedException)
             {
                 MessageBox.Show($"Register failed. Invalid register request.", "Error");
             }
