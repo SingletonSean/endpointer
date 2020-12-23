@@ -1,4 +1,5 @@
 ﻿using Endpointer.Authentication.API.Models;
+using Endpointer.Core.API.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;

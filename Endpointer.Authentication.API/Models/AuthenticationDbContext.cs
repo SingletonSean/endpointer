@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Endpointer.Core.API.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Endpointer.Authentication.API.Models
 {

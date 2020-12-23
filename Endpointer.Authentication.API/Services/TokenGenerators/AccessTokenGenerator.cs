@@ -1,4 +1,5 @@
 ﻿using Endpointer.Authentication.API.Models;
+using Endpointer.Core.API.Models;
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
