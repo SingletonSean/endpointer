@@ -1,7 +1,9 @@
-﻿using Endpointer.Authentication.Client.Services;
+﻿using Endpointer.Authentication.Client.Exceptions;
+using Endpointer.Authentication.Client.Services;
 using Endpointer.Authentication.Client.Services.Logout;
 using Endpointer.Authentication.Demos.WPF.Stores;
 using Refit;
+using System;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -10,9 +12,9 @@ namespace Endpointer.Authentication.Demos.WPF.Commands
     public class LogoutCommand : AsyncCommandBase
     {
         private readonly TokenStore _tokenStore;
-        private readonly IAPILogoutService _logoutService;
+        private readonly ILogoutService _logoutService;
 
-        public LogoutCommand(TokenStore tokenStore, IAPILogoutService logoutService)
+        public LogoutCommand(TokenStore tokenStore, ILogoutService logoutService)
         {
             _tokenStore = tokenStore;
             _logoutService = logoutService;
@@ -26,9 +28,13 @@ namespace Endpointer.Authentication.Demos.WPF.Commands
 
                 MessageBox.Show("Successfully logged out.", "Success");
             }
-            catch (ApiException ex)
+            catch (UnauthorizedException)
             {
-                MessageBox.Show($"Logout failed. (Status Code: {ex.StatusCode})", "Error");
+                MessageBox.Show($"Logout failed. Must be logged in to logout.", "Error");
+            }
+            catch (Exception)
+            {
+                MessageBox.Show($"Logout failed. Not sure why...", "Error");
             }
         }
     }

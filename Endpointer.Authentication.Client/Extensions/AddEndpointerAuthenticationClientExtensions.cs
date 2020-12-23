@@ -42,6 +42,7 @@ namespace Endpointer.Authentication.Client.Extensions
             }
 
             services.AddSingleton<ILoginService, LoginService>();
+            services.AddSingleton<ILogoutService, LogoutService>();
 
             return services;
         }
