@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Endpointer.Authentication.API.Models
+namespace Endpointer.Core.API.Models
 {
     public class User
     {

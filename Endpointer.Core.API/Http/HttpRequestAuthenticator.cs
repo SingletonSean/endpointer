@@ -1,11 +1,11 @@
-﻿using Endpointer.Authentication.API.Models;
-using Endpointer.Authentication.API.Services.TokenDecoders;
+﻿using Endpointer.Core.API.Models;
+using Endpointer.Core.API.Services.TokenDecoders;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Endpointer.Authentication.API.Services.Authenticators
+namespace Endpointer.Core.API.Http
 {
     public class HttpRequestAuthenticator
     {
@@ -18,6 +18,11 @@ namespace Endpointer.Authentication.API.Services.Authenticators
             _tokenDecoder = tokenDecoder;
         }
 
+        /// <summary>
+        /// Authenticate a user from an HTTP request.
+        /// </summary>
+        /// <param name="request">The request with the authorization header.</param>
+        /// <returns>The authenticated user. Null if authentication fails.</returns>
         public async Task<User> Authenticate(HttpRequest request)
         {
             User user = null;
@@ -28,6 +33,7 @@ namespace Endpointer.Authentication.API.Services.Authenticators
             {
                 // Validate the token and get the user.
                 string token = rawBearerToken.Substring(BEARER_PREFIX.Length);
+
                 try
                 {
                     user = await _tokenDecoder.GetUserFromToken(token);

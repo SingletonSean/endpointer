@@ -11,13 +11,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Endpointer.Authentication.C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Endpointer.Authentication.Core", "Endpointer.Authentication.Core\Endpointer.Authentication.Core.csproj", "{8C110ECF-587F-40C0-B38C-D17B76BB8BBB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Endpointer.Core.Client", "Endpointer.Core.Client\Endpointer.Core.Client.csproj", "{B751812C-FE66-4241-9B94-E35A0955D8E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Endpointer.Core.Client", "Endpointer.Core.Client\Endpointer.Core.Client.csproj", "{B751812C-FE66-4241-9B94-E35A0955D8E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Endpointer.Core", "Endpointer.Core\Endpointer.Core.csproj", "{89C29BFA-CD37-484D-B595-DBC49DE5EA5D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Endpointer.Core", "Endpointer.Core\Endpointer.Core.csproj", "{89C29BFA-CD37-484D-B595-DBC49DE5EA5D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Endpointer.Authentication.Demos.Web", "Demos\Endpointer.Authentication.Demos.Web\Endpointer.Authentication.Demos.Web.csproj", "{C2225535-599B-44B5-942C-EDAC62F541F1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Endpointer.Authentication.Demos.WPF", "Demos\Endpointer.Authentication.Demos.WPF\Endpointer.Authentication.Demos.WPF.csproj", "{88D28638-D8E6-4AE7-8754-73DE6ABC5105}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Endpointer.Core.API", "Endpointer.Core.API\Endpointer.Core.API.csproj", "{22658AA2-6C67-4F29-B58A-D019B1B73970}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +55,10 @@ Global
 		{88D28638-D8E6-4AE7-8754-73DE6ABC5105}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88D28638-D8E6-4AE7-8754-73DE6ABC5105}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88D28638-D8E6-4AE7-8754-73DE6ABC5105}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22658AA2-6C67-4F29-B58A-D019B1B73970}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22658AA2-6C67-4F29-B58A-D019B1B73970}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22658AA2-6C67-4F29-B58A-D019B1B73970}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22658AA2-6C67-4F29-B58A-D019B1B73970}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

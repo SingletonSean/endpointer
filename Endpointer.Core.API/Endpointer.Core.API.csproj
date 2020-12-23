@@ -5,20 +5,21 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <PackageId>Endpointer.Core</PackageId>
+    <PackageId>Endpointer.Core.API</PackageId>
     <Version>1.1.1</Version>
     <Authors>SingletonSean</Authors>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <RepositoryUrl>https://github.com/SingletonSean/endpointer</RepositoryUrl>
     <PackageProjectUrl>https://github.com/SingletonSean/endpointer</PackageProjectUrl>
-    <PackageTags>asp net core model endpointer functions</PackageTags>
+    <PackageTags>asp net core model api endpointer client http</PackageTags>
     <Description>
-      Core models for Endpointer.
+      Core logic for Endpointer API applications.
     </Description>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.8.0" />
   </ItemGroup>
 
 </Project>

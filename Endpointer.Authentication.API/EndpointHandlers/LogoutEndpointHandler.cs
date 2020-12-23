@@ -1,6 +1,6 @@
-﻿using Endpointer.Authentication.API.Models;
-using Endpointer.Authentication.API.Services.Authenticators;
-using Endpointer.Authentication.API.Services.RefreshTokenRepositories;
+﻿using Endpointer.Authentication.API.Services.RefreshTokenRepositories;
+using Endpointer.Core.API.Http;
+using Endpointer.Core.API.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
