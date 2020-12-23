@@ -46,7 +46,7 @@ namespace Endpointer.Authentication.Demos.WPF.Containers
         {
             return new LoginViewModel(vm => new LoginCommand(vm,
                 services.GetRequiredService<TokenStore>(),
-                services.GetRequiredService<IAPILoginService>()));
+                services.GetRequiredService<ILoginService>()));
         }
     }
 }
