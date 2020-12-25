@@ -10,7 +10,9 @@ namespace Endpointer.Authentication.API.Services.RefreshTokenRepositories
 
         Task Create(RefreshToken refreshToken);
 
-        Task Delete(Guid id);
+        Task DeleteById(Guid id);
+        
+        Task DeleteByToken(string refreshToken);
 
         Task DeleteAll(Guid userId);
     }

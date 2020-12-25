@@ -55,7 +55,7 @@ namespace Endpointer.Authentication.API.EndpointHandlers
                 return new NotFoundObjectResult(new ErrorResponse(ErrorCode.INVALID_REFRESH_TOKEN, "Invalid refresh token."));
             }
 
-            await _refreshTokenRepository.Delete(refreshTokenDTO.Id);
+            await _refreshTokenRepository.DeleteById(refreshTokenDTO.Id);
 
             User user = await _userRepository.GetById(refreshTokenDTO.UserId);
             if (user == null)
