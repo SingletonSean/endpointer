@@ -35,6 +35,7 @@ namespace Endpointer.Authentication.API.Extensions
             services.AddSingleton<AccessTokenDecoder>();
             services.AddSingleton<TokenGenerator>();
             services.AddSingleton<IPasswordHasher, BcryptPasswordHasher>();
+
             services.AddScoped<IUserRepository, DatabaseUserRepository>();
             services.AddScoped<IRefreshTokenRepository, DatabaseRefreshTokenRepository>();
 
