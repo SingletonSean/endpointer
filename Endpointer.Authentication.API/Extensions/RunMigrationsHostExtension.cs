@@ -10,9 +10,12 @@ namespace Endpointer.Authentication.API.Extensions
         {
             using (IServiceScope scope = host.Services.CreateScope())
             {
-                using (TDbContext context = scope.ServiceProvider.GetRequiredService<TDbContext>())
+                using (TDbContext context = scope.ServiceProvider.GetService<TDbContext>())
                 {
-                    context.Database.Migrate();
+                    if(context != null)
+                    {
+                        context.Database.Migrate();
+                    }
                 }
             }
         }

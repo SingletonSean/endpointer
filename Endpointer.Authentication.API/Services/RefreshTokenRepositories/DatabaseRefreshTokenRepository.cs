@@ -1,4 +1,5 @@
-﻿using Endpointer.Authentication.API.Models;
+﻿using Endpointer.Authentication.API.Contexts;
+using Endpointer.Authentication.API.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,9 +10,9 @@ namespace Endpointer.Authentication.API.Services.RefreshTokenRepositories
 {
     public class DatabaseRefreshTokenRepository : IRefreshTokenRepository
     {
-        private readonly AuthenticationDbContext _context;
+        private readonly DefaultAuthenticationDbContext _context;
 
-        public DatabaseRefreshTokenRepository(AuthenticationDbContext context)
+        public DatabaseRefreshTokenRepository(DefaultAuthenticationDbContext context)
         {
             _context = context;
         }

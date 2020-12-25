@@ -1,4 +1,5 @@
-﻿using Endpointer.Authentication.API.EndpointHandlers;
+﻿using Endpointer.Authentication.API.Contexts;
+using Endpointer.Authentication.API.EndpointHandlers;
 using Endpointer.Authentication.API.Models;
 using Endpointer.Authentication.API.Services.Authenticators;
 using Endpointer.Authentication.API.Services.PasswordHashers;
@@ -20,12 +21,26 @@ namespace Endpointer.Authentication.API.Extensions
         public static IServiceCollection AddEndpointerAuthentication(this IServiceCollection services, 
             AuthenticationConfiguration authenticationConfiguration,
             TokenValidationParameters validationParameters,
-            Action<DbContextOptionsBuilder> dbOptions)
+            Func<EndpointerAuthenticationOptionsBuilder, EndpointerAuthenticationOptionsBuilder> configureOptions = null)
         {
+            EndpointerAuthenticationOptionsBuilder optionsBuilder = new EndpointerAuthenticationOptionsBuilder();
+            configureOptions?.Invoke(optionsBuilder);
+            EndpointerAuthenticationOptions options = optionsBuilder.Build();
+
+            if(options.UseDatabase)
+            {
+                options.AddDbContext(services);
+                services.AddScoped<IUserRepository, DatabaseUserRepository>();
+                services.AddScoped<IRefreshTokenRepository, DatabaseRefreshTokenRepository>();
+            }
+            else
+            {
+                services.AddSingleton<IUserRepository, InMemoryUserRepository>();
+                services.AddSingleton<IRefreshTokenRepository, InMemoryRefreshTokenRepository>();
+            }
+
             services.AddSingleton(authenticationConfiguration);
             services.AddSingleton(validationParameters);
-
-            services.AddDbContext<AuthenticationDbContext>(dbOptions);
 
             services.AddSingleton<AccessTokenGenerator>();
             services.AddSingleton<RefreshTokenGenerator>();
@@ -35,9 +50,6 @@ namespace Endpointer.Authentication.API.Extensions
             services.AddSingleton<AccessTokenDecoder>();
             services.AddSingleton<TokenGenerator>();
             services.AddSingleton<IPasswordHasher, BcryptPasswordHasher>();
-
-            services.AddScoped<IUserRepository, DatabaseUserRepository>();
-            services.AddScoped<IRefreshTokenRepository, DatabaseRefreshTokenRepository>();
 
             services.AddScoped<RegisterEndpointHandler>();
             services.AddScoped<LoginEndpointHandler>();

@@ -1,4 +1,4 @@
-﻿using Endpointer.Authentication.API.Models;
+﻿using Endpointer.Authentication.API.Contexts;
 using Endpointer.Core.API.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -8,9 +8,9 @@ namespace Endpointer.Authentication.API.Services.UserRepositories
 {
     public class DatabaseUserRepository : IUserRepository
     {
-        private readonly AuthenticationDbContext _context;
+        private readonly DefaultAuthenticationDbContext _context;
 
-        public DatabaseUserRepository(AuthenticationDbContext context)
+        public DatabaseUserRepository(DefaultAuthenticationDbContext context)
         {
             _context = context;
         }

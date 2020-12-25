@@ -42,7 +42,9 @@ namespace Endpointer.Authentication.Demos.Web
             string connectionString = _configuration.GetConnectionString("sqlite");
             services.AddEndpointerAuthentication(authenticationConfiguration,
                 validationParameters, 
-                o => o.UseSqlite(connectionString, o => o.MigrationsAssembly("Endpointer.Authentication.Demos.Web")));
+                o => o.WithDatabase(
+                    c => c.UseSqlite(connectionString, o => o.MigrationsAssembly("Endpointer.Authentication.Demos.Web")))
+                );
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
