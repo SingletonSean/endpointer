@@ -10,6 +10,7 @@ namespace Endpointer.Authentication.Demos.WPF.Containers
         {
             services.AddSingleton<RefreshCommand>();
             services.AddSingleton<LogoutCommand>();
+            services.AddSingleton<LogoutEverywhereCommand>();
             services.AddSingleton<NavigateCommand<RegisterViewModel>>();
             services.AddSingleton<NavigateCommand<LoginViewModel>>();
 

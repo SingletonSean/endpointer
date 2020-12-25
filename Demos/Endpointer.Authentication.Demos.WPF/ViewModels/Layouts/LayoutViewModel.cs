@@ -11,6 +11,7 @@ namespace Endpointer.Authentication.Demos.WPF.ViewModels.Layouts
         public ICommand ShowLoginCommand { get; }
         public ICommand RefreshCommand { get; }
         public ICommand LogoutCommand { get; }
+        public ICommand LogoutEverywhereCommand { get; }
 
         public ViewModelBase CurrentViewModel { get; }
 
@@ -18,7 +19,8 @@ namespace Endpointer.Authentication.Demos.WPF.ViewModels.Layouts
             CreateCommand<LayoutViewModel> createShowRegisterCommand,
             CreateCommand<LayoutViewModel> createShowLoginCommand,
             CreateCommand<LayoutViewModel> refreshCommand,
-            CreateCommand<LayoutViewModel> logoutCommand)
+            CreateCommand<LayoutViewModel> logoutCommand,
+            CreateCommand<LayoutViewModel> logoutEverywhereCommand)
         {
             CurrentViewModel = currentViewModel;
 
@@ -26,6 +28,7 @@ namespace Endpointer.Authentication.Demos.WPF.ViewModels.Layouts
             ShowLoginCommand = createShowLoginCommand(this);
             RefreshCommand = refreshCommand(this);
             LogoutCommand = logoutCommand(this);
+            LogoutEverywhereCommand = logoutEverywhereCommand(this);
         }
     }
 }

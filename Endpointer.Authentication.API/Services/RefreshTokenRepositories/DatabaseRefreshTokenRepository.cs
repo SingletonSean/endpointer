@@ -22,7 +22,17 @@ namespace Endpointer.Authentication.API.Services.RefreshTokenRepositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task Delete(Guid id)
+        public async Task DeleteByToken(string refreshToken)
+        {
+            RefreshToken refreshTokenDTO = await _context.RefreshTokens.FirstOrDefaultAsync(t => t.Token == refreshToken);
+            if (refreshTokenDTO != null)
+            {
+                _context.RefreshTokens.Remove(refreshTokenDTO);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task DeleteById(Guid id)
         {
             RefreshToken refreshToken = await _context.RefreshTokens.FindAsync(id);
             if(refreshToken != null)

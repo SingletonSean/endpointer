@@ -1,5 +1,4 @@
 ﻿using System;
-using Endpointer.Authentication.Client.Exceptions;
 using System.Threading.Tasks;
 
 namespace Endpointer.Authentication.Client.Services.Logout
@@ -7,10 +6,10 @@ namespace Endpointer.Authentication.Client.Services.Logout
     public interface ILogoutService
     {
         /// <summary>
-        /// Logout the current user.
+        /// Logout the current user by deleting the user's current refresh token.
         /// </summary>
-        /// <exception cref="UnauthorizedException">Thrown if user has invalid access token.</exception>
-        /// <exception cref="Exception">Thrown if logout fails.</exception>
-        Task Logout();
+        /// <param name="refreshToken">The refresh token to delete.</param>
+        /// <exception cref="Exception">Thrown if request fails.</exception>
+        Task Logout(string refreshToken);
     }
 }

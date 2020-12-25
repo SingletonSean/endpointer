@@ -42,6 +42,7 @@ namespace Endpointer.Authentication.API.Extensions
             services.AddScoped<LoginEndpointHandler>();
             services.AddScoped<RefreshEndpointHandler>();
             services.AddScoped<LogoutEndpointHandler>();
+            services.AddScoped<LogoutEverywhereEndpointHandler>();
 
             return services;
         }

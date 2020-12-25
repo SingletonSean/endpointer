@@ -1,7 +1,4 @@
-﻿using Endpointer.Authentication.Client.Exceptions;
-using Refit;
-using System.Net;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Endpointer.Authentication.Client.Services.Logout
 {
@@ -15,21 +12,9 @@ namespace Endpointer.Authentication.Client.Services.Logout
         }
 
         /// <inheritdoc/>
-        public async Task Logout()
+        public async Task Logout(string refreshToken)
         {
-            try
-            {
-                await _api.Logout();
-            }
-            catch (ApiException ex)
-            {
-                if (ex.StatusCode == HttpStatusCode.Unauthorized)
-                {
-                    throw new UnauthorizedException(ex.Message, ex.InnerException);
-                }
-
-                throw;
-            }
+            await _api.Logout(refreshToken);
         }
     }
 }

@@ -12,16 +12,19 @@ namespace Endpointer.Authentication.Demos.Web.Controllers
         private readonly LoginEndpointHandler _loginHandler;
         private readonly RefreshEndpointHandler _refreshHandler;
         private readonly LogoutEndpointHandler _logoutHandler;
+        private readonly LogoutEverywhereEndpointHandler _logoutEverywhereHandler;
 
         public AuthenticationController(RegisterEndpointHandler registerHandler,
             LoginEndpointHandler loginHandler, 
             RefreshEndpointHandler refreshHandler, 
-            LogoutEndpointHandler logoutHandler)
+            LogoutEndpointHandler logoutHandler,
+            LogoutEverywhereEndpointHandler logoutEverywhereHandler)
         {
             _registerHandler = registerHandler;
             _loginHandler = loginHandler;
             _refreshHandler = refreshHandler;
             _logoutHandler = logoutHandler;
+            _logoutEverywhereHandler = logoutEverywhereHandler;
         }
 
         [HttpPost("register")]
@@ -42,10 +45,16 @@ namespace Endpointer.Authentication.Demos.Web.Controllers
             return await _refreshHandler.HandleRefresh(refreshRequest, ModelState);
         }
 
-        [HttpDelete("logout")]
-        public async Task<IActionResult> Logout()
+        [HttpDelete("logout/{refreshToken}")]
+        public async Task<IActionResult> Logout(string refreshToken)
         {
-            return await _logoutHandler.HandleLogout(HttpContext.Request);
+            return await _logoutHandler.HandleLogout(refreshToken);
+        }
+
+        [HttpDelete("logout")]
+        public async Task<IActionResult> LogoutEverywhere()
+        {
+            return await _logoutEverywhereHandler.HandleLogoutEverywhere(HttpContext.Request);
         }
     }
 }
