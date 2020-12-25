@@ -25,10 +25,11 @@ namespace Endpointer.Authentication.Client.Extensions
             services.AddRefitClient<IAPIRegisterService>(options.RefitSettings, endpointsConfiguration.RegisterEndpoint);
             services.AddRefitClient<IAPILoginService>(options.RefitSettings, endpointsConfiguration.LoginEndpoint);
             services.AddRefitClient<IAPIRefreshService>(options.RefitSettings, endpointsConfiguration.RefreshEndpoint);
+            services.AddRefitClient<IAPILogoutService>(options.RefitSettings, endpointsConfiguration.LogoutEndpoint);
 
             if(options.AutoTokenRefresh)
             {
-                services.AddAutoRefreshRefitClient<IAPILogoutService>(options.RefitSettings, 
+                services.AddAutoRefreshRefitClient<IAPILogoutEverywhereService>(options.RefitSettings, 
                     endpointsConfiguration.LogoutEndpoint, 
                     options.GetAutoRefreshTokenStore);
             }
@@ -41,6 +42,7 @@ namespace Endpointer.Authentication.Client.Extensions
 
             services.AddSingleton<IRegisterService, RegisterService>();
             services.AddSingleton<ILoginService, LoginService>();
+            services.AddSingleton<ILogoutEverywhereService, LogoutEverywhereService>();
             services.AddSingleton<ILogoutService, LogoutService>();
             services.AddSingleton<IRefreshService, RefreshService>();
 
