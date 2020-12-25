@@ -1,5 +1,4 @@
-﻿using Endpointer.Authentication.Client.Exceptions;
-using Endpointer.Authentication.Client.Services.Logout;
+﻿using Endpointer.Authentication.Client.Services.Logout;
 using Endpointer.Authentication.Demos.WPF.Stores;
 using System;
 using System.Threading.Tasks;
@@ -22,13 +21,10 @@ namespace Endpointer.Authentication.Demos.WPF.Commands
         {
             try
             {
-                await _logoutService.Logout();
+                string refreshToken = await _tokenStore.GetRefreshToken();
+                await _logoutService.Logout(refreshToken);
 
                 MessageBox.Show("Successfully logged out.", "Success");
-            }
-            catch (UnauthorizedException)
-            {
-                MessageBox.Show($"Logout failed. Must be logged in to logout.", "Error");
             }
             catch (Exception)
             {

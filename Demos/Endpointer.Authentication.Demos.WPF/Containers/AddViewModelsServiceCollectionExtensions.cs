@@ -31,7 +31,8 @@ namespace Endpointer.Authentication.Demos.WPF.Containers
                 (vm) => services.GetRequiredService<NavigateCommand<RegisterViewModel>>(),
                 (vm) => services.GetRequiredService<NavigateCommand<LoginViewModel>>(),
                 (vm) => services.GetRequiredService<RefreshCommand>(),
-                (vm) => services.GetRequiredService<LogoutCommand>());
+                (vm) => services.GetRequiredService<LogoutCommand>(),
+                (vm) => services.GetRequiredService<LogoutEverywhereCommand>());
         }
 
         private static RegisterViewModel CreateRegisterViewModel(IServiceProvider services)

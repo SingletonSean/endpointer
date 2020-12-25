@@ -3,7 +3,6 @@ using Endpointer.Core.API.Http;
 using Endpointer.Core.API.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Threading.Tasks;
 
 namespace Endpointer.Authentication.API.EndpointHandlers

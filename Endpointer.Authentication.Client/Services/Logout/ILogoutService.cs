@@ -1,5 +1,4 @@
 ﻿using System;
-using Endpointer.Authentication.Client.Exceptions;
 using System.Threading.Tasks;
 
 namespace Endpointer.Authentication.Client.Services.Logout

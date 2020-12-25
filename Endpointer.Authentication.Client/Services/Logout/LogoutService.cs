@@ -1,7 +1,4 @@
-﻿using Endpointer.Authentication.Client.Exceptions;
-using Refit;
-using System.Net;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Endpointer.Authentication.Client.Services.Logout
 {

@@ -25,6 +25,7 @@
                                 <ColumnDefinition Width="auto" />
                                 <ColumnDefinition Width="auto" />
                                 <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="auto" />
                             </Grid.ColumnDefinitions>
 
                             <TextBlock Grid.Column="0"
@@ -48,6 +49,10 @@
                             <Button Grid.Column="4" Margin="5 0" Padding="10 5"
                                 Command="{Binding LogoutCommand}"
                                 Content="Logout" />
+
+                            <Button Grid.Column="5" Margin="5 0" Padding="10 5"
+                                Command="{Binding LogoutEverywhereCommand}"
+                                Content="Logout Everywhere" />
                         </Grid>
                     </Grid>
 
