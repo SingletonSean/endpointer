@@ -21,7 +21,7 @@ namespace Endpointer.Demos.Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "User",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -31,7 +31,7 @@ namespace Endpointer.Demos.Web.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.PrimaryKey("PK_User", x => x.Id);
                 });
         }
 
@@ -41,7 +41,7 @@ namespace Endpointer.Demos.Web.Migrations
                 name: "RefreshTokens");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "User");
         }
     }
 }

@@ -1,6 +1,6 @@
 using Endpointer.Authentication.API.Extensions;
 using Endpointer.Authentication.API.Models;
-using Endpointer.Users.API.Extensions;
+using Endpointer.Accounts.API.Extensions;
 using Endpointer.Demos.Web.Contexts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -48,7 +48,7 @@ namespace Endpointer.Demos.Web
                     c => c.UseSqlite(connectionString))
                 );
 
-            services.AddEndpointerUsers(o => 
+            services.AddEndpointerAccounts(o => 
                 o.WithDatabase<CustomDbContext>(
                     c => c.UseSqlite(connectionString)));
         }
