@@ -30,8 +30,8 @@ namespace Endpointer.Authentication.API.Extensions
             if(options.UseDatabase)
             {
                 options.AddDbContext(services);
-                services.AddScoped<IUserRepository, DatabaseUserRepository>();
-                services.AddScoped<IRefreshTokenRepository, DatabaseRefreshTokenRepository>();
+                options.AddDbUserRepository(services);
+                options.AddDbRefreshTokenRepository(services);
             }
             else
             {

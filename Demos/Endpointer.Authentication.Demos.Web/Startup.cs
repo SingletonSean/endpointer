@@ -1,5 +1,6 @@
 using Endpointer.Authentication.API.Extensions;
 using Endpointer.Authentication.API.Models;
+using Endpointer.Authentication.Demos.Web.Contexts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -42,8 +43,8 @@ namespace Endpointer.Authentication.Demos.Web
             string connectionString = _configuration.GetConnectionString("sqlite");
             services.AddEndpointerAuthentication(authenticationConfiguration,
                 validationParameters, 
-                o => o.WithDatabase(
-                    c => c.UseSqlite(connectionString, o => o.MigrationsAssembly("Endpointer.Authentication.Demos.Web")))
+                o => o.WithDatabase<CustomDbContext>(
+                    c => c.UseSqlite(connectionString))
                 );
         }
 

@@ -1,5 +1,6 @@
 ﻿using Endpointer.Authentication.API.Contexts;
 using Endpointer.Authentication.API.Models;
+using Endpointer.Core.API.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,11 +9,12 @@ using System.Threading.Tasks;
 
 namespace Endpointer.Authentication.API.Services.RefreshTokenRepositories
 {
-    public class DatabaseRefreshTokenRepository : IRefreshTokenRepository
+    public class DatabaseRefreshTokenRepository<TDbContext> : IRefreshTokenRepository
+        where TDbContext : DbContext, IAuthenticationDbContext<User>
     {
-        private readonly DefaultAuthenticationDbContext _context;
+        private readonly TDbContext _context;
 
-        public DatabaseRefreshTokenRepository(DefaultAuthenticationDbContext context)
+        public DatabaseRefreshTokenRepository(TDbContext context)
         {
             _context = context;
         }

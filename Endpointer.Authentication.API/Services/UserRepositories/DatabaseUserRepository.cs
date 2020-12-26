@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace Endpointer.Authentication.API.Services.UserRepositories
 {
-    public class DatabaseUserRepository : IUserRepository
+    public class DatabaseUserRepository<TDbContext> : IUserRepository
+        where TDbContext : DbContext, IAuthenticationDbContext<User>
     {
-        private readonly DefaultAuthenticationDbContext _context;
+        private readonly TDbContext _context;
 
-        public DatabaseUserRepository(DefaultAuthenticationDbContext context)
+        public DatabaseUserRepository(TDbContext context)
         {
             _context = context;
         }
