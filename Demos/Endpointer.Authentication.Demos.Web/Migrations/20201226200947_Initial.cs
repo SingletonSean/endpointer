@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Endpointer.Authentication.Demos.Web.Migrations
+namespace Endpointer.Demos.Web.Migrations
 {
     public partial class Initial : Migration
     {

@@ -27,9 +27,9 @@ namespace Endpointer.Authentication.API.Extensions
 
             if(options.UseDatabase)
             {
-                options.AddDbContext(services);
-                options.AddDbUserRepository(services);
-                options.AddDbRefreshTokenRepository(services);
+                options.AddDbContext?.Invoke(services);
+                options.AddDbUserRepository?.Invoke(services);
+                options.AddDbRefreshTokenRepository?.Invoke(services);
             }
             else
             {

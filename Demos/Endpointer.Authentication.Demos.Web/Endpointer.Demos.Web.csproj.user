@@ -4,6 +4,6 @@
     <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup>
-    <ActiveDebugProfile>Endpointer.Authentication.Demos.Web</ActiveDebugProfile>
+    <ActiveDebugProfile>Endpointer.Demos.Web</ActiveDebugProfile>
   </PropertyGroup>
 </Project>

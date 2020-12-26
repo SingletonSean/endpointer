@@ -15,13 +15,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Endpointer.Core.Client", "E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Endpointer.Core", "Endpointer.Core\Endpointer.Core.csproj", "{89C29BFA-CD37-484D-B595-DBC49DE5EA5D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Endpointer.Authentication.Demos.Web", "Demos\Endpointer.Authentication.Demos.Web\Endpointer.Authentication.Demos.Web.csproj", "{C2225535-599B-44B5-942C-EDAC62F541F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Endpointer.Demos.Web", "Demos\Endpointer.Authentication.Demos.Web\Endpointer.Demos.Web.csproj", "{C2225535-599B-44B5-942C-EDAC62F541F1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Endpointer.Authentication.Demos.WPF", "Demos\Endpointer.Authentication.Demos.WPF\Endpointer.Authentication.Demos.WPF.csproj", "{88D28638-D8E6-4AE7-8754-73DE6ABC5105}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Endpointer.Core.API", "Endpointer.Core.API\Endpointer.Core.API.csproj", "{22658AA2-6C67-4F29-B58A-D019B1B73970}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Endpointer.Accounts.API", "Endpointer.Accounts.API\Endpointer.Accounts.API.csproj", "{A12BD441-1BE6-47F4-9FA1-5352A1BCA1B7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Endpointer.Users.API", "Endpointer.Accounts.API\Endpointer.Users.API.csproj", "{A12BD441-1BE6-47F4-9FA1-5352A1BCA1B7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

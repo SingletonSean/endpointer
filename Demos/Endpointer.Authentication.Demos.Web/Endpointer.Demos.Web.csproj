@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Endpointer.Accounts.API\Endpointer.Users.API.csproj" />
     <ProjectReference Include="..\..\Endpointer.Authentication.API\Endpointer.Authentication.API.csproj" />
   </ItemGroup>
 
