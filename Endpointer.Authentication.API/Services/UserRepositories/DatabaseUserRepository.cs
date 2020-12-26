@@ -1,4 +1,4 @@
-﻿using Endpointer.Authentication.API.Models;
+﻿using Endpointer.Authentication.API.Contexts;
 using Endpointer.Core.API.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace Endpointer.Authentication.API.Services.UserRepositories
 {
-    public class DatabaseUserRepository : IUserRepository
+    public class DatabaseUserRepository<TDbContext> : IUserRepository
+        where TDbContext : DbContext, IAuthenticationDbContext<User>
     {
-        private readonly AuthenticationDbContext _context;
+        private readonly TDbContext _context;
 
-        public DatabaseUserRepository(AuthenticationDbContext context)
+        public DatabaseUserRepository(TDbContext context)
         {
             _context = context;
         }

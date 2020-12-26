@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Endpointer.Authentication.D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Endpointer.Authentication.Demos.WPF", "Demos\Endpointer.Authentication.Demos.WPF\Endpointer.Authentication.Demos.WPF.csproj", "{88D28638-D8E6-4AE7-8754-73DE6ABC5105}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Endpointer.Core.API", "Endpointer.Core.API\Endpointer.Core.API.csproj", "{22658AA2-6C67-4F29-B58A-D019B1B73970}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Endpointer.Core.API", "Endpointer.Core.API\Endpointer.Core.API.csproj", "{22658AA2-6C67-4F29-B58A-D019B1B73970}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

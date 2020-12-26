@@ -1,5 +1,6 @@
+using Endpointer.Authentication.API.Contexts;
 using Endpointer.Authentication.API.Extensions;
-using Endpointer.Authentication.API.Models;
+using Endpointer.Authentication.Demos.Web.Contexts;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
@@ -11,7 +12,7 @@ namespace Endpointer.Authentication.Demos.Web
         {
             IHost host = CreateHostBuilder(args).Build();
 
-            host.RunMigrations<AuthenticationDbContext>();
+            host.RunMigrations<CustomDbContext>();
 
             host.Run();
         }
