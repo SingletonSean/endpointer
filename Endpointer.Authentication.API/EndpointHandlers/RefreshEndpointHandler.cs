@@ -1,9 +1,9 @@
-﻿using Endpointer.Authentication.API.Extensions;
-using Endpointer.Authentication.API.Models;
+﻿using Endpointer.Authentication.API.Models;
 using Endpointer.Authentication.API.Services.Authenticators;
 using Endpointer.Authentication.API.Services.RefreshTokenRepositories;
 using Endpointer.Authentication.API.Services.TokenValidators;
 using Endpointer.Authentication.API.Services.UserRepositories;
+using Endpointer.Core.API.Extensions;
 using Endpointer.Core.API.Models;
 using Endpointer.Core.Models.Requests;
 using Endpointer.Core.Models.Responses;

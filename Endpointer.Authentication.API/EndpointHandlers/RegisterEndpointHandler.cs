@@ -1,8 +1,8 @@
-﻿using Endpointer.Authentication.API.Extensions;
-using Endpointer.Authentication.API.Services.PasswordHashers;
+﻿using Endpointer.Authentication.API.Services.PasswordHashers;
 using Endpointer.Authentication.API.Services.UserRepositories;
 using Endpointer.Authentication.Core.Models.Requests;
 using Endpointer.Authentication.Core.Models.Responses;
+using Endpointer.Core.API.Extensions;
 using Endpointer.Core.API.Models;
 using Endpointer.Core.Models.Responses;
 using Microsoft.AspNetCore.Mvc;

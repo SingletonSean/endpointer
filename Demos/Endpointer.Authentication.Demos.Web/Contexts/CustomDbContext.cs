@@ -2,10 +2,6 @@
 using Endpointer.Authentication.API.Models;
 using Endpointer.Core.API.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Endpointer.Authentication.Demos.Web.Contexts
 {

@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Endpointer.Authentication.API.Extensions
+namespace Endpointer.Core.API.Extensions
 {
     public static class RunMigrationsHostExtension
     {

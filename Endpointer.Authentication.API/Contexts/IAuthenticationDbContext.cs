@@ -1,6 +1,5 @@
 ﻿using Endpointer.Authentication.API.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
 
 namespace Endpointer.Authentication.API.Contexts
 {
