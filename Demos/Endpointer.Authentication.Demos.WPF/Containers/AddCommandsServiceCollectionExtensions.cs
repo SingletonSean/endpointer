@@ -1,4 +1,5 @@
 ﻿using Endpointer.Demos.WPF.Commands;
+using Endpointer.Demos.WPF.Commands.Authentication;
 using Endpointer.Demos.WPF.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 

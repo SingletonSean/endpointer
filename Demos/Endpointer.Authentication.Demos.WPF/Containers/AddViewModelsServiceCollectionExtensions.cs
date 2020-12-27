@@ -2,6 +2,8 @@
 using Endpointer.Authentication.Client.Services.Login;
 using Endpointer.Authentication.Client.Services.Register;
 using Endpointer.Demos.WPF.Commands;
+using Endpointer.Demos.WPF.Commands.Accounts;
+using Endpointer.Demos.WPF.Commands.Authentication;
 using Endpointer.Demos.WPF.Services;
 using Endpointer.Demos.WPF.Stores;
 using Endpointer.Demos.WPF.ViewModels;

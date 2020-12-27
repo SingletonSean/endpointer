@@ -8,7 +8,7 @@ using System;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Endpointer.Demos.WPF.Commands
+namespace Endpointer.Demos.WPF.Commands.Authentication
 {
     public class LoginCommand : AsyncCommandBase
     {

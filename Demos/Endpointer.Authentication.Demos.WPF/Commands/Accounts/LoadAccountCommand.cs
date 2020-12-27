@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Endpointer.Demos.WPF.Commands
+namespace Endpointer.Demos.WPF.Commands.Accounts
 {
     public class LoadAccountCommand : AsyncCommandBase
     {
