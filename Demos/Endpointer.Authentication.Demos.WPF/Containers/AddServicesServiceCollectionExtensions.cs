@@ -1,11 +1,11 @@
 ﻿using Endpointer.Authentication.Client.Extensions;
 using Endpointer.Authentication.Client.Models;
-using Endpointer.Authentication.Demos.WPF.Services;
-using Endpointer.Authentication.Demos.WPF.Stores;
-using Endpointer.Authentication.Demos.WPF.ViewModels;
+using Endpointer.Demos.WPF.Services;
+using Endpointer.Demos.WPF.Stores;
+using Endpointer.Demos.WPF.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Endpointer.Authentication.Demos.WPF.Containers
+namespace Endpointer.Demos.WPF.Containers
 {
     public static class AddServicesServiceCollectionExtensions
     {

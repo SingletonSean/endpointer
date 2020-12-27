@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Endpointer.Authentication.Demos.WPF.ViewModels
+namespace Endpointer.Demos.WPF.ViewModels
 {
     public class ViewModelBase : INotifyPropertyChanged
     {

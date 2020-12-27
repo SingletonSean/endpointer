@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 
-namespace Endpointer.Authentication.Demos.WPF.Commands
+namespace Endpointer.Demos.WPF.Commands
 {
     public delegate ICommand CreateCommand<TViewModel>(TViewModel viewmodel);
 }

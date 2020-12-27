@@ -1,12 +1,12 @@
-﻿using Endpointer.Authentication.Demos.WPF.Containers;
-using Endpointer.Authentication.Demos.WPF.Stores;
-using Endpointer.Authentication.Demos.WPF.ViewModels;
+﻿using Endpointer.Demos.WPF.Containers;
+using Endpointer.Demos.WPF.Stores;
+using Endpointer.Demos.WPF.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Windows;
 
-namespace Endpointer.Authentication.Demos.WPF
+namespace Endpointer.Demos.WPF
 {
     public partial class App : Application
     {

@@ -1,14 +1,14 @@
 ﻿using Endpointer.Authentication.Client.Services.Login;
 using Endpointer.Authentication.Core.Models.Requests;
-using Endpointer.Authentication.Demos.WPF.Stores;
-using Endpointer.Authentication.Demos.WPF.ViewModels;
+using Endpointer.Demos.WPF.Stores;
+using Endpointer.Demos.WPF.ViewModels;
 using Endpointer.Core.Client.Exceptions;
 using Endpointer.Core.Models.Responses;
 using System;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Endpointer.Authentication.Demos.WPF.Commands
+namespace Endpointer.Demos.WPF.Commands
 {
     public class LoginCommand : AsyncCommandBase
     {

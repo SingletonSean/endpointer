@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Endpointer.Authentication.Demos.WPF
+namespace Endpointer.Demos.WPF
 {
     public partial class MainWindow : Window
     {

@@ -1,14 +1,14 @@
 ﻿using Endpointer.Authentication.Client.Services.Login;
 using Endpointer.Authentication.Client.Services.Register;
-using Endpointer.Authentication.Demos.WPF.Commands;
-using Endpointer.Authentication.Demos.WPF.Services;
-using Endpointer.Authentication.Demos.WPF.Stores;
-using Endpointer.Authentication.Demos.WPF.ViewModels;
-using Endpointer.Authentication.Demos.WPF.ViewModels.Layouts;
+using Endpointer.Demos.WPF.Commands;
+using Endpointer.Demos.WPF.Services;
+using Endpointer.Demos.WPF.Stores;
+using Endpointer.Demos.WPF.ViewModels;
+using Endpointer.Demos.WPF.ViewModels.Layouts;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
-namespace Endpointer.Authentication.Demos.WPF.Containers
+namespace Endpointer.Demos.WPF.Containers
 {
     public static class AddViewModelsServiceCollectionExtensions
     {

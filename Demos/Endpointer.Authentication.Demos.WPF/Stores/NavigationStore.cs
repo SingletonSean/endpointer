@@ -1,8 +1,8 @@
-﻿using Endpointer.Authentication.Demos.WPF.ViewModels;
-using Endpointer.Authentication.Demos.WPF.ViewModels.Layouts;
+﻿using Endpointer.Demos.WPF.ViewModels;
+using Endpointer.Demos.WPF.ViewModels.Layouts;
 using System;
 
-namespace Endpointer.Authentication.Demos.WPF.Stores
+namespace Endpointer.Demos.WPF.Stores
 {
     public class NavigationStore
     {

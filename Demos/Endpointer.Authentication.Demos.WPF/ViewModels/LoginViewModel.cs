@@ -1,7 +1,7 @@
-﻿using Endpointer.Authentication.Demos.WPF.Commands;
+﻿using Endpointer.Demos.WPF.Commands;
 using System.Windows.Input;
 
-namespace Endpointer.Authentication.Demos.WPF.ViewModels
+namespace Endpointer.Demos.WPF.ViewModels
 {
     public class LoginViewModel : ViewModelBase
     {

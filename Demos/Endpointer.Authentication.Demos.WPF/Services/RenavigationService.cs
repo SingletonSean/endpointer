@@ -1,7 +1,7 @@
-﻿using Endpointer.Authentication.Demos.WPF.Stores;
-using Endpointer.Authentication.Demos.WPF.ViewModels;
+﻿using Endpointer.Demos.WPF.Stores;
+using Endpointer.Demos.WPF.ViewModels;
 
-namespace Endpointer.Authentication.Demos.WPF.Services
+namespace Endpointer.Demos.WPF.Services
 {
     public class RenavigationService<TViewModel> where TViewModel : ViewModelBase
     {

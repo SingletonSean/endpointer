@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Endpointer.Authentication.Demos.WPF.Stores
+namespace Endpointer.Demos.WPF.Stores
 {
     public class TokenStore : AutoRefreshTokenStoreBase
     {

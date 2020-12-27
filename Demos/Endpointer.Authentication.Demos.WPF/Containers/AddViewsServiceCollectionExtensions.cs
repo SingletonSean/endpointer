@@ -1,7 +1,7 @@
-﻿using Endpointer.Authentication.Demos.WPF.ViewModels;
+﻿using Endpointer.Demos.WPF.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Endpointer.Authentication.Demos.WPF.Containers
+namespace Endpointer.Demos.WPF.Containers
 {
     public static class AddViewsServiceCollectionExtensions
     {
