@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Endpointer.Authentication.Client.Exceptions
+namespace Endpointer.Core.Client.Exceptions
 {
     public class UnauthorizedException : Exception
     {

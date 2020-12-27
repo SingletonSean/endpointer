@@ -1,6 +1,7 @@
 using Endpointer.Authentication.API.Extensions;
 using Endpointer.Authentication.API.Models;
-using Endpointer.Authentication.Demos.Web.Contexts;
+using Endpointer.Accounts.API.Extensions;
+using Endpointer.Demos.Web.Contexts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +12,7 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Text;
 
-namespace Endpointer.Authentication.Demos.Web
+namespace Endpointer.Demos.Web
 {
     public class Startup
     {
@@ -46,6 +47,10 @@ namespace Endpointer.Authentication.Demos.Web
                 o => o.WithDatabase<CustomDbContext>(
                     c => c.UseSqlite(connectionString))
                 );
+
+            services.AddEndpointerAccounts(o => 
+                o.WithDatabase<CustomDbContext>(
+                    c => c.UseSqlite(connectionString)));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

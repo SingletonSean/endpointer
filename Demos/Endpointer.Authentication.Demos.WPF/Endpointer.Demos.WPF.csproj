@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Endpointer.Accounts.Client\Endpointer.Accounts.Client.csproj" />
     <ProjectReference Include="..\..\Endpointer.Authentication.Client\Endpointer.Authentication.Client.csproj" />
   </ItemGroup>
 

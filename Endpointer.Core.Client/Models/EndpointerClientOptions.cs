@@ -2,9 +2,9 @@
 using Refit;
 using System;
 
-namespace Endpointer.Authentication.Client.Models
+namespace Endpointer.Core.Client.Models
 {
-    public class EndpointerAuthenticationOptions
+    public class EndpointerClientOptions
     {
         public RefitSettings RefitSettings { get; set; }
 

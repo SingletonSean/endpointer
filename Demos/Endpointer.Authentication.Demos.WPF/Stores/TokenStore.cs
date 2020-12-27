@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Endpointer.Authentication.Demos.WPF.Stores
+namespace Endpointer.Demos.WPF.Stores
 {
     public class TokenStore : AutoRefreshTokenStoreBase
     {
@@ -23,6 +23,11 @@ namespace Endpointer.Authentication.Demos.WPF.Stores
             AccessTokenExpirationTime = accessTokenExpirationTime;
 
             return Task.CompletedTask;
+        }
+
+        public void ClearAccessToken()
+        {
+            _accessToken = string.Empty;
         }
     }
 }

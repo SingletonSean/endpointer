@@ -1,8 +1,9 @@
-﻿using Endpointer.Authentication.Demos.WPF.Commands;
-using Endpointer.Authentication.Demos.WPF.ViewModels;
+﻿using Endpointer.Demos.WPF.Commands;
+using Endpointer.Demos.WPF.Commands.Authentication;
+using Endpointer.Demos.WPF.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Endpointer.Authentication.Demos.WPF.Containers
+namespace Endpointer.Demos.WPF.Containers
 {
     public static class AddCommandsServiceCollectionExtensions
     {
@@ -13,6 +14,7 @@ namespace Endpointer.Authentication.Demos.WPF.Containers
             services.AddSingleton<LogoutEverywhereCommand>();
             services.AddSingleton<NavigateCommand<RegisterViewModel>>();
             services.AddSingleton<NavigateCommand<LoginViewModel>>();
+            services.AddSingleton<NavigateCommand<AccountViewModel>>();
 
             return services;
         }

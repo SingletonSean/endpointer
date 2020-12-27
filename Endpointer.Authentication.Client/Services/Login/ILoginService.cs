@@ -1,7 +1,6 @@
 ﻿using Endpointer.Authentication.Core.Models.Requests;
 using Endpointer.Core.Models.Responses;
 using Endpointer.Core.Client.Exceptions;
-using Endpointer.Authentication.Client.Exceptions;
 using System;
 using System.Threading.Tasks;
 

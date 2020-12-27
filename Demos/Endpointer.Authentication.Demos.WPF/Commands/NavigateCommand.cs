@@ -1,7 +1,7 @@
-﻿using Endpointer.Authentication.Demos.WPF.Services;
-using Endpointer.Authentication.Demos.WPF.ViewModels;
+﻿using Endpointer.Demos.WPF.Services;
+using Endpointer.Demos.WPF.ViewModels;
 
-namespace Endpointer.Authentication.Demos.WPF.Commands
+namespace Endpointer.Demos.WPF.Commands
 {
     public class NavigateCommand<TViewModel> : CommandBase where TViewModel : ViewModelBase
     {

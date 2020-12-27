@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace Endpointer.Authentication.Demos.WPF.Components
+namespace Endpointer.Demos.WPF.Components
 {
     /// <summary>
     /// Interaction logic for Layout.xaml

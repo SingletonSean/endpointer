@@ -1,10 +1,10 @@
 ﻿using Endpointer.Authentication.Client.Services.Logout;
-using Endpointer.Authentication.Demos.WPF.Stores;
+using Endpointer.Demos.WPF.Stores;
 using System;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Endpointer.Authentication.Demos.WPF.Commands
+namespace Endpointer.Demos.WPF.Commands.Authentication
 {
     public class LogoutCommand : AsyncCommandBase
     {
@@ -23,6 +23,8 @@ namespace Endpointer.Authentication.Demos.WPF.Commands
             {
                 string refreshToken = await _tokenStore.GetRefreshToken();
                 await _logoutService.Logout(refreshToken);
+
+                _tokenStore.ClearAccessToken();
 
                 MessageBox.Show("Successfully logged out.", "Success");
             }

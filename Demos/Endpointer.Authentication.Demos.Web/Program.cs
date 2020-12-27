@@ -1,10 +1,9 @@
-using Endpointer.Authentication.API.Contexts;
-using Endpointer.Authentication.API.Extensions;
-using Endpointer.Authentication.Demos.Web.Contexts;
+using Endpointer.Demos.Web.Contexts;
+using Endpointer.Core.API.Extensions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace Endpointer.Authentication.Demos.Web
+namespace Endpointer.Demos.Web
 {
     public class Program
     {

@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace Endpointer.Authentication.Demos.WPF.Views
+namespace Endpointer.Demos.WPF.Views
 {
     /// <summary>
     /// Interaction logic for LoginView.xaml

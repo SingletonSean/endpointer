@@ -1,14 +1,14 @@
 ﻿using Endpointer.Authentication.Client.Exceptions;
 using Endpointer.Authentication.Client.Services.Register;
 using Endpointer.Authentication.Core.Models.Requests;
-using Endpointer.Authentication.Demos.WPF.Services;
-using Endpointer.Authentication.Demos.WPF.ViewModels;
+using Endpointer.Demos.WPF.Services;
+using Endpointer.Demos.WPF.ViewModels;
 using Endpointer.Core.Client.Exceptions;
 using System;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Endpointer.Authentication.Demos.WPF.Commands
+namespace Endpointer.Demos.WPF.Commands.Authentication
 {
     public class RegisterCommand : AsyncCommandBase
     {

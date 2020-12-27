@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Endpointer.Authentication.API.Extensions
+namespace Endpointer.Core.API.Extensions
 {
     public static class ModelStateDictionaryExtensions
     {

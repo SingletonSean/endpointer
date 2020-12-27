@@ -1,6 +1,6 @@
-﻿using Endpointer.Authentication.Demos.WPF.Stores;
+﻿using Endpointer.Demos.WPF.Stores;
 
-namespace Endpointer.Authentication.Demos.WPF.ViewModels
+namespace Endpointer.Demos.WPF.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
