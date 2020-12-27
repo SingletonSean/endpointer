@@ -29,6 +29,10 @@ namespace Endpointer.Accounts.API.EndpointerHandlers
             }
 
             User account = await _accountRepository.GetById(user.Id);
+            if(account == null)
+            {
+                return new NotFoundResult();
+            }
 
             // TODO: Setup automapper.
             AccountResponse accountResponse = new AccountResponse()

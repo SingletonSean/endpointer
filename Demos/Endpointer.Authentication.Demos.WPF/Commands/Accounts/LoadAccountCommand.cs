@@ -1,4 +1,5 @@
-﻿using Endpointer.Accounts.Client.Services.Accounts;
+﻿using Endpointer.Accounts.Client.Exceptions;
+using Endpointer.Accounts.Client.Services.Accounts;
 using Endpointer.Accounts.Core.Models.Responses;
 using Endpointer.Core.Client.Exceptions;
 using Endpointer.Demos.WPF.ViewModels;
@@ -38,6 +39,10 @@ namespace Endpointer.Demos.WPF.Commands.Accounts
             catch(UnauthorizedException)
             {
                 MessageBox.Show($"Load account failed. Must login to get account information.", "Error");
+            }
+            catch(AccountNotFoundException)
+            {
+                MessageBox.Show($"Load account failed. Unable to find user's account.", "Error");
             }
             catch (Exception)
             {

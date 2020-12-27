@@ -1,4 +1,5 @@
-﻿using Endpointer.Accounts.Core.Models.Responses;
+﻿using Endpointer.Accounts.Client.Exceptions;
+using Endpointer.Accounts.Core.Models.Responses;
 using Endpointer.Core.Client.Exceptions;
 using Endpointer.Core.Models.Responses;
 using Refit;
@@ -38,6 +39,11 @@ namespace Endpointer.Accounts.Client.Services.Accounts
                 if(ex.StatusCode == HttpStatusCode.Unauthorized)
                 {
                     throw new UnauthorizedException();
+                }
+                
+                if(ex.StatusCode == HttpStatusCode.NotFound)
+                {
+                    throw new AccountNotFoundException();
                 }
 
                 throw;
