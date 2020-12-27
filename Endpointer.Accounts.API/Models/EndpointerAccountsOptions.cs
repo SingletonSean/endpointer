@@ -7,5 +7,6 @@ namespace Endpointer.Accounts.API.Models
     {
         public bool UseDatabase { get; set; }
         public Action<IServiceCollection> AddDbContext { get; set; }
+        public Action<IServiceCollection> AddDbAccountRepository { get; set; }
     }
 }

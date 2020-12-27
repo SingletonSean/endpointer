@@ -3,6 +3,7 @@ using Endpointer.Accounts.API.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using Endpointer.Accounts.API.Services.AccountRepositories;
 
 namespace Endpointer.Accounts.API.Models
 {
@@ -10,6 +11,7 @@ namespace Endpointer.Accounts.API.Models
     {
         private bool _useDatabase;
         private Action<IServiceCollection> _addDbContext;
+        private Action<IServiceCollection> _addDbAccountRepository;
 
         public EndpointerAccountsOptionsBuilder WithDatabase(Action<DbContextOptionsBuilder> dbOptions = null)
         {
@@ -22,6 +24,7 @@ namespace Endpointer.Accounts.API.Models
             _useDatabase = true;
 
             _addDbContext = services => services.AddDbContext<TDbContext>(dbOptions);
+            _addDbAccountRepository = services => services.AddScoped<IAccountRepository, DatabaseAccountRepository<TDbContext>>();
 
             return this;
         }
@@ -31,7 +34,8 @@ namespace Endpointer.Accounts.API.Models
             return new EndpointerAccountsOptions()
             {
                 UseDatabase = _useDatabase,
-                AddDbContext = _addDbContext
+                AddDbContext = _addDbContext,
+                AddDbAccountRepository = _addDbAccountRepository
             };
         }
     }

@@ -1,5 +1,6 @@
 ﻿using Endpointer.Accounts.API.EndpointerHandlers;
 using Endpointer.Accounts.API.Models;
+using Endpointer.Accounts.API.Services.AccountRepositories;
 using Endpointer.Core.API.Http;
 using Endpointer.Core.API.Services.TokenDecoders;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,10 +20,11 @@ namespace Endpointer.Accounts.API.Extensions
             if(options.UseDatabase)
             {
                 options.AddDbContext?.Invoke(services);
+                options.AddDbAccountRepository?.Invoke(services);
             }
             else
             {
-
+                services.AddSingleton<IAccountRepository, InMemoryAccountRepository>();
             }
 
             services.AddScoped<HttpRequestAuthenticator>();
