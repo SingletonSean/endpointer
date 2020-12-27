@@ -1,5 +1,4 @@
-﻿using Endpointer.Authentication.Client.Exceptions;
-using Endpointer.Authentication.Core.Models.Requests;
+﻿using Endpointer.Authentication.Core.Models.Requests;
 using Endpointer.Core.Client.Exceptions;
 using Endpointer.Core.Models.Responses;
 using Refit;

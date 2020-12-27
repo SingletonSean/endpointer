@@ -1,5 +1,4 @@
-﻿using Endpointer.Authentication.Client.Exceptions;
-using Endpointer.Authentication.Client.Services.Login;
+﻿using Endpointer.Authentication.Client.Services.Login;
 using Endpointer.Authentication.Core.Models.Requests;
 using Endpointer.Authentication.Demos.WPF.Stores;
 using Endpointer.Authentication.Demos.WPF.ViewModels;

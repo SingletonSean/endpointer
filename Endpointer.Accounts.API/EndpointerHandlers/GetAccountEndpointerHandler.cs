@@ -1,14 +1,10 @@
-﻿using Endpointer.Accounts.API.Services;
-using Endpointer.Accounts.API.Services.AccountRepositories;
+﻿using Endpointer.Accounts.API.Services.AccountRepositories;
 using Endpointer.Accounts.Core.Models.Responses;
 using Endpointer.Core.API.Http;
 using Endpointer.Core.API.Models;
 using Endpointer.Core.Models.Responses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Endpointer.Accounts.API.EndpointerHandlers

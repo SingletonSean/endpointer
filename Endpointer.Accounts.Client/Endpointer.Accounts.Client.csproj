@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Endpointer.Accounts.Core\Endpointer.Accounts.Core.csproj" />
+    <ProjectReference Include="..\Endpointer.Core.Client\Endpointer.Core.Client.csproj" />
+  </ItemGroup>
+
+</Project>

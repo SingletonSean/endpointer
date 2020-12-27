@@ -1,5 +1,4 @@
-﻿using Endpointer.Accounts.API.Services;
-using Endpointer.Core.API.Models;
+﻿using Endpointer.Core.API.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

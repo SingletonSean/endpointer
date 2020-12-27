@@ -2,7 +2,8 @@
 using Endpointer.Authentication.Client.Services.Login;
 using Endpointer.Authentication.Client.Services.Logout;
 using Endpointer.Authentication.Client.Services.Register;
-using Endpointer.Core.Client.Http;
+using Endpointer.Core.Client.Extensions;
+using Endpointer.Core.Client.Models;
 using Endpointer.Core.Client.Services.Refresh;
 using Endpointer.Core.Client.Stores;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,11 +17,11 @@ namespace Endpointer.Authentication.Client.Extensions
         public static IServiceCollection AddEndpointerAuthenticationClient(this IServiceCollection services, 
             AuthenticationEndpointsConfiguration endpointsConfiguration,
             Func<IServiceProvider, IAccessTokenStore> getTokenStore,
-            Func<EndpointerAuthenticationOptionsBuilder, EndpointerAuthenticationOptionsBuilder> configureOptions = null)
+            Func<EndpointerClientOptionsBuilder, EndpointerClientOptionsBuilder> configureOptions = null)
         {
-            EndpointerAuthenticationOptionsBuilder optionsBuilder = new EndpointerAuthenticationOptionsBuilder();
+            EndpointerClientOptionsBuilder optionsBuilder = new EndpointerClientOptionsBuilder();
             configureOptions?.Invoke(optionsBuilder);
-            EndpointerAuthenticationOptions options = optionsBuilder.Build();
+            EndpointerClientOptions options = optionsBuilder.Build();
 
             services.AddRefitClient<IAPIRegisterService>(options.RefitSettings, endpointsConfiguration.RegisterEndpoint);
             services.AddRefitClient<IAPILoginService>(options.RefitSettings, endpointsConfiguration.LoginEndpoint);
@@ -47,36 +48,6 @@ namespace Endpointer.Authentication.Client.Extensions
             services.AddSingleton<IRefreshService, RefreshService>();
 
             return services;
-        }
-
-        private static IHttpClientBuilder AddRefitClient<TService>(this IServiceCollection services,
-            RefitSettings settings,
-            string endpoint) where TService : class
-        {
-            return services.AddRefitClient<TService>(settings)
-                .ConfigureHttpClient(o => o.BaseAddress = new Uri(endpoint));
-        }
-
-        private static IHttpClientBuilder AddAccessTokenRefitClient<TService>(this IServiceCollection services,
-            RefitSettings settings,
-            string endpoint,
-            Func<IServiceProvider, IAccessTokenStore> getTokenStore) where TService : class
-        {
-            return services.AddRefitClient<TService>(settings)
-                .ConfigureHttpClient(o => o.BaseAddress = new Uri(endpoint))
-                .AddHttpMessageHandler(s => new AccessTokenHttpMessageHandler(getTokenStore(s)));
-        }
-
-        private static IHttpClientBuilder AddAutoRefreshRefitClient<TService>(this IServiceCollection services, 
-            RefitSettings settings,
-            string endpoint,
-            Func<IServiceProvider, IAutoRefreshTokenStore> getRefreshTokenStore) where TService : class
-        {
-            return services.AddRefitClient<TService>(settings, endpoint)
-                .AddHttpMessageHandler(s => new AutoRefreshHttpMessageHandler(
-                    getRefreshTokenStore(s),
-                    s.GetRequiredService<IRefreshService>()))
-                .AddHttpMessageHandler(s => new AccessTokenHttpMessageHandler(getRefreshTokenStore(s)));
         }
     }
 }

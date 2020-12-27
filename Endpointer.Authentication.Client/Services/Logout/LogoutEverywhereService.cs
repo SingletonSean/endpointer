@@ -1,4 +1,4 @@
-﻿using Endpointer.Authentication.Client.Exceptions;
+﻿using Endpointer.Core.Client.Exceptions;
 using Refit;
 using System.Net;
 using System.Threading.Tasks;

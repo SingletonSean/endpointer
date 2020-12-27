@@ -2,32 +2,32 @@
 using Refit;
 using System;
 
-namespace Endpointer.Authentication.Client.Models
+namespace Endpointer.Core.Client.Models
 {
-    public class EndpointerAuthenticationOptionsBuilder
+    public class EndpointerClientOptionsBuilder
     {
         private RefitSettings _refitSettings;
         private bool _withAutoTokenRefresh;
         private Func<IServiceProvider, IAutoRefreshTokenStore> _getAutoRefreshTokenStore;
 
-        public EndpointerAuthenticationOptionsBuilder()
+        public EndpointerClientOptionsBuilder()
         {
             _refitSettings = new RefitSettings(new NewtonsoftJsonContentSerializer());
         }
 
-        public EndpointerAuthenticationOptionsBuilder UseRefitSettings(RefitSettings settings)
+        public EndpointerClientOptionsBuilder UseRefitSettings(RefitSettings settings)
         {
             _refitSettings = settings;
 
             return this;
         }
 
-        public EndpointerAuthenticationOptionsBuilder WithAutoTokenRefresh(IAutoRefreshTokenStore autoRefreshTokenStore)
+        public EndpointerClientOptionsBuilder WithAutoTokenRefresh(IAutoRefreshTokenStore autoRefreshTokenStore)
         {
             return WithAutoTokenRefresh(s => autoRefreshTokenStore);
         }
 
-        public EndpointerAuthenticationOptionsBuilder WithAutoTokenRefresh(Func<IServiceProvider, IAutoRefreshTokenStore> getAutoRefreshTokenStore)
+        public EndpointerClientOptionsBuilder WithAutoTokenRefresh(Func<IServiceProvider, IAutoRefreshTokenStore> getAutoRefreshTokenStore)
         {
             _withAutoTokenRefresh = true;
             _getAutoRefreshTokenStore = getAutoRefreshTokenStore;
@@ -35,9 +35,9 @@ namespace Endpointer.Authentication.Client.Models
             return this;
         }
 
-        public EndpointerAuthenticationOptions Build()
+        public EndpointerClientOptions Build()
         {
-            return new EndpointerAuthenticationOptions()
+            return new EndpointerClientOptions()
             {
                 RefitSettings = _refitSettings,
                 AutoTokenRefresh = _withAutoTokenRefresh,
