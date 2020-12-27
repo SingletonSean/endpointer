@@ -13,6 +13,7 @@ namespace Endpointer.Demos.WPF.Containers
             services.AddSingleton<LogoutEverywhereCommand>();
             services.AddSingleton<NavigateCommand<RegisterViewModel>>();
             services.AddSingleton<NavigateCommand<LoginViewModel>>();
+            services.AddSingleton<NavigateCommand<AccountViewModel>>();
 
             return services;
         }

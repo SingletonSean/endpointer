@@ -1,4 +1,5 @@
-﻿using Endpointer.Authentication.Client.Services.Login;
+﻿using Endpointer.Accounts.Client.Services.Accounts;
+using Endpointer.Authentication.Client.Services.Login;
 using Endpointer.Authentication.Client.Services.Register;
 using Endpointer.Demos.WPF.Commands;
 using Endpointer.Demos.WPF.Services;
@@ -21,6 +22,7 @@ namespace Endpointer.Demos.WPF.Containers
 
             services.AddSingleton<CreateViewModel<RegisterViewModel>>(s => () => s.GetRequiredService<RegisterViewModel>());
             services.AddSingleton<CreateViewModel<LoginViewModel>>(s => () => s.GetRequiredService<LoginViewModel>());
+            services.AddSingleton<CreateViewModel<AccountViewModel>>(CreateAccountViewModel);
 
             return services;
         }
@@ -30,6 +32,7 @@ namespace Endpointer.Demos.WPF.Containers
             return vm => new LayoutViewModel(vm,
                 (vm) => services.GetRequiredService<NavigateCommand<RegisterViewModel>>(),
                 (vm) => services.GetRequiredService<NavigateCommand<LoginViewModel>>(),
+                (vm) => services.GetRequiredService<NavigateCommand<AccountViewModel>>(),
                 (vm) => services.GetRequiredService<RefreshCommand>(),
                 (vm) => services.GetRequiredService<LogoutCommand>(),
                 (vm) => services.GetRequiredService<LogoutEverywhereCommand>());
@@ -47,6 +50,12 @@ namespace Endpointer.Demos.WPF.Containers
             return new LoginViewModel(vm => new LoginCommand(vm,
                 services.GetRequiredService<TokenStore>(),
                 services.GetRequiredService<ILoginService>()));
+        }
+
+        private static CreateViewModel<AccountViewModel> CreateAccountViewModel(IServiceProvider services)
+        {
+            return () => AccountViewModel.LoadViewModel(vm => new LoadAccountCommand(vm,
+                services.GetRequiredService<IAccountService>()));
         }
     }
 }

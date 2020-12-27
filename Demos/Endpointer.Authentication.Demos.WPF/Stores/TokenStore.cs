@@ -24,5 +24,10 @@ namespace Endpointer.Demos.WPF.Stores
 
             return Task.CompletedTask;
         }
+
+        public void ClearAccessToken()
+        {
+            _accessToken = string.Empty;
+        }
     }
 }

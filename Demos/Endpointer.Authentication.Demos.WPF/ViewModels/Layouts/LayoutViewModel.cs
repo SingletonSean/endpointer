@@ -9,6 +9,7 @@ namespace Endpointer.Demos.WPF.ViewModels.Layouts
     {
         public ICommand ShowRegisterCommand { get; }
         public ICommand ShowLoginCommand { get; }
+        public ICommand ShowAccountCommand { get; }
         public ICommand RefreshCommand { get; }
         public ICommand LogoutCommand { get; }
         public ICommand LogoutEverywhereCommand { get; }
@@ -18,6 +19,7 @@ namespace Endpointer.Demos.WPF.ViewModels.Layouts
         public LayoutViewModel(ViewModelBase currentViewModel,
             CreateCommand<LayoutViewModel> createShowRegisterCommand,
             CreateCommand<LayoutViewModel> createShowLoginCommand,
+            CreateCommand<LayoutViewModel> createShowAccountCommand,
             CreateCommand<LayoutViewModel> refreshCommand,
             CreateCommand<LayoutViewModel> logoutCommand,
             CreateCommand<LayoutViewModel> logoutEverywhereCommand)
@@ -26,6 +28,7 @@ namespace Endpointer.Demos.WPF.ViewModels.Layouts
 
             ShowRegisterCommand = createShowRegisterCommand(this);
             ShowLoginCommand = createShowLoginCommand(this);
+            ShowAccountCommand = createShowAccountCommand(this);
             RefreshCommand = refreshCommand(this);
             LogoutCommand = logoutCommand(this);
             LogoutEverywhereCommand = logoutEverywhereCommand(this);

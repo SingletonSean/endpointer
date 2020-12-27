@@ -24,6 +24,8 @@ namespace Endpointer.Demos.WPF.Commands
                 string refreshToken = await _tokenStore.GetRefreshToken();
                 await _logoutService.Logout(refreshToken);
 
+                _tokenStore.ClearAccessToken();
+
                 MessageBox.Show("Successfully logged out.", "Success");
             }
             catch (Exception)

@@ -26,6 +26,7 @@
                                 <ColumnDefinition Width="auto" />
                                 <ColumnDefinition Width="auto" />
                                 <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="auto" />
                             </Grid.ColumnDefinitions>
 
                             <TextBlock Grid.Column="0"
@@ -43,14 +44,18 @@
                                 Content="Login" />
 
                             <Button Grid.Column="3" Margin="5 0" Padding="10 5"
+                                Command="{Binding ShowAccountCommand}"
+                                Content="Account" />
+
+                            <Button Grid.Column="4" Margin="5 0" Padding="10 5"
                                 Command="{Binding RefreshCommand}"
                                 Content="Refresh" />
 
-                            <Button Grid.Column="4" Margin="5 0" Padding="10 5"
+                            <Button Grid.Column="5" Margin="5 0" Padding="10 5"
                                 Command="{Binding LogoutCommand}"
                                 Content="Logout" />
 
-                            <Button Grid.Column="5" Margin="5 0" Padding="10 5"
+                            <Button Grid.Column="6" Margin="5 0" Padding="10 5"
                                 Command="{Binding LogoutEverywhereCommand}"
                                 Content="Logout Everywhere" />
                         </Grid>
