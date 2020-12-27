@@ -3,6 +3,19 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
+  
+  <PropertyGroup>
+    <PackageId>Endpointer.Accounts.Client</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>SingletonSean</Authors>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <RepositoryUrl>https://github.com/SingletonSean/endpointer</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/SingletonSean/endpointer</PackageProjectUrl>
+    <PackageTags>asp net core model endpointer functions client accounts authentication</PackageTags>
+    <Description>
+      Quickly consume an API using Endpointer.Accounts.API endpoints.
+    </Description>
+  </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Endpointer.Accounts.Core\Endpointer.Accounts.Core.csproj" />
