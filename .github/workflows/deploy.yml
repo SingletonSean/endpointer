@@ -3,14 +3,13 @@ name: Deploy
 on:
   push:
     branches:
-      - 'master'
-    paths-ignore:
-      - '**/README.md'
+      - 'release'
 
 env:
   BUILD_CONFIGURATION: Release
   PACKAGE_OUTPUT_DIRECTORY: ${{ github.workspace }}\output
   NUGET_SOURCE_URL: 'https://api.nuget.org/v3/index.json'
+  PACK_OPTIONS: '--no-restore --no-build -c ${{ env.BUILD_CONFIGURATION }} --include-symbols --include-source --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}'
 
 jobs:
   deploy:
@@ -36,31 +35,31 @@ jobs:
         run: dotnet build --no-restore -c ${{ env.BUILD_CONFIGURATION }}
 
       - name: 'Pack Core project'
-        run: dotnet pack Endpointer.Core --no-restore --no-build -c ${{ env.BUILD_CONFIGURATION }} --include-symbols --include-source --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
+        run: dotnet pack Endpointer.Core ${{ env.PACK_OPTIONS }}
 
       - name: 'Pack Core API project'
-        run: dotnet pack Endpointer.Core.API --no-restore --no-build -c ${{ env.BUILD_CONFIGURATION }} --include-symbols --include-source --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
+        run: dotnet pack Endpointer.Core.API ${{ env.PACK_OPTIONS }}
 
       - name: 'Pack Core Client project'
-        run: dotnet pack Endpointer.Core.Client --no-restore --no-build -c ${{ env.BUILD_CONFIGURATION }} --include-symbols --include-source --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
+        run: dotnet pack Endpointer.Core.Client ${{ env.PACK_OPTIONS }}
 
       - name: 'Pack Authentication Core project'
-        run: dotnet pack Endpointer.Authentication.Core --no-restore --no-build -c ${{ env.BUILD_CONFIGURATION }} --include-symbols --include-source --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
+        run: dotnet pack Endpointer.Authentication.Core ${{ env.PACK_OPTIONS }}
 
       - name: 'Pack Authentication API project'
-        run: dotnet pack Endpointer.Authentication.API --no-restore --no-build -c ${{ env.BUILD_CONFIGURATION }} --include-symbols --include-source --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
+        run: dotnet pack Endpointer.Authentication.API ${{ env.PACK_OPTIONS }}
 
       - name: 'Pack Authentication Client project'
-        run: dotnet pack Endpointer.Authentication.Client --no-restore --no-build -c ${{ env.BUILD_CONFIGURATION }} --include-symbols --include-source --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
+        run: dotnet pack Endpointer.Authentication.Client ${{ env.PACK_OPTIONS }}
 
       - name: 'Pack Accounts Core project'
-        run: dotnet pack Endpointer.Accounts.Core --no-restore --no-build -c ${{ env.BUILD_CONFIGURATION }} --include-symbols --include-source --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
+        run: dotnet pack Endpointer.Accounts.Core ${{ env.PACK_OPTIONS }}
 
       - name: 'Pack Accounts API project'
-        run: dotnet pack Endpointer.Accounts.API --no-restore --no-build -c ${{ env.BUILD_CONFIGURATION }} --include-symbols --include-source --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
+        run: dotnet pack Endpointer.Accounts.API ${{ env.PACK_OPTIONS }}
 
       - name: 'Pack Accounts Client project'
-        run: dotnet pack Endpointer.Accounts.Client --no-restore --no-build -c ${{ env.BUILD_CONFIGURATION }} --include-symbols --include-source --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
+        run: dotnet pack Endpointer.Accounts.Client ${{ env.PACK_OPTIONS }}
 
       - name: 'Push packages'
         run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIRECTORY }}\*.nupkg -k ${{ secrets.NUGET_AUTH_TOKEN }} -s ${{ env.NUGET_SOURCE_URL }}
