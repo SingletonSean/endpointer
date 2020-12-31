@@ -9,11 +9,12 @@ env:
   BUILD_CONFIGURATION: Release
   PACKAGE_OUTPUT_DIRECTORY: ${{ github.workspace }}\output
   NUGET_SOURCE_URL: 'https://api.nuget.org/v3/index.json'
-  PACK_OPTIONS: '--no-restore --no-build -c ${{ env.BUILD_CONFIGURATION }} --include-symbols --include-source --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}'
 
 jobs:
   deploy:
     runs-on: windows-latest
+    env:
+      PACK_OPTIONS: '--no-restore --no-build -c ${{ env.BUILD_CONFIGURATION }} --include-symbols --include-source --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}'
     steps:
       # Setup
       - uses: actions/checkout@v2
