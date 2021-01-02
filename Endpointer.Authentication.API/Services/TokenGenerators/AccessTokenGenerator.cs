@@ -9,9 +9,9 @@ namespace Endpointer.Authentication.API.Services.TokenGenerators
     public class AccessTokenGenerator : IAccessTokenGenerator
     {
         private readonly AuthenticationConfiguration _configuration;
-        private readonly TokenGenerator _tokenGenerator;
+        private readonly ITokenGenerator _tokenGenerator;
 
-        public AccessTokenGenerator(AuthenticationConfiguration configuration, TokenGenerator tokenGenerator)
+        public AccessTokenGenerator(AuthenticationConfiguration configuration, ITokenGenerator tokenGenerator)
         {
             _configuration = configuration;
             _tokenGenerator = tokenGenerator;

@@ -19,13 +19,13 @@ namespace Endpointer.Authentication.API.EndpointHandlers
         private readonly IUserRepository _userRepository;
         private readonly IRefreshTokenRepository _refreshTokenRepository;
         private readonly IAuthenticator _authenticator;
-        private readonly RefreshTokenValidator _refreshTokenValidator;
+        private readonly IRefreshTokenValidator _refreshTokenValidator;
         private readonly IMapper _mapper;
 
         public RefreshEndpointHandler(IUserRepository userRepository,
             IRefreshTokenRepository refreshTokenRepository,
             IAuthenticator authenticator,
-            RefreshTokenValidator refreshTokenValidator, 
+            IRefreshTokenValidator refreshTokenValidator, 
             IMapper mapper)
         {
             _userRepository = userRepository;

@@ -44,13 +44,13 @@ namespace Endpointer.Authentication.API.Extensions
 
             services.AddAutoMapper(typeof(DomainResponseProfile));
 
-            services.AddSingleton<AccessTokenGenerator>();
-            services.AddSingleton<RefreshTokenGenerator>();
-            services.AddSingleton<RefreshTokenValidator>();
+            services.AddSingleton<IAccessTokenGenerator, AccessTokenGenerator>();
+            services.AddSingleton<IRefreshTokenGenerator, RefreshTokenGenerator>();
+            services.AddSingleton<IRefreshTokenValidator, RefreshTokenValidator>();
             services.AddScoped<IAuthenticator, Authenticator>();
             services.AddScoped<HttpRequestAuthenticator>();
             services.AddSingleton<AccessTokenDecoder>();
-            services.AddSingleton<TokenGenerator>();
+            services.AddSingleton<ITokenGenerator, TokenGenerator>();
             services.AddSingleton<IPasswordHasher, BcryptPasswordHasher>();
 
             services.AddScoped<RegisterEndpointHandler>();

@@ -11,14 +11,14 @@ namespace Endpointer.Authentication.API.Services.Authenticators
 {
     public class Authenticator : IAuthenticator
     {
-        private readonly AccessTokenGenerator _accessTokenGenerator;
-        private readonly RefreshTokenGenerator _refreshTokenGenerator;
+        private readonly IAccessTokenGenerator _accessTokenGenerator;
+        private readonly IRefreshTokenGenerator _refreshTokenGenerator;
         private readonly IRefreshTokenRepository _refreshTokenRepository;
         private readonly AuthenticationConfiguration _configuration;
         private readonly ILogger<Authenticator> _log;
 
-        public Authenticator(AccessTokenGenerator accessTokenGenerator,
-            RefreshTokenGenerator refreshTokenGenerator,
+        public Authenticator(IAccessTokenGenerator accessTokenGenerator,
+            IRefreshTokenGenerator refreshTokenGenerator,
             IRefreshTokenRepository refreshTokenRepository,
             AuthenticationConfiguration configuration,
             ILogger<Authenticator> log)
