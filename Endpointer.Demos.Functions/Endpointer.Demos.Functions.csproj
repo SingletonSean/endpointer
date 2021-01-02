@@ -9,9 +9,6 @@
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="3.0.11" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Endpointer.Authentication.API\Endpointer.Authentication.API.csproj" />
-  </ItemGroup>
-  <ItemGroup>
     <None Update="host.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -23,5 +20,8 @@
   <ItemGroup>
     <Folder Include="Contexts\" />
     <Folder Include="Functions\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Authentication\Endpointer.Authentication.API\Endpointer.Authentication.API.csproj" />
   </ItemGroup>
 </Project>
