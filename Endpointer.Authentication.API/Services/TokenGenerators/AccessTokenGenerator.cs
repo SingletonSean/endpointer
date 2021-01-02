@@ -6,7 +6,7 @@ using System.Security.Claims;
 
 namespace Endpointer.Authentication.API.Services.TokenGenerators
 {
-    public class AccessTokenGenerator
+    public class AccessTokenGenerator : IAccessTokenGenerator
     {
         private readonly AuthenticationConfiguration _configuration;
         private readonly TokenGenerator _tokenGenerator;
@@ -17,6 +17,7 @@ namespace Endpointer.Authentication.API.Services.TokenGenerators
             _tokenGenerator = tokenGenerator;
         }
 
+        /// <inheritdoc />
         public string GenerateToken(User user, DateTime expirationTime)
         {
             List<Claim> claims = new List<Claim>()

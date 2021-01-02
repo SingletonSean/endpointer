@@ -16,6 +16,7 @@ namespace Endpointer.Authentication.API.Services.UserRepositories
             _context = context;
         }
 
+        /// <inheritdoc />
         public async Task<User> Create(User user)
         {
             _context.Users.Add(user);
@@ -24,16 +25,19 @@ namespace Endpointer.Authentication.API.Services.UserRepositories
             return user;
         }
 
+        /// <inheritdoc />
         public async Task<User> GetByEmail(string email)
         {
             return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
         }
 
+        /// <inheritdoc />
         public async Task<User> GetById(Guid userId)
         {
             return await _context.Users.FindAsync(userId);
         }
 
+        /// <inheritdoc />
         public async Task<User> GetByUsername(string username)
         {
             return await _context.Users.FirstOrDefaultAsync(u => u.Username == username);

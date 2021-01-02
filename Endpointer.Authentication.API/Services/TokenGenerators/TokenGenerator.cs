@@ -7,9 +7,10 @@ using System.Text;
 
 namespace Endpointer.Authentication.API.Services.TokenGenerators
 {
-    public class TokenGenerator
+    public class TokenGenerator : ITokenGenerator
     {
-        public string GenerateToken(string secretKey, string issuer, string audience, DateTime expires, 
+        /// <inheritdoc />
+        public string GenerateToken(string secretKey, string issuer, string audience, DateTime expires,
             IEnumerable<Claim> claims = null)
         {
             SecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));

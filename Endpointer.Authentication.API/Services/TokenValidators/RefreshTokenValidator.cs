@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Endpointer.Authentication.API.Services.TokenValidators
 {
-    public class RefreshTokenValidator
+    public class RefreshTokenValidator : IRefreshTokenValidator
     {
         private readonly AuthenticationConfiguration _configuration;
 
@@ -15,6 +15,7 @@ namespace Endpointer.Authentication.API.Services.TokenValidators
             _configuration = configuration;
         }
 
+        /// <inheritdoc />
         public bool Validate(string refreshToken)
         {
             TokenValidationParameters validationParameters = new TokenValidationParameters()

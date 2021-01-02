@@ -3,7 +3,7 @@ using System;
 
 namespace Endpointer.Authentication.API.Services.TokenGenerators
 {
-    public class RefreshTokenGenerator
+    public class RefreshTokenGenerator : IRefreshTokenGenerator
     {
         private readonly AuthenticationConfiguration _configuration;
         private readonly TokenGenerator _tokenGenerator;
@@ -14,6 +14,7 @@ namespace Endpointer.Authentication.API.Services.TokenGenerators
             _tokenGenerator = tokenGenerator;
         }
 
+        /// <inheritdoc />
         public string GenerateToken()
         {
             return _tokenGenerator.GenerateToken(
