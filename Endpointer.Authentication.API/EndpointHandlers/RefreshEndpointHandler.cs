@@ -1,4 +1,5 @@
-﻿using Endpointer.Authentication.API.Models;
+﻿using AutoMapper;
+using Endpointer.Authentication.API.Models;
 using Endpointer.Authentication.API.Services.Authenticators;
 using Endpointer.Authentication.API.Services.RefreshTokenRepositories;
 using Endpointer.Authentication.API.Services.TokenValidators;
@@ -17,18 +18,21 @@ namespace Endpointer.Authentication.API.EndpointHandlers
     {
         private readonly IUserRepository _userRepository;
         private readonly IRefreshTokenRepository _refreshTokenRepository;
-        private readonly Authenticator _authenticator;
+        private readonly IAuthenticator _authenticator;
         private readonly RefreshTokenValidator _refreshTokenValidator;
+        private readonly IMapper _mapper;
 
-        public RefreshEndpointHandler(IUserRepository userRepository, 
-            IRefreshTokenRepository refreshTokenRepository, 
-            Authenticator authenticator, 
-            RefreshTokenValidator refreshTokenValidator)
+        public RefreshEndpointHandler(IUserRepository userRepository,
+            IRefreshTokenRepository refreshTokenRepository,
+            IAuthenticator authenticator,
+            RefreshTokenValidator refreshTokenValidator, 
+            IMapper mapper)
         {
             _userRepository = userRepository;
             _refreshTokenRepository = refreshTokenRepository;
             _authenticator = authenticator;
             _refreshTokenValidator = refreshTokenValidator;
+            _mapper = mapper;
         }
 
         public async Task<IActionResult> HandleRefresh(RefreshRequest refreshRequest, ModelStateDictionary modelState)
@@ -63,7 +67,8 @@ namespace Endpointer.Authentication.API.EndpointHandlers
                 return new NotFoundResult();
             }
 
-            AuthenticatedUserResponse response = await _authenticator.Authenticate(user);
+            AuthenticatedUser authenticatedUser = await _authenticator.Authenticate(user);
+            AuthenticatedUserResponse response = _mapper.Map<AuthenticatedUserResponse>(authenticatedUser);
 
             return new OkObjectResult(new SuccessResponse<AuthenticatedUserResponse>(response));
         }

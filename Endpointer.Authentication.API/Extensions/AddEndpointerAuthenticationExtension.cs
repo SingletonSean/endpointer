@@ -1,4 +1,6 @@
-﻿using Endpointer.Authentication.API.EndpointHandlers;
+﻿using AutoMapper;
+using Endpointer.Authentication.API.EndpointHandlers;
+using Endpointer.Authentication.API.Mappers;
 using Endpointer.Authentication.API.Models;
 using Endpointer.Authentication.API.Services.Authenticators;
 using Endpointer.Authentication.API.Services.PasswordHashers;
@@ -40,10 +42,12 @@ namespace Endpointer.Authentication.API.Extensions
             services.AddSingleton(authenticationConfiguration);
             services.AddSingleton(validationParameters);
 
+            services.AddAutoMapper(typeof(DomainResponseProfile));
+
             services.AddSingleton<AccessTokenGenerator>();
             services.AddSingleton<RefreshTokenGenerator>();
             services.AddSingleton<RefreshTokenValidator>();
-            services.AddScoped<Authenticator>();
+            services.AddScoped<IAuthenticator, Authenticator>();
             services.AddScoped<HttpRequestAuthenticator>();
             services.AddSingleton<AccessTokenDecoder>();
             services.AddSingleton<TokenGenerator>();

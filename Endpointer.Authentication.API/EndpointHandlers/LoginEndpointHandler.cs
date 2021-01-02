@@ -1,4 +1,6 @@
-﻿using Endpointer.Authentication.API.Services.Authenticators;
+﻿using AutoMapper;
+using Endpointer.Authentication.API.Models;
+using Endpointer.Authentication.API.Services.Authenticators;
 using Endpointer.Authentication.API.Services.PasswordHashers;
 using Endpointer.Authentication.API.Services.UserRepositories;
 using Endpointer.Authentication.Core.Models.Requests;
@@ -15,15 +17,18 @@ namespace Endpointer.Authentication.API.EndpointHandlers
     {
         private readonly IUserRepository _userRepository;
         private readonly IPasswordHasher _passwordHasher;
-        private readonly Authenticator _authenticator;
+        private readonly IAuthenticator _authenticator;
+        private readonly IMapper _mapper;
 
-        public LoginEndpointHandler(IUserRepository userRepository, 
-            IPasswordHasher passwordHasher, 
-            Authenticator authenticator)
+        public LoginEndpointHandler(IUserRepository userRepository,
+            IPasswordHasher passwordHasher,
+            IAuthenticator authenticator, 
+            IMapper mapper)
         {
             _userRepository = userRepository;
             _passwordHasher = passwordHasher;
             _authenticator = authenticator;
+            _mapper = mapper;
         }
 
         public async Task<IActionResult> HandleLogin(LoginRequest loginRequest, ModelStateDictionary modelState)
@@ -50,7 +55,8 @@ namespace Endpointer.Authentication.API.EndpointHandlers
                 return new UnauthorizedResult();
             }
 
-            AuthenticatedUserResponse response = await _authenticator.Authenticate(user);
+            AuthenticatedUser authenticatedUser = await _authenticator.Authenticate(user);
+            AuthenticatedUserResponse response = _mapper.Map<AuthenticatedUserResponse>(authenticatedUser);
 
             return new OkObjectResult(new SuccessResponse<AuthenticatedUserResponse>(response));
         }
