@@ -1,10 +1,12 @@
 ﻿using Endpointer.Accounts.API.Services.AccountRepositories;
 using Endpointer.Accounts.Core.Models.Responses;
+using Endpointer.Core.API.Exceptions;
 using Endpointer.Core.API.Http;
 using Endpointer.Core.API.Models;
 using Endpointer.Core.Models.Responses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using System.Threading.Tasks;
 
 namespace Endpointer.Accounts.API.EndpointerHandlers
@@ -22,27 +24,38 @@ namespace Endpointer.Accounts.API.EndpointerHandlers
 
         public async Task<IActionResult> HandleGetAccount(HttpRequest request)
         {
-            User user = await _authenticator.Authenticate(request);
-            if(user == null)
+            try
+            {
+                User user = await _authenticator.Authenticate(request);
+
+                User account = await _accountRepository.GetById(user.Id);
+                if (account == null)
+                {
+                    return new NotFoundResult();
+                }
+
+                // TODO: Setup automapper.
+                AccountResponse accountResponse = new AccountResponse()
+                {
+                    Id = account.Id,
+                    Email = account.Email,
+                    Username = account.Username
+                };
+
+                return new OkObjectResult(new SuccessResponse<AccountResponse>(accountResponse));
+            }
+            catch (BearerSchemeNotProvidedException)
             {
                 return new UnauthorizedResult();
             }
-
-            User account = await _accountRepository.GetById(user.Id);
-            if(account == null)
+            catch (SecurityTokenDecryptionFailedException)
             {
-                return new NotFoundResult();
+                return new UnauthorizedResult();
             }
-
-            // TODO: Setup automapper.
-            AccountResponse accountResponse = new AccountResponse()
+            catch (SecurityTokenException)
             {
-                Id = account.Id,
-                Email = account.Email,
-                Username = account.Username
-            };
-
-            return new OkObjectResult(new SuccessResponse<AccountResponse>(accountResponse));
+                return new UnauthorizedResult();
+            }
         }
     }
 }

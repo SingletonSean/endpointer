@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Http;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Endpointer.Core.API.Exceptions;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Endpointer.Core.API.Http
 {
@@ -22,29 +24,32 @@ namespace Endpointer.Core.API.Http
         /// Authenticate a user from an HTTP request.
         /// </summary>
         /// <param name="request">The request with the authorization header.</param>
-        /// <returns>The authenticated user. Null if authentication fails.</returns>
+        /// <returns>The authenticated user.</returns>
+        /// <exception cref="BearerSchemeNotProvidedException">Thrown if Authorization header does not have 'Bearer ' prefix.</exception>
+        /// <exception cref="SecurityTokenException">Thrown if unable to get claims from token.</exception>
+        /// <exception cref="SecurityTokenDecryptionFailedException">Thrown if unable to get user values from token.</exception>
         public async Task<User> Authenticate(HttpRequest request)
         {
-            User user = null;
+            string authorizationHeader = request.Headers["Authorization"].FirstOrDefault();
 
-            // Ensure authorization header has a token.
-            string rawBearerToken = request.Headers["Authorization"].FirstOrDefault();
-            if (rawBearerToken != null && rawBearerToken.StartsWith(BEARER_PREFIX, StringComparison.InvariantCultureIgnoreCase))
+            if (string.IsNullOrEmpty(authorizationHeader) || !HasBearerPrefix(authorizationHeader))
             {
-                // Validate the token and get the user.
-                string token = rawBearerToken.Substring(BEARER_PREFIX.Length);
-
-                try
-                {
-                    user = await _tokenDecoder.GetUserFromToken(token);
-                }
-                catch (Exception)
-                {
-                    user = null;
-                }
+                throw new BearerSchemeNotProvidedException(authorizationHeader);
             }
 
-            return user;
+            string token = authorizationHeader.Substring(BEARER_PREFIX.Length);
+
+            return await _tokenDecoder.GetUserFromToken(token);
+        }
+
+        /// <summary>
+        /// Check if a string started with a bearer prefix.
+        /// </summary>
+        /// <param name="authorizationHeader">The string to check.</param>
+        /// <returns>True/false for if the string starts with a bearer prefix.</returns>
+        private static bool HasBearerPrefix(string authorizationHeader)
+        {
+            return authorizationHeader.StartsWith(BEARER_PREFIX, StringComparison.InvariantCultureIgnoreCase);
         }
     }
 }

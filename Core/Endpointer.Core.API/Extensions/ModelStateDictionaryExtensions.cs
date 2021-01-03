@@ -7,6 +7,11 @@ namespace Endpointer.Core.API.Extensions
 {
     public static class ModelStateDictionaryExtensions
     {
+        /// <summary>
+        /// Create an error response for invalid model state.
+        /// </summary>
+        /// <param name="modelState">The model state to convert.</param>
+        /// <returns>The error response for the invalid model state.</returns>
         public static ErrorResponse CreateErrorResponse(this ModelStateDictionary modelState)
         {
             IEnumerable<ErrorMessageResponse> errorMessages = modelState.Values

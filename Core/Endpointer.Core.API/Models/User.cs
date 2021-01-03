@@ -2,6 +2,9 @@
 
 namespace Endpointer.Core.API.Models
 {
+    /// <summary>
+    /// Model for an Endpointer user.
+    /// </summary>
     public class User
     {
         public Guid Id { get; set; }
