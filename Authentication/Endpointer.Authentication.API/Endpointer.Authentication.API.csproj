@@ -31,7 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Endpointer.Core.API\Endpointer.Core.API.csproj" />
+    <ProjectReference Include="..\..\Core\Endpointer.Core.API\Endpointer.Core.API.csproj" />
     <ProjectReference Include="..\Endpointer.Authentication.Core\Endpointer.Authentication.Core.csproj" />
   </ItemGroup>
 

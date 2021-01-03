@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Endpointer.Core.Client\Endpointer.Core.Client.csproj" />
+    <ProjectReference Include="..\..\Core\Endpointer.Core.Client\Endpointer.Core.Client.csproj" />
     <ProjectReference Include="..\Endpointer.Authentication.Core\Endpointer.Authentication.Core.csproj" />
   </ItemGroup>
 

@@ -18,8 +18,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Core\Endpointer.Core.Client\Endpointer.Core.Client.csproj" />
     <ProjectReference Include="..\Endpointer.Accounts.Core\Endpointer.Accounts.Core.csproj" />
-    <ProjectReference Include="..\Endpointer.Core.Client\Endpointer.Core.Client.csproj" />
   </ItemGroup>
 
 </Project>

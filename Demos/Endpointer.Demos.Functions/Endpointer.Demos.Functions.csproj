@@ -22,6 +22,6 @@
     <Folder Include="Functions\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Authentication\Endpointer.Authentication.API\Endpointer.Authentication.API.csproj" />
+    <ProjectReference Include="..\..\Authentication\Endpointer.Authentication.API\Endpointer.Authentication.API.csproj" />
   </ItemGroup>
 </Project>

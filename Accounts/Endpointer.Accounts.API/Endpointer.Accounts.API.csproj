@@ -24,8 +24,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Core\Endpointer.Core.API\Endpointer.Core.API.csproj" />
     <ProjectReference Include="..\Endpointer.Accounts.Core\Endpointer.Accounts.Core.csproj" />
-    <ProjectReference Include="..\Endpointer.Core.API\Endpointer.Core.API.csproj" />
   </ItemGroup>
 
 </Project>
