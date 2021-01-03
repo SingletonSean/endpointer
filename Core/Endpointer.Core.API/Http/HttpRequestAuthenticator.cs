@@ -13,9 +13,9 @@ namespace Endpointer.Core.API.Http
     {
         private const string BEARER_PREFIX = "Bearer ";
 
-        private readonly AccessTokenDecoder _tokenDecoder;
+        private readonly IAccessTokenDecoder _tokenDecoder;
 
-        public HttpRequestAuthenticator(AccessTokenDecoder tokenDecoder)
+        public HttpRequestAuthenticator(IAccessTokenDecoder tokenDecoder)
         {
             _tokenDecoder = tokenDecoder;
         }

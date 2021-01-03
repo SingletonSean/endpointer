@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Endpointer.Core.API.Services.TokenDecoders
 {
-    public class AccessTokenDecoder
+    public class AccessTokenDecoder : IAccessTokenDecoder
     {
         private readonly TokenValidationParameters _validationParameters;
 
@@ -16,13 +16,7 @@ namespace Endpointer.Core.API.Services.TokenDecoders
             _validationParameters = validationParameters;
         }
 
-        /// <summary>
-        /// Get a user from a JWT token.
-        /// </summary>
-        /// <param name="token">The JWT token value.</param>
-        /// <returns>The user signed into the token.</returns>
-        /// <exception cref="SecurityTokenException">Thrown if unable to get claims from token.</exception>
-        /// <exception cref="SecurityTokenDecryptionFailedException">Thrown if unable to get user values from token.</exception>
+        /// <inheritdoc />
         public Task<User> GetUserFromToken(string token)
         {
             ClaimsPrincipal claims = GetUserClaims(token);
