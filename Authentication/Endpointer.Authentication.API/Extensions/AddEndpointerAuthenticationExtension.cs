@@ -9,6 +9,7 @@ using Endpointer.Authentication.API.Services.TokenGenerators;
 using Endpointer.Authentication.API.Services.TokenValidators;
 using Endpointer.Authentication.API.Services.UserRepositories;
 using Endpointer.Core.API.Http;
+using Endpointer.Core.API.Services.TokenClaimsDecoders;
 using Endpointer.Core.API.Services.TokenDecoders;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -48,10 +49,12 @@ namespace Endpointer.Authentication.API.Extensions
             services.AddSingleton<IRefreshTokenGenerator, RefreshTokenGenerator>();
             services.AddSingleton<IRefreshTokenValidator, RefreshTokenValidator>();
             services.AddScoped<IAuthenticator, Authenticator>();
-            services.AddScoped<HttpRequestAuthenticator>();
-            services.AddSingleton<AccessTokenDecoder>();
             services.AddSingleton<ITokenGenerator, TokenGenerator>();
             services.AddSingleton<IPasswordHasher, BcryptPasswordHasher>();
+
+            services.AddScoped<ITokenClaimsDecoder, TokenHandlerTokenClaimsDecoder>();
+            services.AddScoped<IAccessTokenDecoder, AccessTokenDecoder>();
+            services.AddScoped<HttpRequestAuthenticator>();
 
             services.AddScoped<RegisterEndpointHandler>();
             services.AddScoped<LoginEndpointHandler>();

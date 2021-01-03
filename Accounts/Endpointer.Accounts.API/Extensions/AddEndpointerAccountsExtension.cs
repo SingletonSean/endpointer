@@ -28,7 +28,7 @@ namespace Endpointer.Accounts.API.Extensions
             }
 
             services.AddScoped<HttpRequestAuthenticator>();
-            services.AddSingleton<AccessTokenDecoder>();
+            services.AddScoped<IAccessTokenDecoder, AccessTokenDecoder>();
 
             services.AddScoped<GetAccountEndpointerHandler>();
 

@@ -1,4 +1,5 @@
 ﻿using Endpointer.Core.API.Models;
+using Endpointer.Core.API.Services.TokenClaimsDecoders;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
@@ -9,17 +10,17 @@ namespace Endpointer.Core.API.Services.TokenDecoders
 {
     public class AccessTokenDecoder : IAccessTokenDecoder
     {
-        private readonly TokenValidationParameters _validationParameters;
+        private readonly ITokenClaimsDecoder _claimsDecoder;
 
-        public AccessTokenDecoder(TokenValidationParameters validationParameters)
+        public AccessTokenDecoder(ITokenClaimsDecoder claimsDecoder)
         {
-            _validationParameters = validationParameters;
+            _claimsDecoder = claimsDecoder;
         }
 
         /// <inheritdoc />
         public Task<User> GetUserFromToken(string token)
         {
-            ClaimsPrincipal claims = GetUserClaims(token);
+            ClaimsPrincipal claims = _claimsDecoder.GetClaims(token);
 
             string rawId = claims.FindFirst("id")?.Value;
             if (!Guid.TryParse(rawId, out Guid id))
@@ -45,26 +46,6 @@ namespace Endpointer.Core.API.Services.TokenDecoders
                 Email = emailClaim.Value,
                 Username = usernameClaim.Value
             });
-        }
-
-        /// <summary>
-        /// Get claims signed into a JWT token.
-        /// </summary>
-        /// <param name="token">The token value.</param>
-        /// <returns>The claims signed into the token.</returns>
-        /// <exception cref="SecurityTokenException">Thrown if unable to get claims from token.</exception>
-        private ClaimsPrincipal GetUserClaims(string token)
-        {
-            JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
-
-            try
-            {
-                return handler.ValidateToken(token, _validationParameters, out _);
-            }
-            catch (Exception ex)
-            {
-                throw new SecurityTokenException(string.Empty, ex);
-            }
         }
     }
 }
