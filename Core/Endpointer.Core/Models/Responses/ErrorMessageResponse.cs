@@ -1,5 +1,8 @@
 ﻿namespace Endpointer.Core.Models.Responses
 {
+    /// <summary>
+    /// Model for an Endpointer error message response.
+    /// </summary>
     public class ErrorMessageResponse
     {
         public int Code { get; }

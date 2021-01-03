@@ -1,5 +1,8 @@
 ﻿namespace Endpointer.Core.Models.Responses
 {
+    /// <summary>
+    /// Endpointer error code constants.
+    /// </summary>
     public class ErrorCode
     {
         public const int VALIDATION_FAILURE = 1;

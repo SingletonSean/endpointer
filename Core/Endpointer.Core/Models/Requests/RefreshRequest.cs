@@ -2,6 +2,9 @@
 
 namespace Endpointer.Core.Models.Requests
 {
+    /// <summary>
+    /// Model for a refresh token request.
+    /// </summary>
     public class RefreshRequest
     {
         [Required]
