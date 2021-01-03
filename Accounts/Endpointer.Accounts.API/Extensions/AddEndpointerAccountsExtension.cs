@@ -1,9 +1,11 @@
 ﻿using Endpointer.Accounts.API.EndpointerHandlers;
 using Endpointer.Accounts.API.Models;
 using Endpointer.Accounts.API.Services.AccountRepositories;
+using Endpointer.Core.API.Extensions;
 using Endpointer.Core.API.Http;
 using Endpointer.Core.API.Services.TokenDecoders;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using System;
 
 namespace Endpointer.Accounts.API.Extensions
@@ -11,6 +13,7 @@ namespace Endpointer.Accounts.API.Extensions
     public static class AddEndpointerAccountsExtension
     {
         public static IServiceCollection AddEndpointerAccounts(this IServiceCollection services, 
+            TokenValidationParameters validationParameters,
             Func<EndpointerAccountsOptionsBuilder, EndpointerAccountsOptionsBuilder> configureOptions = null)
         {
             EndpointerAccountsOptionsBuilder optionsBuilder = new EndpointerAccountsOptionsBuilder();
@@ -27,10 +30,9 @@ namespace Endpointer.Accounts.API.Extensions
                 services.AddSingleton<IAccountRepository, InMemoryAccountRepository>();
             }
 
-            services.AddScoped<HttpRequestAuthenticator>();
-            services.AddScoped<IAccessTokenDecoder, AccessTokenDecoder>();
-
             services.AddScoped<GetAccountEndpointerHandler>();
+
+            services.AddEndpointerCore(validationParameters);
 
             return services;
         }

@@ -48,8 +48,8 @@ namespace Endpointer.Demos.Web
                     c => c.UseSqlite(connectionString))
                 );
 
-            services.AddEndpointerAccounts(o => 
-                o.WithDatabase<CustomDbContext>(
+            services.AddEndpointerAccounts(validationParameters,
+                o => o.WithDatabase<CustomDbContext>(
                     c => c.UseSqlite(connectionString)));
         }
 

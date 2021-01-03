@@ -8,6 +8,7 @@ using Endpointer.Authentication.API.Services.RefreshTokenRepositories;
 using Endpointer.Authentication.API.Services.TokenGenerators;
 using Endpointer.Authentication.API.Services.TokenValidators;
 using Endpointer.Authentication.API.Services.UserRepositories;
+using Endpointer.Core.API.Extensions;
 using Endpointer.Core.API.Http;
 using Endpointer.Core.API.Services.TokenClaimsDecoders;
 using Endpointer.Core.API.Services.TokenDecoders;
@@ -41,7 +42,6 @@ namespace Endpointer.Authentication.API.Extensions
             }
 
             services.AddSingleton(authenticationConfiguration);
-            services.AddSingleton(validationParameters);
 
             services.AddAutoMapper(typeof(DomainResponseProfile));
 
@@ -52,15 +52,13 @@ namespace Endpointer.Authentication.API.Extensions
             services.AddSingleton<ITokenGenerator, TokenGenerator>();
             services.AddSingleton<IPasswordHasher, BcryptPasswordHasher>();
 
-            services.AddScoped<ITokenClaimsDecoder, TokenHandlerTokenClaimsDecoder>();
-            services.AddScoped<IAccessTokenDecoder, AccessTokenDecoder>();
-            services.AddScoped<HttpRequestAuthenticator>();
-
             services.AddScoped<RegisterEndpointHandler>();
             services.AddScoped<LoginEndpointHandler>();
             services.AddScoped<RefreshEndpointHandler>();
             services.AddScoped<LogoutEndpointHandler>();
             services.AddScoped<LogoutEverywhereEndpointHandler>();
+
+            services.AddEndpointerCore(validationParameters);
 
             return services;
         }
