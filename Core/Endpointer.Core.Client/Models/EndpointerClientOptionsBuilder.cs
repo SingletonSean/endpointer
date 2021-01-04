@@ -15,6 +15,11 @@ namespace Endpointer.Core.Client.Models
             _refitSettings = new RefitSettings(new NewtonsoftJsonContentSerializer());
         }
 
+        /// <summary>
+        /// Set the Refit settings for the client.
+        /// </summary>
+        /// <param name="settings">The Refit settings to use.</param>
+        /// <returns>The configured builder.</returns>
         public EndpointerClientOptionsBuilder UseRefitSettings(RefitSettings settings)
         {
             _refitSettings = settings;
@@ -22,11 +27,21 @@ namespace Endpointer.Core.Client.Models
             return this;
         }
 
+        /// <summary>
+        /// Add automatic token refresh.
+        /// </summary>
+        /// <param name="autoRefreshTokenStore">The store to handle tokens.</param>
+        /// <returns>The configured builder.</returns>
         public EndpointerClientOptionsBuilder WithAutoTokenRefresh(IAutoRefreshTokenStore autoRefreshTokenStore)
         {
             return WithAutoTokenRefresh(s => autoRefreshTokenStore);
         }
 
+        /// <summary>
+        /// Add automatic token refresh.
+        /// </summary>
+        /// <param name="getAutoRefreshTokenStore">The function to get the store to handle tokens.</param>
+        /// <returns>The configured builder.</returns>
         public EndpointerClientOptionsBuilder WithAutoTokenRefresh(Func<IServiceProvider, IAutoRefreshTokenStore> getAutoRefreshTokenStore)
         {
             _withAutoTokenRefresh = true;
@@ -35,6 +50,10 @@ namespace Endpointer.Core.Client.Models
             return this;
         }
 
+        /// <summary>
+        /// Build the client options.
+        /// </summary>
+        /// <returns>The built client options.</returns>
         public EndpointerClientOptions Build()
         {
             return new EndpointerClientOptions()

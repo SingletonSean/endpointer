@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 
 namespace Endpointer.Core.Client.Http
 {
+    /// <summary>
+    /// Refresh the access token for the request.
+    /// </summary>
     public class AutoRefreshHttpMessageHandler : DelegatingHandler
     {
         private readonly IAutoRefreshTokenStore _tokenStore;

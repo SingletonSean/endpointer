@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace Endpointer.Core.Client.Exceptions
 {
+    /// <summary>
+    /// Exception for validation failure from API.
+    /// </summary>
     public class ValidationFailedException : Exception
     {
         public IEnumerable<string> ValidationMessages { get; }

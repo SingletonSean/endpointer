@@ -2,6 +2,9 @@
 
 namespace Endpointer.Core.Client.Exceptions
 {
+    /// <summary>
+    /// Exception for an unauthorized API response.
+    /// </summary>
     public class UnauthorizedException : Exception
     {
         public UnauthorizedException() { }

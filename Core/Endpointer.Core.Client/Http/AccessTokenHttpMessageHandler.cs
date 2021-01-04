@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Endpointer.Core.Client.Http
 {
+    /// <summary>
+    /// Add an access token header to the request.
+    /// </summary>
     public class AccessTokenHttpMessageHandler : DelegatingHandler
     {
         private readonly IAccessTokenStore _tokenStore;

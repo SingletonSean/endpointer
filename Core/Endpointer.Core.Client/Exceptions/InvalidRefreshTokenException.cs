@@ -2,6 +2,9 @@
 
 namespace Endpointer.Core.Client.Exceptions
 {
+    /// <summary>
+    /// Exception for an invalid refresh token.
+    /// </summary>
     public class InvalidRefreshTokenException : Exception
     {
         public InvalidRefreshTokenException() { }
