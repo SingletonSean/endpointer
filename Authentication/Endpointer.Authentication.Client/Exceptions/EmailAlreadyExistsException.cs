@@ -2,6 +2,9 @@
 
 namespace Endpointer.Authentication.Client.Exceptions
 {
+    /// <summary>
+    /// Exception for an email already existing.
+    /// </summary>
     public class EmailAlreadyExistsException : Exception
     {
         public string Email { get; }

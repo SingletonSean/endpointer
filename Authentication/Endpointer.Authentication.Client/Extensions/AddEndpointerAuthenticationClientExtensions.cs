@@ -14,6 +14,14 @@ namespace Endpointer.Authentication.Client.Extensions
 {
     public static class AddEndpointerAuthenticationClientExtensions
     {
+        /// <summary>
+        /// Add Endpointer authentication client services.
+        /// </summary>
+        /// <param name="services">The collection to add services to.</param>
+        /// <param name="endpointsConfiguration">The endpoint configuration for APIs.</param>
+        /// <param name="getTokenStore">Function to get the token store for authenticated requests.</param>
+        /// <param name="configureOptions">Function to configure options.</param>
+        /// <returns>The service collection with the registered services.</returns>
         public static IServiceCollection AddEndpointerAuthenticationClient(this IServiceCollection services, 
             AuthenticationEndpointsConfiguration endpointsConfiguration,
             Func<IServiceProvider, IAccessTokenStore> getTokenStore,

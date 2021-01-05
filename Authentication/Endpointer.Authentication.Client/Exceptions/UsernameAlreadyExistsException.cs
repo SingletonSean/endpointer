@@ -2,6 +2,9 @@
 
 namespace Endpointer.Authentication.Client.Exceptions
 {
+    /// <summary>
+    /// Exception for a username already existing.
+    /// </summary>
     public class UsernameAlreadyExistsException : Exception
     {
         public string Username { get; }

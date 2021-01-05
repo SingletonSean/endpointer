@@ -2,6 +2,9 @@
 
 namespace Endpointer.Authentication.Client.Exceptions
 {
+    /// <summary>
+    /// Exception for a non-matching confirm password.
+    /// </summary>
     public class ConfirmPasswordException : Exception
     {
         public ConfirmPasswordException() {}
