@@ -2,6 +2,9 @@
 
 namespace Endpointer.Authentication.Core.Models.Requests
 {
+    /// <summary>
+    /// Model for a register request.
+    /// </summary>
     public class RegisterRequest
     {
         [Required]

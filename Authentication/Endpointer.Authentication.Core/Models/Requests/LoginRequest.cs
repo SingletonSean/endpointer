@@ -2,6 +2,9 @@
 
 namespace Endpointer.Authentication.Core.Models.Requests
 {
+    /// <summary>
+    /// Model for a login request.
+    /// </summary>
     public class LoginRequest
     {
         [Required]

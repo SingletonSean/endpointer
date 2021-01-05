@@ -1,5 +1,8 @@
 ﻿namespace Endpointer.Authentication.Core.Models.Responses
 {
+    /// <summary>
+    /// Endpointer authentication error codes.
+    /// </summary>
     public class AuthenticationErrorCode
     {
         public const int EMAIL_ALREADY_EXISTS = 3;
