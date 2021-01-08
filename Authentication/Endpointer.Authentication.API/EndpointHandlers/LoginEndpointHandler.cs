@@ -10,6 +10,7 @@ using Endpointer.Core.Models.Responses;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Threading.Tasks;
+using System;
 
 namespace Endpointer.Authentication.API.EndpointHandlers
 {
@@ -31,6 +32,13 @@ namespace Endpointer.Authentication.API.EndpointHandlers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Handle a login with model state validation.
+        /// </summary>
+        /// <param name="loginRequest">The request to login.</param>
+        /// <param name="modelState">The request model state to validate.</param>
+        /// <returns>The result of logging in.</returns>
+        /// <exception cref="Exception">Thrown if login fails.</exception>
         public async Task<IActionResult> HandleLogin(LoginRequest loginRequest, ModelStateDictionary modelState)
         {
             if (!modelState.IsValid)
@@ -41,6 +49,12 @@ namespace Endpointer.Authentication.API.EndpointHandlers
             return await HandleLogin(loginRequest);
         }
 
+        /// <summary>
+        /// Handle a login.
+        /// </summary>
+        /// <param name="loginRequest">The request to login.</param>
+        /// <returns>The result of logging in.</returns>
+        /// <exception cref="Exception">Thrown if login fails.</exception>
         public async Task<IActionResult> HandleLogin(LoginRequest loginRequest)
         { 
             User user = await _userRepository.GetByUsername(loginRequest.Username);

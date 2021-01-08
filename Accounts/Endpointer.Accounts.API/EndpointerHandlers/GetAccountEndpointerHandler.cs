@@ -14,9 +14,9 @@ namespace Endpointer.Accounts.API.EndpointerHandlers
     public class GetAccountEndpointerHandler
     {
         private readonly IAccountRepository _accountRepository;
-        private readonly HttpRequestAuthenticator _authenticator;
+        private readonly IHttpRequestAuthenticator _authenticator;
 
-        public GetAccountEndpointerHandler(IAccountRepository accountRepository, HttpRequestAuthenticator authenticator)
+        public GetAccountEndpointerHandler(IAccountRepository accountRepository, IHttpRequestAuthenticator authenticator)
         {
             _accountRepository = accountRepository;
             _authenticator = authenticator;

@@ -24,7 +24,7 @@ namespace Endpointer.Core.API.Extensions
 
             services.AddScoped<ITokenClaimsDecoder, TokenHandlerTokenClaimsDecoder>();
             services.AddScoped<IAccessTokenDecoder, AccessTokenDecoder>();
-            services.AddScoped<HttpRequestAuthenticator>();
+            services.AddScoped<IHttpRequestAuthenticator, HttpRequestAuthenticator>();
 
             return services;
         }

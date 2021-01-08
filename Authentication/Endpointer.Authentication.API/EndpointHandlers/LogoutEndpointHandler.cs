@@ -13,6 +13,11 @@ namespace Endpointer.Authentication.API.EndpointHandlers
             _refreshTokenRepository = refreshTokenRepository;
         }
 
+        /// <summary>
+        /// Handle a logout by deleting a refresh token.
+        /// </summary>
+        /// <param name="refreshToken">The refresh token to logout.</param>
+        /// <returns>The result of the logout.</returns>
         public async Task<IActionResult> HandleLogout(string refreshToken)
         {
             await _refreshTokenRepository.DeleteByToken(refreshToken);

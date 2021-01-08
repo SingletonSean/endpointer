@@ -5,11 +5,10 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Endpointer.Core.API.Exceptions;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Endpointer.Core.API.Http
 {
-    public class HttpRequestAuthenticator
+    public class HttpRequestAuthenticator : IHttpRequestAuthenticator
     {
         private const string BEARER_PREFIX = "Bearer ";
 
@@ -20,14 +19,7 @@ namespace Endpointer.Core.API.Http
             _tokenDecoder = tokenDecoder;
         }
 
-        /// <summary>
-        /// Authenticate a user from an HTTP request.
-        /// </summary>
-        /// <param name="request">The request with the authorization header.</param>
-        /// <returns>The authenticated user.</returns>
-        /// <exception cref="BearerSchemeNotProvidedException">Thrown if Authorization header does not have 'Bearer ' prefix.</exception>
-        /// <exception cref="SecurityTokenException">Thrown if unable to get claims from token.</exception>
-        /// <exception cref="SecurityTokenDecryptionFailedException">Thrown if unable to get user values from token.</exception>
+        /// <inheritdoc />
         public async Task<User> Authenticate(HttpRequest request)
         {
             string authorizationHeader = request.Headers["Authorization"].FirstOrDefault();

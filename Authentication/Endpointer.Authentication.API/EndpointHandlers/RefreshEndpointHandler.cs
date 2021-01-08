@@ -11,6 +11,7 @@ using Endpointer.Core.Models.Responses;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Threading.Tasks;
+using System;
 
 namespace Endpointer.Authentication.API.EndpointHandlers
 {
@@ -35,6 +36,13 @@ namespace Endpointer.Authentication.API.EndpointHandlers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Handle a refresh with model state validation.
+        /// </summary>
+        /// <param name="refreshRequest">The request to refresh.</param>
+        /// <param name="modelState">The request model state to validate.</param>
+        /// <returns>The result of refreshing.</returns>
+        /// <exception cref="Exception">Thrown if refresh fails.</exception>
         public async Task<IActionResult> HandleRefresh(RefreshRequest refreshRequest, ModelStateDictionary modelState)
         {
             if (!modelState.IsValid)
@@ -45,6 +53,12 @@ namespace Endpointer.Authentication.API.EndpointHandlers
             return await HandleRefresh(refreshRequest);
         }
 
+        /// <summary>
+        /// Handle a refresh.
+        /// </summary>
+        /// <param name="refreshRequest">The request to refresh.</param>
+        /// <returns>The result of refreshing.</returns>
+        /// <exception cref="Exception">Thrown if refresh fails.</exception>
         public async Task<IActionResult> HandleRefresh(RefreshRequest refreshRequest)
         { 
             bool isValidRefreshToken = _refreshTokenValidator.Validate(refreshRequest.RefreshToken);

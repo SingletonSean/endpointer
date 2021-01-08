@@ -13,14 +13,20 @@ namespace Endpointer.Authentication.API.EndpointHandlers
     public class LogoutEverywhereEndpointHandler
     {
         private readonly IRefreshTokenRepository _refreshTokenRepository;
-        private readonly HttpRequestAuthenticator _requestAuthenticator;
+        private readonly IHttpRequestAuthenticator _requestAuthenticator;
 
-        public LogoutEverywhereEndpointHandler(IRefreshTokenRepository refreshTokenRepository, HttpRequestAuthenticator requestAuthenticator)
+        public LogoutEverywhereEndpointHandler(IRefreshTokenRepository refreshTokenRepository, IHttpRequestAuthenticator requestAuthenticator)
         {
             _refreshTokenRepository = refreshTokenRepository;
             _requestAuthenticator = requestAuthenticator;
         }
 
+        /// <summary>
+        /// Handle a logout everywhere by deleting all refresh tokens.
+        /// </summary>
+        /// <param name="request">The request with the authenticated user.</param>
+        /// <returns>The result of the logout everywhere.</returns>
+        /// <exception cref="Exception">Thrown if logout everywhere fails.</exception>
         public async Task<IActionResult> HandleLogoutEverywhere(HttpRequest request)
         {
             try

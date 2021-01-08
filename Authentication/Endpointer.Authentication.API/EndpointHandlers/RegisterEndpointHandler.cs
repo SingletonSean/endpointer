@@ -8,6 +8,7 @@ using Endpointer.Core.Models.Responses;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Threading.Tasks;
+using System;
 
 namespace Endpointer.Authentication.API.EndpointHandlers
 {
@@ -22,6 +23,13 @@ namespace Endpointer.Authentication.API.EndpointHandlers
             _passwordHasher = passwordHasher;
         }
 
+        /// <summary>
+        /// Handle a register with model state validation.
+        /// </summary>
+        /// <param name="registerRequest">The request to register.</param>
+        /// <param name="modelState">The request model state to validate.</param>
+        /// <returns>The result of registering.</returns>
+        /// <exception cref="Exception">Thrown if register fails.</exception>
         public async Task<IActionResult> HandleRegister(RegisterRequest registerRequest, ModelStateDictionary modelState)
         {
             if (!modelState.IsValid)
@@ -32,6 +40,12 @@ namespace Endpointer.Authentication.API.EndpointHandlers
             return await HandleRegister(registerRequest);
         }
 
+        /// <summary>
+        /// Handle a register.
+        /// </summary>
+        /// <param name="registerRequest">The request to register.</param>
+        /// <returns>The result of registering.</returns>
+        /// <exception cref="Exception">Thrown if register fails.</exception>
         public async Task<IActionResult> HandleRegister(RegisterRequest registerRequest)
         {
             if (registerRequest.Password != registerRequest.ConfirmPassword)
