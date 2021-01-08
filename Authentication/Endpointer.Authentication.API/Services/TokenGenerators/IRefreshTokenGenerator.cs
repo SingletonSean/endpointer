@@ -1,4 +1,6 @@
-﻿namespace Endpointer.Authentication.API.Services.TokenGenerators
+﻿using System;
+
+namespace Endpointer.Authentication.API.Services.TokenGenerators
 {
     public interface IRefreshTokenGenerator
     {

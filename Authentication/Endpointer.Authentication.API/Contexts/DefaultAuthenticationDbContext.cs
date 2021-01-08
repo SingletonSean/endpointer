@@ -9,6 +9,7 @@ namespace Endpointer.Authentication.API.Contexts
     /// </summary>
     public class DefaultAuthenticationDbContext : DbContext, IAuthenticationDbContext<User>
     {
+        public DefaultAuthenticationDbContext(DbContextOptions options) : base(options) { }
         public DefaultAuthenticationDbContext(DbContextOptions<DefaultAuthenticationDbContext> options) : base(options) { }
 
         /// <inheritdoc />
