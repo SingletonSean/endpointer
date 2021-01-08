@@ -3,6 +3,9 @@ using System;
 
 namespace Endpointer.Authentication.API.Models
 {
+    /// <summary>
+    /// Model for additional Endpointer Authentication options.
+    /// </summary>
     public class EndpointerAuthenticationOptions
     {
         public bool UseDatabase { get; set; }

@@ -20,6 +20,14 @@ namespace Endpointer.Authentication.API.Extensions
 {
     public static class AddEndpointerAuthenticationExtension
     {
+        /// <summary>
+        /// Add Endpointer Authentication services.
+        /// </summary>
+        /// <param name="services">The service collection to add to.</param>
+        /// <param name="authenticationConfiguration">The configuration for authentication services.</param>
+        /// <param name="validationParameters">The validation parameters for access tokens.</param>
+        /// <param name="configureOptions">Function configure additional options.</param>
+        /// <returns>The service collection with registered services.</returns>
         public static IServiceCollection AddEndpointerAuthentication(this IServiceCollection services, 
             AuthenticationConfiguration authenticationConfiguration,
             TokenValidationParameters validationParameters,

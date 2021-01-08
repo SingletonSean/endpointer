@@ -1,5 +1,8 @@
 ﻿namespace Endpointer.Authentication.API.Models
 {
+    /// <summary>
+    /// Model for Endpointer authentication services.
+    /// </summary>
     public class AuthenticationConfiguration
     {
         public string AccessTokenSecret { get; set; }

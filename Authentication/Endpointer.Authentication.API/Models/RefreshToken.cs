@@ -2,6 +2,9 @@
 
 namespace Endpointer.Authentication.API.Models
 {
+    /// <summary>
+    /// Model for a refresh token.
+    /// </summary>
     public class RefreshToken
     {
         public Guid Id { get; set; }
