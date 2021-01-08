@@ -1,5 +1,6 @@
 ﻿using Endpointer.Authentication.Client.Services.Login;
 using Endpointer.Authentication.Core.Models.Requests;
+using Endpointer.Client.Tests.Services;
 using Endpointer.Core.Client.Exceptions;
 using Endpointer.Core.Models.Responses;
 using Moq;

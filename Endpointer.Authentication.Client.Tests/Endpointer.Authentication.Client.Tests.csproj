@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Authentication\Endpointer.Authentication.Client\Endpointer.Authentication.Client.csproj" />
+    <ProjectReference Include="..\Endpointer.Client.Tests\Endpointer.Client.Tests.csproj" />
   </ItemGroup>
 
 </Project>

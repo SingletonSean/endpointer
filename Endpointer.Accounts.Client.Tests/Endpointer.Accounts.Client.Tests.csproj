@@ -11,12 +11,11 @@
     <PackageReference Include="NUnit" Version="3.12.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.16.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
-    <PackageReference Include="System.Net.Http.Json" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Endpointer.Client.Tests\Endpointer.Client.Tests.csproj" />
-    <ProjectReference Include="..\Endpointer.Core.Client\Endpointer.Core.Client.csproj" />
+    <ProjectReference Include="..\Accounts\Endpointer.Accounts.Client\Endpointer.Accounts.Client.csproj" />
+    <ProjectReference Include="..\Endpointer.Client.Tests\Endpointer.Client.Tests.csproj" />
   </ItemGroup>
 
 </Project>

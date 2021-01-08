@@ -1,4 +1,5 @@
-﻿using Endpointer.Core.Client.Exceptions;
+﻿using Endpointer.Client.Tests.Services;
+using Endpointer.Core.Client.Exceptions;
 using Endpointer.Core.Client.Services.Refresh;
 using Endpointer.Core.Models.Requests;
 using Endpointer.Core.Models.Responses;
@@ -17,7 +18,7 @@ using System.Threading.Tasks;
 namespace Endpointer.Core.Client.Tests.Services.Refresh
 {
     [TestFixture]
-    public class RefreshServiceTests
+    public class RefreshServiceTests : APIServiceTests
     {
         private RefreshService _service;
 
@@ -159,19 +160,6 @@ namespace Endpointer.Core.Client.Tests.Services.Refresh
             Assert.AreEqual(expected.AccessToken, response.AccessToken);
             Assert.AreEqual(expected.RefreshToken, response.RefreshToken);
             Assert.AreEqual(expected.AccessTokenExpirationTime, response.AccessTokenExpirationTime);
-        }
-
-        private async Task<ApiException> CreateApiException(
-            HttpStatusCode statusCode = HttpStatusCode.InternalServerError, 
-            object content = null)
-        {
-            return await ApiException.Create(null, 
-                HttpMethod.Post, 
-                new HttpResponseMessage(statusCode)
-                {
-                    Content = JsonContent.Create(content),
-                },
-                new RefitSettings(new NewtonsoftJsonContentSerializer()));
         }
     }
 }

@@ -2,6 +2,7 @@
 using Endpointer.Authentication.Client.Services.Register;
 using Endpointer.Authentication.Core.Models.Requests;
 using Endpointer.Authentication.Core.Models.Responses;
+using Endpointer.Client.Tests.Services;
 using Endpointer.Core.Client.Exceptions;
 using Endpointer.Core.Models.Responses;
 using Moq;

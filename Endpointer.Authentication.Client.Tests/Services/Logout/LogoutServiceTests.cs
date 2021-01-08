@@ -1,4 +1,5 @@
 ﻿using Endpointer.Authentication.Client.Services.Logout;
+using Endpointer.Client.Tests.Services;
 using Moq;
 using NUnit.Framework;
 using Refit;

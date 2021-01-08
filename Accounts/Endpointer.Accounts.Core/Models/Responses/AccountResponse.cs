@@ -2,6 +2,9 @@
 
 namespace Endpointer.Accounts.Core.Models.Responses
 {
+    /// <summary>
+    /// Model for an account response from the API.
+    /// </summary>
     public class AccountResponse
     {
         public Guid Id { get; set; }
