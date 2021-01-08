@@ -36,7 +36,7 @@ namespace Endpointer.Authentication.API.Services.TokenValidators
                 tokenHandler.ValidateToken(refreshToken, validationParameters, out SecurityToken validatedToken);
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return false;
             }

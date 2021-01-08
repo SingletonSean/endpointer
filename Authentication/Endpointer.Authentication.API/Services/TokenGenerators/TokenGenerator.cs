@@ -13,18 +13,25 @@ namespace Endpointer.Authentication.API.Services.TokenGenerators
         public string GenerateToken(string secretKey, string issuer, string audience, DateTime expires,
             IEnumerable<Claim> claims = null)
         {
-            SecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
-            SigningCredentials credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            try
+            {
+                SecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
+                SigningCredentials credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            JwtSecurityToken token = new JwtSecurityToken(
-                issuer,
-                audience,
-                claims,
-                DateTime.UtcNow,
-                expires,
-                credentials);
+                JwtSecurityToken token = new JwtSecurityToken(
+                    issuer,
+                    audience,
+                    claims,
+                    DateTime.UtcNow,
+                    expires,
+                    credentials);
 
-            return new JwtSecurityTokenHandler().WriteToken(token);
+                return new JwtSecurityTokenHandler().WriteToken(token);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Failed to generate token.", ex);
+            }
         }
     }
 }
