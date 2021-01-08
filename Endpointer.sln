@@ -49,6 +49,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Endpointer.Accounts.Client.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Endpointer.Client.Tests", "Endpointer.Client.Tests\Endpointer.Client.Tests.csproj", "{43016E9C-E463-4F4E-95F1-024D30AC273B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Endpointer.API.Tests", "Endpointer.API.Tests\Endpointer.API.Tests.csproj", "{85A6FF6E-7A78-4506-B54E-5933EF02729D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -131,6 +133,10 @@ Global
 		{43016E9C-E463-4F4E-95F1-024D30AC273B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43016E9C-E463-4F4E-95F1-024D30AC273B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43016E9C-E463-4F4E-95F1-024D30AC273B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85A6FF6E-7A78-4506-B54E-5933EF02729D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85A6FF6E-7A78-4506-B54E-5933EF02729D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85A6FF6E-7A78-4506-B54E-5933EF02729D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85A6FF6E-7A78-4506-B54E-5933EF02729D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -155,6 +161,7 @@ Global
 		{7FDD6AD5-264D-4C79-ACA0-8B62D665C2CE} = {C9D21AFB-DC94-4880-8BE4-358FCBDF4E19}
 		{F4581814-165B-47AD-8760-8C39F652F9F1} = {C9D21AFB-DC94-4880-8BE4-358FCBDF4E19}
 		{43016E9C-E463-4F4E-95F1-024D30AC273B} = {17BD0369-59F0-4641-AABF-677691C5D8C4}
+		{85A6FF6E-7A78-4506-B54E-5933EF02729D} = {17BD0369-59F0-4641-AABF-677691C5D8C4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {22080EC3-FAA9-448A-B298-F86B819E92D0}

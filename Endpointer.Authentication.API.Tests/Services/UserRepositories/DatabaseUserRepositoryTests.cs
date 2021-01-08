@@ -9,11 +9,12 @@ using Endpointer.Core.API.Models;
 using Moq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Data.Sqlite;
+using Endpointer.API.Tests.Services;
 
 namespace Endpointer.Authentication.API.Tests.Services.UserRepositories
 {
     [TestFixture]
-    public class DatabaseUserRepositoryTests : DbContextTests
+    public class DatabaseUserRepositoryTests : DbContextTests<DefaultAuthenticationDbContext>
     {
         private DatabaseUserRepository<DefaultAuthenticationDbContext> _repository;
 
@@ -144,6 +145,11 @@ namespace Endpointer.Authentication.API.Tests.Services.UserRepositories
             _connection.Dispose();
 
             Assert.ThrowsAsync<SqliteException>(() => _repository.GetByUsername(string.Empty));
+        }
+
+        protected override DefaultAuthenticationDbContext CreateDbContext(DbContextOptions options)
+        {
+            return new DefaultAuthenticationDbContext(options);
         }
     }
 }

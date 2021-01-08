@@ -10,28 +10,10 @@ namespace Endpointer.Accounts.API.Services.AccountRepositories
     {
         private readonly List<User> _accounts = new List<User>();
 
-        public Task<User> Create(User user)
-        {
-            user.Id = Guid.NewGuid();
-
-            _accounts.Add(user);
-
-            return Task.FromResult(user);
-        }
-
-        public Task<User> GetByEmail(string email)
-        {
-            return Task.FromResult(_accounts.FirstOrDefault(u => u.Email == email));
-        }
-
+        /// <inheritdoc />
         public Task<User> GetById(Guid userId)
         {
             return Task.FromResult(_accounts.FirstOrDefault(u => u.Id == userId));
-        }
-
-        public Task<User> GetByUsername(string username)
-        {
-            return Task.FromResult(_accounts.FirstOrDefault(u => u.Username == username));
         }
     }
 }

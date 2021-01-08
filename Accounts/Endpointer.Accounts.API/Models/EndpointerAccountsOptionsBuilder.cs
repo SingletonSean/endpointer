@@ -13,11 +13,22 @@ namespace Endpointer.Accounts.API.Models
         private Action<IServiceCollection> _addDbContext;
         private Action<IServiceCollection> _addDbAccountRepository;
 
+        /// <summary>
+        /// Add database services to Endpointer with a DefaultAccountDbContext.
+        /// </summary>
+        /// <param name="dbOptions">The options to configure the DbContext.</param>
+        /// <returns>The builder to configure options.</returns>
         public EndpointerAccountsOptionsBuilder WithDatabase(Action<DbContextOptionsBuilder> dbOptions = null)
         {
             return WithDatabase<DefaultAccountDbContext>(dbOptions);
         }
 
+        /// <summary>
+        /// Add database services to Endpointer.
+        /// </summary>
+        /// <typeparam name="TDbContext">The type of DbContext for the database.</typeparam>
+        /// <param name="dbOptions">The options to configure the DbContext.</param>
+        /// <returns>The builder to configure options.</returns>
         public EndpointerAccountsOptionsBuilder WithDatabase<TDbContext>(Action<DbContextOptionsBuilder> dbOptions = null)
             where TDbContext : DbContext, IAccountsDbContext<User>
         {
@@ -29,6 +40,10 @@ namespace Endpointer.Accounts.API.Models
             return this;
         }
 
+        /// <summary>
+        /// Build the Endpointer options.
+        /// </summary>
+        /// <returns>The built options.</returns>
         public EndpointerAccountsOptions Build()
         {
             return new EndpointerAccountsOptions()

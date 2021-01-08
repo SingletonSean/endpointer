@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.Threading.Tasks;
+using System;
 
 namespace Endpointer.Accounts.API.EndpointerHandlers
 {
@@ -22,6 +23,12 @@ namespace Endpointer.Accounts.API.EndpointerHandlers
             _authenticator = authenticator;
         }
 
+        /// <summary>
+        /// Handle a get account request for the request user.
+        /// </summary>
+        /// <param name="request">The request with a user to authenticate.</param>
+        /// <returns>The result of the request.</returns>
+        /// <exception cref="Exception">Thrown if request fails.</exception>
         public async Task<IActionResult> HandleGetAccount(HttpRequest request)
         {
             try
@@ -34,7 +41,6 @@ namespace Endpointer.Accounts.API.EndpointerHandlers
                     return new NotFoundResult();
                 }
 
-                // TODO: Setup automapper.
                 AccountResponse accountResponse = new AccountResponse()
                 {
                     Id = account.Id,

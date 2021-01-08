@@ -16,6 +16,7 @@ namespace Endpointer.Accounts.API.Services.AccountRepositories
             _context = context;
         }
 
+        /// <inheritdoc />
         public async Task<User> GetById(Guid userId)
         {
             return await _context.Accounts.FindAsync(userId);

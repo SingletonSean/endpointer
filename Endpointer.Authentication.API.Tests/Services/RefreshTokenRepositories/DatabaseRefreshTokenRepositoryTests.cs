@@ -9,11 +9,12 @@ using System.Threading.Tasks;
 using Endpointer.Authentication.API.Models;
 using Moq;
 using Microsoft.Data.Sqlite;
+using Endpointer.API.Tests.Services;
 
 namespace Endpointer.Authentication.API.Tests.Services.RefreshTokenRepositories
 {
     [TestFixture]
-    public class DatabaseRefreshTokenRepositoryTests : DbContextTests
+    public class DatabaseRefreshTokenRepositoryTests : DbContextTests<DefaultAuthenticationDbContext>
     {
         private DatabaseRefreshTokenRepository<DefaultAuthenticationDbContext> _repository;
 
@@ -173,6 +174,11 @@ namespace Endpointer.Authentication.API.Tests.Services.RefreshTokenRepositories
             _connection.Dispose();
 
             Assert.ThrowsAsync<SqliteException>(() => _repository.GetByToken(_token));
+        }
+
+        protected override DefaultAuthenticationDbContext CreateDbContext(DbContextOptions options)
+        {
+            return new DefaultAuthenticationDbContext(options);
         }
     }
 }

@@ -7,9 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Moq" Version="4.15.2" />
     <PackageReference Include="NUnit" Version="3.12.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.16.1" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0"/>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Accounts\Endpointer.Accounts.API\Endpointer.Accounts.API.csproj" />
+    <ProjectReference Include="..\Endpointer.API.Tests\Endpointer.API.Tests.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="EndpointHandlers\" />
   </ItemGroup>
 
 </Project>
