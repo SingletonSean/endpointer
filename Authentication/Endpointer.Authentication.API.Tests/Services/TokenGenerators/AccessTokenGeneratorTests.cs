@@ -6,7 +6,6 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
-using System.Text;
 
 namespace Endpointer.Authentication.API.Tests.Services.TokenGenerators
 {

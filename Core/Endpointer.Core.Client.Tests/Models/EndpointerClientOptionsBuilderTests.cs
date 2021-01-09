@@ -3,9 +3,6 @@ using Endpointer.Core.Client.Stores;
 using Moq;
 using NUnit.Framework;
 using Refit;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Endpointer.Core.Client.Tests.Models
 {

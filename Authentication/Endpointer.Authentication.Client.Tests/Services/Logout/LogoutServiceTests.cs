@@ -3,10 +3,7 @@ using Endpointer.Client.Tests.Services;
 using Moq;
 using NUnit.Framework;
 using Refit;
-using System;
-using System.Collections.Generic;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Endpointer.Authentication.Client.Tests.Services.Logout

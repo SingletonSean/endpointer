@@ -1,8 +1,6 @@
 ﻿using NUnit.Framework;
 using Endpointer.Accounts.Client.Services.Accounts;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Endpointer.Client.Tests.Services;
 using Moq;
 using Endpointer.Core.Models.Responses;

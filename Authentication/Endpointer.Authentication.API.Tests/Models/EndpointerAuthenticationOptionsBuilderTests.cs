@@ -1,8 +1,5 @@
 ﻿using NUnit.Framework;
 using Endpointer.Authentication.API.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Endpointer.Authentication.API.Tests.Models
 {

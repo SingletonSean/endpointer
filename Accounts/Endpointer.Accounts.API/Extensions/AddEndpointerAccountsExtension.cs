@@ -2,8 +2,6 @@
 using Endpointer.Accounts.API.Models;
 using Endpointer.Accounts.API.Services.AccountRepositories;
 using Endpointer.Core.API.Extensions;
-using Endpointer.Core.API.Http;
-using Endpointer.Core.API.Services.TokenDecoders;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System;

@@ -1,8 +1,6 @@
 ﻿using NUnit.Framework;
 using Endpointer.Authentication.API.Services.RefreshTokenRepositories;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Endpointer.Authentication.API.Contexts;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;

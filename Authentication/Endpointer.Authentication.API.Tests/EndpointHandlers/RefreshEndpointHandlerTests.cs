@@ -2,11 +2,9 @@
 using Endpointer.Authentication.API.EndpointHandlers;
 using Endpointer.Authentication.API.Models;
 using Endpointer.Authentication.API.Services.Authenticators;
-using Endpointer.Authentication.API.Services.PasswordHashers;
 using Endpointer.Authentication.API.Services.RefreshTokenRepositories;
 using Endpointer.Authentication.API.Services.TokenValidators;
 using Endpointer.Authentication.API.Services.UserRepositories;
-using Endpointer.Authentication.Core.Models.Requests;
 using Endpointer.Core.API.Models;
 using Endpointer.Core.Models.Requests;
 using Microsoft.AspNetCore.Mvc;
@@ -14,8 +12,6 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Moq;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Endpointer.Authentication.API.Tests.EndpointHandlers

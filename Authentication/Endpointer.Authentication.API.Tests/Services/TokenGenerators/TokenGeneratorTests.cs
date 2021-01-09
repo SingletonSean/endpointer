@@ -1,8 +1,6 @@
 ﻿using Endpointer.Authentication.API.Services.TokenGenerators;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Endpointer.Authentication.API.Tests.Services.TokenGenerators
 {

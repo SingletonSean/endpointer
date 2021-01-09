@@ -4,8 +4,6 @@ using Endpointer.Accounts.Core.Models.Responses;
 using Endpointer.Core.Client.Exceptions;
 using Endpointer.Demos.WPF.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 

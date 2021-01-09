@@ -1,8 +1,6 @@
 ﻿using NUnit.Framework;
 using Endpointer.Authentication.API.Services.Authenticators;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Moq;
 using Endpointer.Authentication.API.Services.TokenGenerators;
 using Endpointer.Authentication.API.Models;

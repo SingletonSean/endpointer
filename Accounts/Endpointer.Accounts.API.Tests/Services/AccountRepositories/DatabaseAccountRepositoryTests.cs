@@ -1,8 +1,6 @@
 ﻿using NUnit.Framework;
 using Endpointer.Accounts.API.Services.AccountRepositories;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Endpointer.API.Tests.Services;
 using Endpointer.Accounts.API.Contexts;
 using Microsoft.EntityFrameworkCore;

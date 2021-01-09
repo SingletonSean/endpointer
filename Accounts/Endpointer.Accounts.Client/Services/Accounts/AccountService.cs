@@ -4,9 +4,7 @@ using Endpointer.Core.Client.Exceptions;
 using Endpointer.Core.Models.Responses;
 using Refit;
 using System;
-using System.Collections.Generic;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Endpointer.Accounts.Client.Services.Accounts

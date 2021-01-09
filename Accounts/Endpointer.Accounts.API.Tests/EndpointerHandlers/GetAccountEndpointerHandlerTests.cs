@@ -1,8 +1,6 @@
 ﻿using NUnit.Framework;
 using Endpointer.Accounts.API.EndpointerHandlers;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Moq;
 using Endpointer.Accounts.API.Services.AccountRepositories;
 using Endpointer.Core.API.Http;

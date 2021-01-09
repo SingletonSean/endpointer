@@ -1,8 +1,5 @@
 ﻿using NUnit.Framework;
 using Endpointer.Accounts.API.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Endpointer.Accounts.API.Tests.Models
 {

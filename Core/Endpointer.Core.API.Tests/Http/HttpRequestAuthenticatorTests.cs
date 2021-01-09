@@ -1,11 +1,9 @@
-using System;
 using System.Threading.Tasks;
 using Endpointer.Core.API.Exceptions;
 using Endpointer.Core.API.Http;
 using Endpointer.Core.API.Models;
 using Endpointer.Core.API.Services.TokenDecoders;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Primitives;
 using Microsoft.IdentityModel.Tokens;
 using Moq;
 using NUnit.Framework;

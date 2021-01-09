@@ -3,8 +3,6 @@ using Moq;
 using Moq.Protected;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Endpointer.Core.Client.Tests.Stores
 {

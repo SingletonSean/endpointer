@@ -1,8 +1,6 @@
 ﻿using NUnit.Framework;
 using Endpointer.Authentication.API.Services.UserRepositories;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Endpointer.Authentication.API.Contexts;
 using System.Threading.Tasks;
 using Endpointer.Core.API.Models;

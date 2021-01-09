@@ -3,9 +3,6 @@ using Endpointer.Core.API.Services.TokenClaimsDecoders;
 using Endpointer.Core.API.Services.TokenDecoders;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Endpointer.Core.API.Extensions
 {

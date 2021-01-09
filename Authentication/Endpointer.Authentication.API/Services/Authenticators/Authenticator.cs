@@ -2,7 +2,6 @@
 using Endpointer.Authentication.API.Services.RefreshTokenRepositories;
 using Endpointer.Authentication.API.Services.TokenGenerators;
 using Endpointer.Core.API.Models;
-using Endpointer.Core.Models.Responses;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
