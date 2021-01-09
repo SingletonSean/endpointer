@@ -14,8 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Accounts\Endpointer.Accounts.Client\Endpointer.Accounts.Client.csproj" />
-    <ProjectReference Include="..\Endpointer.Client.Tests\Endpointer.Client.Tests.csproj" />
+    <ProjectReference Include="..\..\Core\Endpointer.Client.Tests\Endpointer.Client.Tests.csproj" />
+    <ProjectReference Include="..\Endpointer.Accounts.Client\Endpointer.Accounts.Client.csproj" />
   </ItemGroup>
 
 </Project>

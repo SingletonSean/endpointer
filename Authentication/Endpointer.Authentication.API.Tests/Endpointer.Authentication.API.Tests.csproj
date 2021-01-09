@@ -7,6 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="3.1.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.10" />
     <PackageReference Include="Moq" Version="4.15.2" />
     <PackageReference Include="NUnit" Version="3.12.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.16.1" />
@@ -14,12 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Accounts\Endpointer.Accounts.API\Endpointer.Accounts.API.csproj" />
-    <ProjectReference Include="..\Endpointer.API.Tests\Endpointer.API.Tests.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="EndpointHandlers\" />
+    <ProjectReference Include="..\..\Core\Endpointer.API.Tests\Endpointer.API.Tests.csproj" />
+    <ProjectReference Include="..\Endpointer.Authentication.API\Endpointer.Authentication.API.csproj" />
   </ItemGroup>
 
 </Project>
