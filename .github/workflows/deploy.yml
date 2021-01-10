@@ -34,6 +34,9 @@ jobs:
       - name: Build .NET projects
         run: dotnet build --no-restore -c ${{ env.BUILD_CONFIGURATION }}
 
+      - name: Test .NET projects
+        run: dotnet test --no-restore --no-build -c ${{ env.BUILD_CONFIGURATION }}
+
       - name: "Pack Core project"
         run: dotnet pack Core/Endpointer.Core -c ${{ env.BUILD_CONFIGURATION }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }} ${{ env.PACK_OPTIONS }}
 
