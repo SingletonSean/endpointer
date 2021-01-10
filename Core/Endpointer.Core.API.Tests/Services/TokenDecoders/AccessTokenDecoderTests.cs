@@ -1,6 +1,7 @@
 ﻿using Endpointer.Core.API.Models;
 using Endpointer.Core.API.Services.TokenClaimsDecoders;
 using Endpointer.Core.API.Services.TokenDecoders;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Moq;
 using NUnit.Framework;
@@ -24,7 +25,7 @@ namespace Endpointer.Core.API.Tests.Services.TokenDecoders
         {
             _mockTokenClaimsDecoder = new Mock<ITokenClaimsDecoder>();
 
-            _decoder = new AccessTokenDecoder(_mockTokenClaimsDecoder.Object);
+            _decoder = new AccessTokenDecoder(_mockTokenClaimsDecoder.Object, new Mock<ILogger<AccessTokenDecoder>>().Object);
         }
 
         [Test]

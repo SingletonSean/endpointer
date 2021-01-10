@@ -4,6 +4,7 @@ using Endpointer.Core.API.Http;
 using Endpointer.Core.API.Models;
 using Endpointer.Core.API.Services.TokenDecoders;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Moq;
 using NUnit.Framework;
@@ -25,7 +26,7 @@ namespace Endpointer.Core.API.Tests.Http
         {
             _mockAccessTokenDecoder = new Mock<IAccessTokenDecoder>();
 
-            _authenticator = new HttpRequestAuthenticator(_mockAccessTokenDecoder.Object);
+            _authenticator = new HttpRequestAuthenticator(_mockAccessTokenDecoder.Object, new Mock<ILogger<HttpRequestAuthenticator>>().Object);
 
             _mockHttpRequestHeaders = new Mock<IHeaderDictionary>();
             Mock<HttpRequest> mockHttpRequest = new Mock<HttpRequest>();
