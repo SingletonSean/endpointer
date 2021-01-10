@@ -3,6 +3,7 @@ using Endpointer.Authentication.Core.Models.Requests;
 using Endpointer.Client.Tests.Services;
 using Endpointer.Core.Client.Exceptions;
 using Endpointer.Core.Models.Responses;
+using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 using Refit;
@@ -28,7 +29,7 @@ namespace Endpointer.Authentication.Client.Tests.Services.Login
         {
             _mockApi = new Mock<IAPILoginService>();
 
-            _service = new LoginService(_mockApi.Object);
+            _service = new LoginService(_mockApi.Object, new Mock<ILogger<LoginService>>().Object);
 
             _request = new LoginRequest();
         }

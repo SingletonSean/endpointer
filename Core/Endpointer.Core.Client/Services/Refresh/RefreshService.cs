@@ -30,7 +30,6 @@ namespace Endpointer.Core.Client.Services.Refresh
                 _logger.LogInformation("Sending refresh request.");
                 SuccessResponse<AuthenticatedUserResponse> response = await _api.Refresh(request);
 
-                _logger.LogInformation("Ensuring response data exists.");
                 if (response == null || response.Data == null)
                 {
                     _logger.LogError("Response does not contain data.");
@@ -69,7 +68,7 @@ namespace Endpointer.Core.Client.Services.Refresh
                         _logger.LogError("Invalid refresh token.");
                         throw new InvalidRefreshTokenException();
                     default:
-                        _logger.LogError("Unknown error.");
+                        _logger.LogError("Unknown error code.");
                         throw;
                 }
             }

@@ -5,6 +5,7 @@ using Endpointer.Authentication.Core.Models.Responses;
 using Endpointer.Client.Tests.Services;
 using Endpointer.Core.Client.Exceptions;
 using Endpointer.Core.Models.Responses;
+using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 using Refit;
@@ -30,7 +31,7 @@ namespace Endpointer.Authentication.Client.Tests.Services.Register
         {
             _mockApi = new Mock<IAPIRegisterService>();
 
-            _service = new RegisterService(_mockApi.Object);
+            _service = new RegisterService(_mockApi.Object, new Mock<ILogger<RegisterService>>().Object);
 
             _request = new RegisterRequest()
             {

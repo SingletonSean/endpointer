@@ -1,6 +1,7 @@
 ﻿using Endpointer.Authentication.Client.Services.Logout;
 using Endpointer.Client.Tests.Services;
 using Endpointer.Core.Client.Exceptions;
+using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 using Refit;
@@ -21,7 +22,7 @@ namespace Endpointer.Authentication.Client.Tests.Services.Logout
         {
             _mockApi = new Mock<IAPILogoutEverywhereService>();
 
-            _service = new LogoutEverywhereService(_mockApi.Object);
+            _service = new LogoutEverywhereService(_mockApi.Object, new Mock<ILogger<LogoutEverywhereService>>().Object);
         }
 
         [Test]
