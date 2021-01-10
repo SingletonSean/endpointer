@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageId>Endpointer.Authentication.Client</PackageId>
+    <Version>1.4.0</Version>
+    <Authors>SingletonSean</Authors>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <RepositoryUrl>https://github.com/SingletonSean/endpointer</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/SingletonSean/endpointer</PackageProjectUrl>
+    <PackageTags>asp net core model endpointer functions client authentication</PackageTags>
+    <Description>
+      Quickly consume an API using Endpointer.Authentication.API endpoints.
+    </Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
+    <PackageReference Include="Refit" Version="5.2.4" />
+    <PackageReference Include="Refit.HttpClientFactory" Version="5.2.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\Endpointer.Core.Client\Endpointer.Core.Client.csproj" />
+    <ProjectReference Include="..\Endpointer.Authentication.Core\Endpointer.Authentication.Core.csproj" />
+  </ItemGroup>
+
+</Project>
