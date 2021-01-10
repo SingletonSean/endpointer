@@ -3,18 +3,17 @@ name: Deploy
 on:
   push:
     branches:
-      - 'release'
+      - "release"
 
 env:
   BUILD_CONFIGURATION: Release
   PACKAGE_OUTPUT_DIRECTORY: ${{ github.workspace }}\output
-  NUGET_SOURCE_URL: 'https://api.nuget.org/v3/index.json'
+  NUGET_SOURCE_URL: "https://api.nuget.org/v3/index.json"
+  PACK_OPTIONS: "--no-restore --no-build --include-symbols --include-source"
 
 jobs:
   deploy:
     runs-on: windows-latest
-    env:
-      PACK_OPTIONS: '--no-restore --no-build -c ${{ env.BUILD_CONFIGURATION }} --include-symbols --include-source --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}'
     steps:
       # Setup
       - uses: actions/checkout@v2
@@ -22,7 +21,7 @@ jobs:
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '3.1.x'
+          dotnet-version: "3.1.x"
 
       # Fix annoying packages not being found
       - name: Clean
@@ -35,32 +34,32 @@ jobs:
       - name: Build .NET projects
         run: dotnet build --no-restore -c ${{ env.BUILD_CONFIGURATION }}
 
-      - name: 'Pack Core project'
-        run: dotnet pack Endpointer.Core ${{ env.PACK_OPTIONS }}
+      - name: "Pack Core project"
+        run: dotnet pack Core/Endpointer.Core -c ${{ env.BUILD_CONFIGURATION }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }} ${{ env.PACK_OPTIONS }}
 
-      - name: 'Pack Core API project'
-        run: dotnet pack Endpointer.Core.API ${{ env.PACK_OPTIONS }}
+      - name: "Pack Core API project"
+        run: dotnet pack Core/Endpointer.Core.API -c ${{ env.BUILD_CONFIGURATION }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }} ${{ env.PACK_OPTIONS }}
 
-      - name: 'Pack Core Client project'
-        run: dotnet pack Endpointer.Core.Client ${{ env.PACK_OPTIONS }}
+      - name: "Pack Core Client project"
+        run: dotnet pack Core/Endpointer.Core.Client -c ${{ env.BUILD_CONFIGURATION }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }} ${{ env.PACK_OPTIONS }}
 
-      - name: 'Pack Authentication Core project'
-        run: dotnet pack Endpointer.Authentication.Core ${{ env.PACK_OPTIONS }}
+      - name: "Pack Authentication Core project"
+        run: dotnet pack Authentication/Endpointer.Authentication.Core -c ${{ env.BUILD_CONFIGURATION }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }} ${{ env.PACK_OPTIONS }}
 
-      - name: 'Pack Authentication API project'
-        run: dotnet pack Endpointer.Authentication.API ${{ env.PACK_OPTIONS }}
+      - name: "Pack Authentication API project"
+        run: dotnet pack Authentication/Endpointer.Authentication.API -c ${{ env.BUILD_CONFIGURATION }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }} ${{ env.PACK_OPTIONS }}
 
-      - name: 'Pack Authentication Client project'
-        run: dotnet pack Endpointer.Authentication.Client ${{ env.PACK_OPTIONS }}
+      - name: "Pack Authentication Client project"
+        run: dotnet pack Authentication/Endpointer.Authentication.Client -c ${{ env.BUILD_CONFIGURATION }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }} ${{ env.PACK_OPTIONS }}
 
-      - name: 'Pack Accounts Core project'
-        run: dotnet pack Endpointer.Accounts.Core ${{ env.PACK_OPTIONS }}
+      - name: "Pack Accounts Core project"
+        run: dotnet pack Accounts/Endpointer.Accounts.Core -c ${{ env.BUILD_CONFIGURATION }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }} ${{ env.PACK_OPTIONS }}
 
-      - name: 'Pack Accounts API project'
-        run: dotnet pack Endpointer.Accounts.API ${{ env.PACK_OPTIONS }}
+      - name: "Pack Accounts API project"
+        run: dotnet pack Accounts/Endpointer.Accounts.API -c ${{ env.BUILD_CONFIGURATION }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }} ${{ env.PACK_OPTIONS }}
 
-      - name: 'Pack Accounts Client project'
-        run: dotnet pack Endpointer.Accounts.Client ${{ env.PACK_OPTIONS }}
+      - name: "Pack Accounts Client project"
+        run: dotnet pack Accounts/Endpointer.Accounts.Client -c ${{ env.BUILD_CONFIGURATION }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }} ${{ env.PACK_OPTIONS }}
 
-      - name: 'Push packages'
+      - name: "Push packages"
         run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIRECTORY }}\*.nupkg -k ${{ secrets.NUGET_AUTH_TOKEN }} -s ${{ env.NUGET_SOURCE_URL }}
