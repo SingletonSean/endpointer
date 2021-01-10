@@ -8,6 +8,7 @@ using Moq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Data.Sqlite;
 using Endpointer.API.Tests.Services;
+using Microsoft.Extensions.Logging;
 
 namespace Endpointer.Authentication.API.Tests.Services.UserRepositories
 {
@@ -21,7 +22,9 @@ namespace Endpointer.Authentication.API.Tests.Services.UserRepositories
         [SetUp]
         public void SetUp()
         {
-            _repository = new DatabaseUserRepository<DefaultAuthenticationDbContext>(_context);
+            _repository = new DatabaseUserRepository<DefaultAuthenticationDbContext>(
+                _context, 
+                new Mock<ILogger<DatabaseUserRepository<DefaultAuthenticationDbContext>>>().Object);
 
             _userId = Guid.NewGuid();
         }

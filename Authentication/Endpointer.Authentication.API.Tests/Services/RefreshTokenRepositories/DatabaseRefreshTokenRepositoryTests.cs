@@ -8,6 +8,7 @@ using Endpointer.Authentication.API.Models;
 using Moq;
 using Microsoft.Data.Sqlite;
 using Endpointer.API.Tests.Services;
+using Microsoft.Extensions.Logging;
 
 namespace Endpointer.Authentication.API.Tests.Services.RefreshTokenRepositories
 {
@@ -21,7 +22,9 @@ namespace Endpointer.Authentication.API.Tests.Services.RefreshTokenRepositories
         [SetUp]
         public void SetUp()
         {
-            _repository = new DatabaseRefreshTokenRepository<DefaultAuthenticationDbContext>(_context);
+            _repository = new DatabaseRefreshTokenRepository<DefaultAuthenticationDbContext>(
+                _context, 
+                new Mock<ILogger<DatabaseRefreshTokenRepository<DefaultAuthenticationDbContext>>>().Object);
 
             _token = "123token123";
         }

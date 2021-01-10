@@ -1,6 +1,8 @@
 ﻿using Endpointer.Authentication.API.Models;
 using Endpointer.Authentication.API.Services.TokenValidators;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Moq;
 using NUnit.Framework;
 using System;
 using System.IdentityModel.Tokens.Jwt;
@@ -32,7 +34,7 @@ namespace Endpointer.Authentication.API.Tests.Services.TokenValidators
 
             _token = new JwtSecurityTokenHandler().WriteToken(token);
 
-            _validator = new RefreshTokenValidator(configuration);
+            _validator = new RefreshTokenValidator(configuration, new Mock<ILogger<RefreshTokenValidator>>().Object);
         }
 
         [Test]

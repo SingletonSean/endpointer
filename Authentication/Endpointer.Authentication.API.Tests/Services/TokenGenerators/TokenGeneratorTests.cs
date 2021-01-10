@@ -1,4 +1,6 @@
 ﻿using Endpointer.Authentication.API.Services.TokenGenerators;
+using Microsoft.Extensions.Logging;
+using Moq;
 using NUnit.Framework;
 using System;
 
@@ -12,7 +14,7 @@ namespace Endpointer.Authentication.API.Tests.Services.TokenGenerators
         [SetUp]
         public void Setup()
         {
-            _tokenGenerator = new TokenGenerator();
+            _tokenGenerator = new TokenGenerator(new Mock<ILogger<TokenGenerator>>().Object);
         }
 
         [Test]
