@@ -2,6 +2,7 @@
 using Endpointer.Core.Client.Services.Refresh;
 using Endpointer.Core.Client.Stores;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Refit;
 using System;
 
@@ -40,7 +41,9 @@ namespace Endpointer.Core.Client.Extensions
             Func<IServiceProvider, IAccessTokenStore> getTokenStore) where TService : class
         {
             return services.AddRefitClient<TService>(settings, endpoint)
-                .AddHttpMessageHandler(s => new AccessTokenHttpMessageHandler(getTokenStore(s)));
+                .AddHttpMessageHandler(s => new AccessTokenHttpMessageHandler(
+                    getTokenStore(s), 
+                    s.GetRequiredService<ILogger<AccessTokenHttpMessageHandler>>()));
         }
 
         /// <summary>
@@ -60,8 +63,11 @@ namespace Endpointer.Core.Client.Extensions
             return services.AddRefitClient<TService>(settings, endpoint)
                 .AddHttpMessageHandler(s => new AutoRefreshHttpMessageHandler(
                     getRefreshTokenStore(s),
-                    s.GetRequiredService<IRefreshService>()))
-                .AddHttpMessageHandler(s => new AccessTokenHttpMessageHandler(getRefreshTokenStore(s)));
+                    s.GetRequiredService<IRefreshService>(),
+                    s.GetRequiredService<ILogger<AutoRefreshHttpMessageHandler>>()))
+                .AddHttpMessageHandler(s => new AccessTokenHttpMessageHandler(
+                    getRefreshTokenStore(s), 
+                    s.GetRequiredService<ILogger<AccessTokenHttpMessageHandler>>()));
         }
     }
 }

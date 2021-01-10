@@ -2,6 +2,7 @@
 using Endpointer.Core.Client.Stores;
 using Endpointer.Core.Models.Requests;
 using Endpointer.Core.Models.Responses;
+using Microsoft.Extensions.Logging;
 using Refit;
 using System;
 using System.Net;
@@ -19,32 +20,42 @@ namespace Endpointer.Core.Client.Http
     {
         private readonly IAutoRefreshTokenStore _tokenStore;
         private readonly IRefreshService _refreshService;
+        private readonly ILogger<AutoRefreshHttpMessageHandler> _logger;
 
-        public AutoRefreshHttpMessageHandler(IAutoRefreshTokenStore tokenStore, 
-            IRefreshService refreshService)
+        public AutoRefreshHttpMessageHandler(IAutoRefreshTokenStore tokenStore,
+            IRefreshService refreshService, 
+            ILogger<AutoRefreshHttpMessageHandler> logger)
         {
             _tokenStore = tokenStore;
             _refreshService = refreshService;
+            _logger = logger;
         }
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
+            _logger.LogInformation("Checking access token expiration for request.");
             if(!_tokenStore.HasAccessToken || _tokenStore.IsAccessTokenExpired)
             {
                 try
                 {
+                    _logger.LogInformation("Getting refresh token.");
                     string refreshToken = await _tokenStore.GetRefreshToken();
 
+                    _logger.LogInformation("Refreshing access token with refresh token.");
                     AuthenticatedUserResponse response = await _refreshService.Refresh(new RefreshRequest()
                     {
                         RefreshToken = refreshToken
                     });
 
+                    _logger.LogInformation("Setting new access token and refresh tokens.");
                     await _tokenStore.SetTokens(response.AccessToken, response.RefreshToken, response.AccessTokenExpirationTime);
+
+                    _logger.LogInformation("Setting access token for request.");
                     request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _tokenStore.AccessToken);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    _logger.LogError(ex, "Failed to refresh access token.");
                     throw await CreateUnauthorizedException(request);
                 }
             }

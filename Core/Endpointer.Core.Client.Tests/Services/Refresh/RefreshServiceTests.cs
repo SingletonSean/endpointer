@@ -3,6 +3,7 @@ using Endpointer.Core.Client.Exceptions;
 using Endpointer.Core.Client.Services.Refresh;
 using Endpointer.Core.Models.Requests;
 using Endpointer.Core.Models.Responses;
+using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 using Refit;
@@ -28,7 +29,7 @@ namespace Endpointer.Core.Client.Tests.Services.Refresh
         {
             _mockApi = new Mock<IAPIRefreshService>();
 
-            _service = new RefreshService(_mockApi.Object);
+            _service = new RefreshService(_mockApi.Object, new Mock<ILogger<RefreshService>>().Object);
 
             _request = new RefreshRequest();
         }
