@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Endpointer.Accounts.API.EndpointerHandlers;
+using Endpointer.Accounts.API.EndpointHandlers;
 using System;
 using Moq;
 using Endpointer.Accounts.API.Services.AccountRepositories;
@@ -10,13 +10,14 @@ using Microsoft.AspNetCore.Http;
 using Endpointer.Core.API.Exceptions;
 using Microsoft.IdentityModel.Tokens;
 using Endpointer.Core.API.Models;
+using Microsoft.Extensions.Logging;
 
-namespace Endpointer.Accounts.API.Tests.EndpointerHandlers
+namespace Endpointer.Accounts.API.Tests.EndpointHandlers
 {
     [TestFixture()]
-    public class GetAccountEndpointerHandlerTests
+    public class GetAccountEndpointHandlerTests
     {
-        private GetAccountEndpointerHandler _handler;
+        private GetAccountEndpointHandler _handler;
 
         private Mock<IAccountRepository> _mockAccountRepository;
         private Mock<IHttpRequestAuthenticator> _mockHttpRequestAuthenticator;
@@ -29,7 +30,9 @@ namespace Endpointer.Accounts.API.Tests.EndpointerHandlers
             _mockAccountRepository = new Mock<IAccountRepository>();
             _mockHttpRequestAuthenticator = new Mock<IHttpRequestAuthenticator>();
 
-            _handler = new GetAccountEndpointerHandler(_mockAccountRepository.Object, _mockHttpRequestAuthenticator.Object);
+            _handler = new GetAccountEndpointHandler(_mockAccountRepository.Object, 
+                _mockHttpRequestAuthenticator.Object,
+                new Mock<ILogger<GetAccountEndpointHandler>>().Object);
 
             _request = new Mock<HttpRequest>().Object;
         }

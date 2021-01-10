@@ -1,4 +1,4 @@
-﻿using Endpointer.Accounts.API.EndpointerHandlers;
+﻿using Endpointer.Accounts.API.EndpointHandlers;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -7,17 +7,17 @@ namespace Endpointer.Demos.Web.Controllers
     [Route("account")]
     public class AccountController : ControllerBase
     {
-        private readonly GetAccountEndpointerHandler _getAccountEndpointerHandler;
+        private readonly GetAccountEndpointHandler _getAccountEndpointHandler;
 
-        public AccountController(GetAccountEndpointerHandler getAccountEndpointerHandler)
+        public AccountController(GetAccountEndpointHandler getAccountEndpointHandler)
         {
-            _getAccountEndpointerHandler = getAccountEndpointerHandler;
+            _getAccountEndpointHandler = getAccountEndpointHandler;
         }
 
         [HttpGet("")]
         public async Task<IActionResult> GetAccount()
         {
-            return await _getAccountEndpointerHandler.HandleGetAccount(HttpContext.Request);
+            return await _getAccountEndpointHandler.HandleGetAccount(HttpContext.Request);
         }
     }
 }

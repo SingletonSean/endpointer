@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using Endpointer.Core.API.Models;
 using Microsoft.Data.Sqlite;
+using Microsoft.Extensions.Logging;
+using Moq;
 
 namespace Endpointer.Accounts.API.Tests.Services.AccountRepositories
 {
@@ -20,7 +22,9 @@ namespace Endpointer.Accounts.API.Tests.Services.AccountRepositories
         [SetUp]
         public void Setup()
         {
-            _repository = new DatabaseAccountRepository<DefaultAccountDbContext>(_context);
+            _repository = new DatabaseAccountRepository<DefaultAccountDbContext>(
+                _context, 
+                new Mock<ILogger<DatabaseAccountRepository<DefaultAccountDbContext>>>().Object);
 
             _userId = Guid.NewGuid();
         }

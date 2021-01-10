@@ -9,18 +9,23 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.Threading.Tasks;
 using System;
+using Microsoft.Extensions.Logging;
 
-namespace Endpointer.Accounts.API.EndpointerHandlers
+namespace Endpointer.Accounts.API.EndpointHandlers
 {
-    public class GetAccountEndpointerHandler
+    public class GetAccountEndpointHandler
     {
         private readonly IAccountRepository _accountRepository;
         private readonly IHttpRequestAuthenticator _authenticator;
+        private readonly ILogger<GetAccountEndpointHandler> _logger;
 
-        public GetAccountEndpointerHandler(IAccountRepository accountRepository, IHttpRequestAuthenticator authenticator)
+        public GetAccountEndpointHandler(IAccountRepository accountRepository,
+            IHttpRequestAuthenticator authenticator, 
+            ILogger<GetAccountEndpointHandler> logger)
         {
             _accountRepository = accountRepository;
             _authenticator = authenticator;
+            _logger = logger;
         }
 
         /// <summary>
@@ -33,11 +38,15 @@ namespace Endpointer.Accounts.API.EndpointerHandlers
         {
             try
             {
+                _logger.LogInformation("Authenticating request.");
                 User user = await _authenticator.Authenticate(request);
 
+                _logger.LogInformation("Finding account for user id {UserId}.", user.Id);
                 User account = await _accountRepository.GetById(user.Id);
+
                 if (account == null)
                 {
+                    _logger.LogError("Account not found for user id {UserId}.", user.Id);
                     return new NotFoundResult();
                 }
 
@@ -48,18 +57,22 @@ namespace Endpointer.Accounts.API.EndpointerHandlers
                     Username = account.Username
                 };
 
+                _logger.LogInformation("Successfully retrieved account for user id {UserId}.", user.Id);
                 return new OkObjectResult(new SuccessResponse<AccountResponse>(accountResponse));
             }
-            catch (BearerSchemeNotProvidedException)
+            catch (BearerSchemeNotProvidedException ex)
             {
+                _logger.LogError(ex, "Bearer scheme not provided.");
                 return new UnauthorizedResult();
             }
-            catch (SecurityTokenDecryptionFailedException)
+            catch (SecurityTokenDecryptionFailedException ex)
             {
+                _logger.LogError(ex, "Failed to authenticate request.");
                 return new UnauthorizedResult();
             }
-            catch (SecurityTokenException)
+            catch (SecurityTokenException ex)
             {
+                _logger.LogError(ex, "Failed to authenticate request.");
                 return new UnauthorizedResult();
             }
         }

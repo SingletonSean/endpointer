@@ -1,4 +1,4 @@
-﻿using Endpointer.Accounts.API.EndpointerHandlers;
+﻿using Endpointer.Accounts.API.EndpointHandlers;
 using Endpointer.Accounts.API.Models;
 using Endpointer.Accounts.API.Services.AccountRepositories;
 using Endpointer.Core.API.Extensions;
@@ -35,7 +35,7 @@ namespace Endpointer.Accounts.API.Extensions
                 services.AddSingleton<IAccountRepository, InMemoryAccountRepository>();
             }
 
-            services.AddScoped<GetAccountEndpointerHandler>();
+            services.AddScoped<GetAccountEndpointHandler>();
 
             services.AddEndpointerCore(validationParameters);
 

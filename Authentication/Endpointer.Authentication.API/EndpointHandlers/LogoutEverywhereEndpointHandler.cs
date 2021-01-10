@@ -35,7 +35,7 @@ namespace Endpointer.Authentication.API.EndpointHandlers
         {
             try
             {
-                _logger.LogInformation("Authenticating request user.");
+                _logger.LogInformation("Authenticating request.");
                 User user = await _requestAuthenticator.Authenticate(request);
 
                 _logger.LogInformation("Deleting refresh token for user.");
@@ -51,12 +51,12 @@ namespace Endpointer.Authentication.API.EndpointHandlers
             }
             catch (SecurityTokenDecryptionFailedException ex)
             {
-                _logger.LogError(ex, "Failed to authenticate user.");
+                _logger.LogError(ex, "Failed to authenticate request.");
                 return new UnauthorizedResult();
             }
             catch (SecurityTokenException ex)
             {
-                _logger.LogError(ex, "Failed to authenticate user.");
+                _logger.LogError(ex, "Failed to authenticate request.");
                 return new UnauthorizedResult();
             }
         }

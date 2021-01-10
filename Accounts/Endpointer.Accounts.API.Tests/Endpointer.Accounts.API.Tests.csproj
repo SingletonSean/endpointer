@@ -14,10 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="EndpointHandlers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\Core\Endpointer.API.Tests\Endpointer.API.Tests.csproj" />
     <ProjectReference Include="..\Endpointer.Accounts.API\Endpointer.Accounts.API.csproj" />
   </ItemGroup>
