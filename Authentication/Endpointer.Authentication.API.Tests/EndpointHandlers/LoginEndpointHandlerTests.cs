@@ -7,6 +7,7 @@ using Endpointer.Authentication.Core.Models.Requests;
 using Endpointer.Core.API.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -40,7 +41,8 @@ namespace Endpointer.Authentication.API.Tests.EndpointHandlers
                 _mockUserRepository.Object,
                 _mockPasswordHasher.Object,
                 _mockAuthenticator.Object,
-                _mockMapper.Object);
+                _mockMapper.Object,
+                new Mock<ILogger<LoginEndpointHandler>>().Object);
 
             _request = new LoginRequest();
             _validModelState = new ModelStateDictionary();

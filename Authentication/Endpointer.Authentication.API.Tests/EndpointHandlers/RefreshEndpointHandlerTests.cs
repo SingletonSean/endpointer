@@ -9,6 +9,7 @@ using Endpointer.Core.API.Models;
 using Endpointer.Core.Models.Requests;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -45,7 +46,8 @@ namespace Endpointer.Authentication.API.Tests.EndpointHandlers
                 _mockRefreshTokenRepository.Object,
                 _mockAuthenticator.Object,
                 _mockRefreshTokenValidator.Object,
-                _mockMapper.Object);
+                _mockMapper.Object,
+                new Mock<ILogger<RefreshEndpointHandler>>().Object);
 
             _request = new RefreshRequest();
             _validModelState = new ModelStateDictionary();

@@ -5,6 +5,7 @@ using Endpointer.Core.API.Http;
 using Endpointer.Core.API.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Moq;
 using NUnit.Framework;
@@ -29,7 +30,10 @@ namespace Endpointer.Authentication.API.Tests.EndpointHandlers
             _mockRefreshTokenRepository = new Mock<IRefreshTokenRepository>();
             _mockHttpRequestAuthenticator = new Mock<IHttpRequestAuthenticator>();
 
-            _handler = new LogoutEverywhereEndpointHandler(_mockRefreshTokenRepository.Object, _mockHttpRequestAuthenticator.Object);
+            _handler = new LogoutEverywhereEndpointHandler(
+                _mockRefreshTokenRepository.Object, 
+                _mockHttpRequestAuthenticator.Object,
+                new Mock<ILogger<LogoutEverywhereEndpointHandler>>().Object);
 
             _request = new Mock<HttpRequest>().Object;
         }

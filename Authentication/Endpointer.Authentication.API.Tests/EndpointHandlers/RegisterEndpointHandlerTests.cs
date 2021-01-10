@@ -5,6 +5,7 @@ using Endpointer.Authentication.Core.Models.Requests;
 using Endpointer.Core.API.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -31,7 +32,8 @@ namespace Endpointer.Authentication.API.Tests.EndpointHandlers
 
             _handler = new RegisterEndpointHandler(
                 _mockUserRepository.Object,
-                _mockPasswordHasher.Object);
+                _mockPasswordHasher.Object,
+                new Mock<ILogger<RegisterEndpointHandler>>().Object);
 
             _request = new RegisterRequest()
             {
