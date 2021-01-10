@@ -10,6 +10,7 @@ using Refit;
 using System.Net;
 using Endpointer.Core.Client.Exceptions;
 using Endpointer.Accounts.Client.Exceptions;
+using Microsoft.Extensions.Logging;
 
 namespace Endpointer.Accounts.Clients.Tests.Services.Accounts
 {
@@ -25,7 +26,7 @@ namespace Endpointer.Accounts.Clients.Tests.Services.Accounts
         {
             _mockApi = new Mock<IAPIAccountService>();
 
-            _service = new AccountService(_mockApi.Object);
+            _service = new AccountService(_mockApi.Object, new Mock<ILogger<AccountService>>().Object);
         }
 
         [Test]
