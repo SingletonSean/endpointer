@@ -4,6 +4,7 @@ using Endpointer.Core.API.Http;
 using Endpointer.Core.API.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Threading.Tasks;
@@ -14,11 +15,14 @@ namespace Endpointer.Authentication.API.EndpointHandlers
     {
         private readonly IRefreshTokenRepository _refreshTokenRepository;
         private readonly IHttpRequestAuthenticator _requestAuthenticator;
+        private readonly ILogger<LogoutEverywhereEndpointHandler> _logger;
 
-        public LogoutEverywhereEndpointHandler(IRefreshTokenRepository refreshTokenRepository, IHttpRequestAuthenticator requestAuthenticator)
+        public LogoutEverywhereEndpointHandler(IRefreshTokenRepository refreshTokenRepository,
+            IHttpRequestAuthenticator requestAuthenticator, ILogger<LogoutEverywhereEndpointHandler> logger)
         {
             _refreshTokenRepository = refreshTokenRepository;
             _requestAuthenticator = requestAuthenticator;
+            _logger = logger;
         }
 
         /// <summary>
@@ -31,22 +35,28 @@ namespace Endpointer.Authentication.API.EndpointHandlers
         {
             try
             {
+                _logger.LogInformation("Authenticating request user.");
                 User user = await _requestAuthenticator.Authenticate(request);
 
+                _logger.LogInformation("Deleting refresh token for user.");
                 await _refreshTokenRepository.DeleteAll(user.Id);
 
+                _logger.LogInformation("Successfully logged out user everywhere.");
                 return new NoContentResult();
             }
-            catch (BearerSchemeNotProvidedException)
+            catch (BearerSchemeNotProvidedException ex)
             {
+                _logger.LogError(ex, "Bearer scheme not provided.");
                 return new UnauthorizedResult();
             }
-            catch (SecurityTokenDecryptionFailedException)
+            catch (SecurityTokenDecryptionFailedException ex)
             {
+                _logger.LogError(ex, "Failed to authenticate user.");
                 return new UnauthorizedResult();
             }
-            catch (SecurityTokenException)
+            catch (SecurityTokenException ex)
             {
+                _logger.LogError(ex, "Failed to authenticate user.");
                 return new UnauthorizedResult();
             }
         }
