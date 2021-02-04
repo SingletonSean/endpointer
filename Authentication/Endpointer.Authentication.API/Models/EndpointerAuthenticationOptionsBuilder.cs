@@ -50,8 +50,18 @@ namespace Endpointer.Authentication.API.Models
             return this;
         }
 
+        /// <summary>
+        /// Add data source services using a custom data source.
+        /// </summary>
+        /// <param name="dataSourceConfiguration">The configuration of the custom data source services.</param>
+        /// <returns></returns>
         public EndpointerAuthenticationOptionsBuilder WithCustomDataSource(CustomDataSourceConfiguration dataSourceConfiguration)
         {
+            _useDatabase = false;
+
+            _addUserRepository = dataSourceConfiguration.AddUserRepository;
+            _addRefreshTokenRepository = dataSourceConfiguration.AddRefreshTokenRepository;
+
             return this;
         }
 

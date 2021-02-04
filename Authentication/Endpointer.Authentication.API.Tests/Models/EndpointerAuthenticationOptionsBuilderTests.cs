@@ -44,6 +44,35 @@ namespace Endpointer.Authentication.API.Tests.Models
         }
 
         [Test()]
+        public void Build_WithCustomDataSourceAfterUseDatabase_ReturnsOptionsWithUseDatabaseFalse()
+        {
+            CustomDataSourceConfiguration dataSourceConfiguration = new CustomDataSourceConfiguration(
+                It.IsAny<Action<IServiceCollection>>(),
+                It.IsAny<Action<IServiceCollection>>()
+            );
+
+            EndpointerAuthenticationOptions options = _builder.WithDatabase().WithCustomDataSource(dataSourceConfiguration).Build();
+
+            Assert.IsFalse(options.UseDatabase);
+        }
+
+        [Test()]
+        public void Build_WithCustomDataSource_ReturnsOptionsWithCustomDataSourceServices()
+        {
+            IUserRepository customUserRepository = new Mock<IUserRepository>().Object;
+            IRefreshTokenRepository customRefreshRepository = new Mock<IRefreshTokenRepository>().Object;
+            CustomDataSourceConfiguration dataSourceConfiguration = new CustomDataSourceConfiguration(
+                (s) => s.AddSingleton(customUserRepository), s => s.AddSingleton(customRefreshRepository));
+
+            EndpointerAuthenticationOptions options = _builder.WithDatabase().WithCustomDataSource(dataSourceConfiguration).Build();
+
+            options.AddUserRepository(Services);
+            options.AddRefreshTokenRepository(Services);
+            VerifyServiceAdded(typeof(IUserRepository), customUserRepository);
+            VerifyServiceAdded(typeof(IRefreshTokenRepository), customRefreshRepository);
+        }
+
+        [Test()]
         public void Build_WithoutConfiguration_ReturnsOptionsWithUseDatabaseFalse()
         {
             EndpointerAuthenticationOptions options = _builder.Build();
@@ -73,6 +102,11 @@ namespace Endpointer.Authentication.API.Tests.Models
         private void VerifyServiceAdded(Type inter, Type implem)
         {
             _mockServices.Verify(s => s.Add(It.Is<ServiceDescriptor>(s => s.ServiceType == inter && s.ImplementationType == implem)));
+        }
+
+        private void VerifyServiceAdded(Type inter, object implem)
+        {
+            _mockServices.Verify(s => s.Add(It.Is<ServiceDescriptor>(s => s.ServiceType == inter && s.ImplementationInstance == implem)));
         }
     }
 }
