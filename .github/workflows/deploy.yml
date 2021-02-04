@@ -52,6 +52,9 @@ jobs:
       - name: "Pack Authentication API project"
         run: dotnet pack Authentication/Endpointer.Authentication.API -c ${{ env.BUILD_CONFIGURATION }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }} ${{ env.PACK_OPTIONS }}
 
+      - name: "Pack Authentication API Firebase project"
+        run: dotnet pack Authentication/Endpointer.Authentication.API.Firebase -c ${{ env.BUILD_CONFIGURATION }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }} ${{ env.PACK_OPTIONS }}
+
       - name: "Pack Authentication Client project"
         run: dotnet pack Authentication/Endpointer.Authentication.Client -c ${{ env.BUILD_CONFIGURATION }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }} ${{ env.PACK_OPTIONS }}
 
@@ -65,4 +68,4 @@ jobs:
         run: dotnet pack Accounts/Endpointer.Accounts.Client -c ${{ env.BUILD_CONFIGURATION }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }} ${{ env.PACK_OPTIONS }}
 
       - name: "Push packages"
-        run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIRECTORY }}\*.nupkg -k ${{ secrets.NUGET_AUTH_TOKEN }} -s ${{ env.NUGET_SOURCE_URL }}
+        run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIRECTORY }}\*.nupkg -k ${{ secrets.NUGET_AUTH_TOKEN }} -s ${{ env.NUGET_SOURCE_URL }} --skip-duplicate
