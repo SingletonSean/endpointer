@@ -31,7 +31,7 @@ namespace Endpointer.Authentication.API.Services.UserRepositories
 
             await _client
                 .Child(_usersKey)
-                .Child(user.Id.ToString)
+                .Child(user.Id.ToString())
                 .PutAsync(user);
 
             return user;
