@@ -13,6 +13,7 @@ using System;
 using System.Text;
 using Firebase.Database;
 using Google.Apis.Auth.OAuth2;
+using Endpointer.Authentication.API.Firebase.Extensions;
 
 namespace Endpointer.Demos.Web
 {

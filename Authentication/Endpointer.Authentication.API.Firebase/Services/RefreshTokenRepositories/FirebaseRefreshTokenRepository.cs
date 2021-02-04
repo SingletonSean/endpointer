@@ -1,4 +1,5 @@
 ﻿using Endpointer.Authentication.API.Models;
+using Endpointer.Authentication.API.Services.RefreshTokenRepositories;
 using Firebase.Database;
 using Firebase.Database.Query;
 using System;
@@ -7,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Endpointer.Authentication.API.Services.RefreshTokenRepositories
+namespace Endpointer.Authentication.API.Firebase.Services.RefreshTokenRepositories
 {
     public class FirebaseRefreshTokenRepository : IRefreshTokenRepository
     {

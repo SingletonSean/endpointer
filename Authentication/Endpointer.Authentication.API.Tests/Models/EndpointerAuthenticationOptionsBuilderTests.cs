@@ -7,7 +7,6 @@ using Moq;
 using System;
 using Endpointer.Authentication.API.Contexts;
 using System.Collections.Generic;
-using Firebase.Database;
 
 namespace Endpointer.Authentication.API.Tests.Models
 {
@@ -41,27 +40,17 @@ namespace Endpointer.Authentication.API.Tests.Models
         }
 
         [Test()]
-        public void Build_WithFirebaseDataSource_ReturnsOptionsWithFirebaseDataSourceServices()
-        {
-            FirebaseClient client = new FirebaseClient(string.Empty);
-
-            EndpointerAuthenticationOptions options = _builder.WithFirebaseDataSource(client).Build();
-
-            options.AddDataSourceServices(Services);
-            VerifyServiceAdded(typeof(FirebaseClient), client);
-            VerifyServiceAdded(typeof(IUserRepository), typeof(FirebaseUserRepository));
-            VerifyServiceAdded(typeof(IRefreshTokenRepository), typeof(FirebaseRefreshTokenRepository));
-        }
-
-        [Test()]
         public void Build_WithCustomDataSource_ReturnsOptionsWithCustomDataSourceServices()
         {
             IUserRepository customUserRepository = new Mock<IUserRepository>().Object;
             IRefreshTokenRepository customRefreshRepository = new Mock<IRefreshTokenRepository>().Object;
-            CustomDataSourceConfiguration dataSourceConfiguration = new CustomDataSourceConfiguration(
-                (s) => s.AddSingleton(customUserRepository), s => s.AddSingleton(customRefreshRepository));
+            Action<IServiceCollection> addCustomDataSource = (s) => 
+            {
+                s.AddSingleton(customUserRepository);
+                s.AddSingleton(customRefreshRepository);
+            };
 
-            EndpointerAuthenticationOptions options = _builder.WithCustomDataSource(dataSourceConfiguration).Build();
+            EndpointerAuthenticationOptions options = _builder.WithCustomDataSource(addCustomDataSource).Build();
 
             options.AddDataSourceServices(Services);
             VerifyServiceAdded(typeof(IUserRepository), customUserRepository);

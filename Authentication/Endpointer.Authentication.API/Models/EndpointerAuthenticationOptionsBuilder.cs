@@ -2,7 +2,6 @@
 using Endpointer.Authentication.API.Services.RefreshTokenRepositories;
 using Endpointer.Authentication.API.Services.UserRepositories;
 using Endpointer.Core.API.Models;
-using Firebase.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -54,34 +53,13 @@ namespace Endpointer.Authentication.API.Models
         }
 
         /// <summary>
-        /// Add Firebase data source services.
-        /// </summary>
-        /// <param name="firebaseClient">The client to connect to Firebase.</param>
-        /// <returns>The builder to configure options.</returns>
-        public EndpointerAuthenticationOptionsBuilder WithFirebaseDataSource(FirebaseClient firebaseClient)
-        {
-            _addDataSourceServices = services =>
-            {
-                services.AddSingleton(firebaseClient);
-                services.AddSingleton<IUserRepository, FirebaseUserRepository>();
-                services.AddSingleton<IRefreshTokenRepository, FirebaseRefreshTokenRepository>();
-            };
-
-            return this;
-        }
-
-        /// <summary>
         /// Add data source services using a custom data source.
         /// </summary>
-        /// <param name="dataSourceConfiguration">The configuration of the custom data source services.</param>
+        /// <param name="addDataSourceServices">The callback to add custom data source services.</param>
         /// <returns>The builder to configure options.</returns>
-        public EndpointerAuthenticationOptionsBuilder WithCustomDataSource(CustomDataSourceConfiguration dataSourceConfiguration)
+        public EndpointerAuthenticationOptionsBuilder WithCustomDataSource(Action<IServiceCollection> addDataSourceServices)
         {
-            _addDataSourceServices = services =>
-            {
-                dataSourceConfiguration.AddUserRepository(services);
-                dataSourceConfiguration.AddRefreshTokenRepository(services);
-            };
+            _addDataSourceServices = addDataSourceServices;
 
             return this;
         }

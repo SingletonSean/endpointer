@@ -61,7 +61,7 @@ namespace Endpointer.Authentication.API.Services.UserRepositories
         {
             IReadOnlyCollection<FirebaseObject<User>> users = await _client
                 .Child(_usersKey)
-                .OrderBy(nameof(User.Id))
+                .OrderByKey()
                 .EqualTo(userId.ToString())
                 .OnceAsync<User>();
 
