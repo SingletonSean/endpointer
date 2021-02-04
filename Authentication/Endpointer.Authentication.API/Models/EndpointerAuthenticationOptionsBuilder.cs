@@ -2,6 +2,7 @@
 using Endpointer.Authentication.API.Services.RefreshTokenRepositories;
 using Endpointer.Authentication.API.Services.UserRepositories;
 using Endpointer.Core.API.Models;
+using Firebase.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -32,7 +33,7 @@ namespace Endpointer.Authentication.API.Models
         }
 
         /// <summary>
-        /// Add database services to Endpointer.
+        /// Add Entity Framework database services to Endpointer.
         /// </summary>
         /// <typeparam name="TDbContext">The type of DbContext for the database.</typeparam>
         /// <param name="dbOptions">The options to configure the DbContext.</param>
@@ -47,6 +48,23 @@ namespace Endpointer.Authentication.API.Models
                 services.AddDbContext<TDbContext>(dbOptions);
                 services.AddScoped<IUserRepository, DatabaseUserRepository<TDbContext>>();
                 services.AddScoped<IRefreshTokenRepository, DatabaseRefreshTokenRepository<TDbContext>>();
+            };
+
+            return this;
+        }
+
+        /// <summary>
+        /// Add Firebase data source services.
+        /// </summary>
+        /// <param name="firebaseClient">The client to connect to Firebase.</param>
+        /// <returns>The builder to configure options.</returns>
+        public EndpointerAuthenticationOptionsBuilder WithFirebaseDataSource(FirebaseClient firebaseClient)
+        {
+            _addDataSourceServices = services =>
+            {
+                services.AddSingleton(firebaseClient);
+                services.AddSingleton<IUserRepository, FirebaseUserRepository>();
+                services.AddSingleton<IRefreshTokenRepository, FirebaseRefreshTokenRepository>();
             };
 
             return this;

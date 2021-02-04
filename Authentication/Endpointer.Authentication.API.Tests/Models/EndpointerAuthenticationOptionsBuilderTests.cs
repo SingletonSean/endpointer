@@ -7,6 +7,7 @@ using Moq;
 using System;
 using Endpointer.Authentication.API.Contexts;
 using System.Collections.Generic;
+using Firebase.Database;
 
 namespace Endpointer.Authentication.API.Tests.Models
 {
@@ -33,12 +34,23 @@ namespace Endpointer.Authentication.API.Tests.Models
         {
             EndpointerAuthenticationOptions options = _builder.WithEntityFrameworkDataSource().Build();
 
-            Assert.IsNotNull(options.AddDataSourceServices);
-
             options.AddDataSourceServices(Services);
             VerifyServiceAdded(typeof(DefaultAuthenticationDbContext), It.IsAny<DefaultAuthenticationDbContext>());
             VerifyServiceAdded(typeof(IUserRepository), typeof(DatabaseUserRepository<DefaultAuthenticationDbContext>));
             VerifyServiceAdded(typeof(IRefreshTokenRepository), typeof(DatabaseRefreshTokenRepository<DefaultAuthenticationDbContext>));
+        }
+
+        [Test()]
+        public void Build_WithFirebaseDataSource_ReturnsOptionsWithFirebaseDataSourceServices()
+        {
+            FirebaseClient client = new FirebaseClient(string.Empty);
+
+            EndpointerAuthenticationOptions options = _builder.WithFirebaseDataSource(client).Build();
+
+            options.AddDataSourceServices(Services);
+            VerifyServiceAdded(typeof(FirebaseClient), client);
+            VerifyServiceAdded(typeof(IUserRepository), typeof(FirebaseUserRepository));
+            VerifyServiceAdded(typeof(IRefreshTokenRepository), typeof(FirebaseRefreshTokenRepository));
         }
 
         [Test()]
