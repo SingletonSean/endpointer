@@ -11,6 +11,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Text;
+using Firebase.Database;
+using Google.Apis.Auth.OAuth2;
+using Endpointer.Authentication.API.Firebase.Extensions;
 
 namespace Endpointer.Demos.Web
 {
@@ -42,11 +45,17 @@ namespace Endpointer.Demos.Web
             };
 
             string connectionString = _configuration.GetConnectionString("sqlite");
+
+            // Entity Framework
+            //services.AddEndpointerAuthentication(authenticationConfiguration,
+            //    validationParameters, 
+            //    o => o.WithEntityFrameworkDataSource<CustomDbContext>(
+            //        c => c.UseSqlite(connectionString)));
+
+            // Firebase
             services.AddEndpointerAuthentication(authenticationConfiguration,
-                validationParameters, 
-                o => o.WithDatabase<CustomDbContext>(
-                    c => c.UseSqlite(connectionString))
-                );
+                validationParameters,
+                o => o.WithFirebaseDataSource(CreateFirebaseClient()));
 
             services.AddEndpointerAccounts(validationParameters,
                 o => o.WithDatabase<CustomDbContext>(
@@ -66,6 +75,41 @@ namespace Endpointer.Demos.Web
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private FirebaseClient CreateFirebaseClient()
+        {
+            return new FirebaseClient(_configuration.GetValue<string>("FirebaseURL"),
+                new FirebaseOptions
+                {
+                    AuthTokenAsyncFactory = async () =>
+                    {
+                        GoogleCredential credential = GetGoogleCredential();
+
+                        return await credential.CreateScoped(
+                                "https://www.googleapis.com/auth/userinfo.email",
+                                "https://www.googleapis.com/auth/firebase.database")
+                            .UnderlyingCredential.GetAccessTokenForRequestAsync();
+                    },
+                    AsAccessToken = true
+                });
+        }
+
+        private GoogleCredential GetGoogleCredential()
+        {
+            if (IsDevelopment())
+            {
+                return GoogleCredential.FromFile("./firebase-credential.json");
+            }
+            else
+            {
+                return GoogleCredential.FromJson(Environment.GetEnvironmentVariable("FIREBASE_CONFIG"));
+            }
+        }
+
+        private static bool IsDevelopment()
+        {
+            return Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
         }
     }
 }

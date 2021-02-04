@@ -10,35 +10,56 @@ namespace Endpointer.Authentication.API.Models
 {
     public class EndpointerAuthenticationOptionsBuilder
     {
-        private bool _useDatabase;
-        private Action<IServiceCollection> _addDbContext;
-        private Action<IServiceCollection> _addDbUserRepository;
-        private Action<IServiceCollection> _addDbRefreshTokenRepository;
+        private Action<IServiceCollection> _addDataSourceServices;
+
+        public EndpointerAuthenticationOptionsBuilder()
+        {
+            _addDataSourceServices = services =>
+            {
+                services.AddSingleton<IUserRepository, InMemoryUserRepository>();
+                services.AddSingleton<IRefreshTokenRepository, InMemoryRefreshTokenRepository>();
+            };
+        }
 
         /// <summary>
         /// Add database services to Endpointer with a DefaultAuthenticationDbContext.
         /// </summary>
         /// <param name="dbOptions">The options to configure the DbContext.</param>
         /// <returns>The builder to configure options.</returns>
-        public EndpointerAuthenticationOptionsBuilder WithDatabase(Action<DbContextOptionsBuilder> dbOptions = null)
+        public EndpointerAuthenticationOptionsBuilder WithEntityFrameworkDataSource(Action<DbContextOptionsBuilder> dbOptions = null)
         {
-            return WithDatabase<DefaultAuthenticationDbContext>(dbOptions);
+            return WithEntityFrameworkDataSource<DefaultAuthenticationDbContext>(dbOptions);
         }
 
         /// <summary>
-        /// Add database services to Endpointer.
+        /// Add Entity Framework database services to Endpointer.
         /// </summary>
         /// <typeparam name="TDbContext">The type of DbContext for the database.</typeparam>
         /// <param name="dbOptions">The options to configure the DbContext.</param>
         /// <returns>The builder to configure options.</returns>
-        public EndpointerAuthenticationOptionsBuilder WithDatabase<TDbContext>(Action<DbContextOptionsBuilder> dbOptions = null)
+        public EndpointerAuthenticationOptionsBuilder WithEntityFrameworkDataSource<TDbContext>(Action<DbContextOptionsBuilder> dbOptions = null)
             where TDbContext : DbContext, IAuthenticationDbContext<User>
         {
-            _useDatabase = true;
+            dbOptions = dbOptions ?? (o => { });
 
-            _addDbContext = services => services.AddDbContext<TDbContext>(dbOptions);
-            _addDbUserRepository = services => services.AddScoped<IUserRepository, DatabaseUserRepository<TDbContext>>();
-            _addDbRefreshTokenRepository = services => services.AddScoped<IRefreshTokenRepository, DatabaseRefreshTokenRepository<TDbContext>>();
+            _addDataSourceServices = services =>
+            {
+                services.AddDbContext<TDbContext>(dbOptions);
+                services.AddScoped<IUserRepository, DatabaseUserRepository<TDbContext>>();
+                services.AddScoped<IRefreshTokenRepository, DatabaseRefreshTokenRepository<TDbContext>>();
+            };
+
+            return this;
+        }
+
+        /// <summary>
+        /// Add data source services using a custom data source.
+        /// </summary>
+        /// <param name="addDataSourceServices">The callback to add custom data source services.</param>
+        /// <returns>The builder to configure options.</returns>
+        public EndpointerAuthenticationOptionsBuilder WithCustomDataSource(Action<IServiceCollection> addDataSourceServices)
+        {
+            _addDataSourceServices = addDataSourceServices;
 
             return this;
         }
@@ -51,10 +72,7 @@ namespace Endpointer.Authentication.API.Models
         {
             return new EndpointerAuthenticationOptions()
             {
-                UseDatabase = _useDatabase,
-                AddDbContext = _addDbContext,
-                AddDbUserRepository = _addDbUserRepository,
-                AddDbRefreshTokenRepository = _addDbRefreshTokenRepository
+                AddDataSourceServices = _addDataSourceServices,
             };
         }
     }

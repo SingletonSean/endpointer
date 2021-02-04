@@ -4,3 +4,4 @@ bin
 *.db
 secrets.txt
 todo.txt
+firebase-credential.json

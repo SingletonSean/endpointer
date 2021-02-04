@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Accounts\Endpointer.Accounts.API\Endpointer.Accounts.API.csproj" />
+    <ProjectReference Include="..\..\Authentication\Endpointer.Authentication.API.Firebase\Endpointer.Authentication.API.Firebase.csproj" />
     <ProjectReference Include="..\..\Authentication\Endpointer.Authentication.API\Endpointer.Authentication.API.csproj" />
   </ItemGroup>
 

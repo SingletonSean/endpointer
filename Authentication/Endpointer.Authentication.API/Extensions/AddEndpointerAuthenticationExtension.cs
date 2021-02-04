@@ -4,10 +4,8 @@ using Endpointer.Authentication.API.Mappers;
 using Endpointer.Authentication.API.Models;
 using Endpointer.Authentication.API.Services.Authenticators;
 using Endpointer.Authentication.API.Services.PasswordHashers;
-using Endpointer.Authentication.API.Services.RefreshTokenRepositories;
 using Endpointer.Authentication.API.Services.TokenGenerators;
 using Endpointer.Authentication.API.Services.TokenValidators;
-using Endpointer.Authentication.API.Services.UserRepositories;
 using Endpointer.Core.API.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -34,17 +32,7 @@ namespace Endpointer.Authentication.API.Extensions
             configureOptions?.Invoke(optionsBuilder);
             EndpointerAuthenticationOptions options = optionsBuilder.Build();
 
-            if(options.UseDatabase)
-            {
-                options.AddDbContext?.Invoke(services);
-                options.AddDbUserRepository?.Invoke(services);
-                options.AddDbRefreshTokenRepository?.Invoke(services);
-            }
-            else
-            {
-                services.AddSingleton<IUserRepository, InMemoryUserRepository>();
-                services.AddSingleton<IRefreshTokenRepository, InMemoryRefreshTokenRepository>();
-            }
+            options.AddDataSourceServices(services);
 
             services.AddSingleton(authenticationConfiguration);
 
