@@ -12,8 +12,14 @@ namespace Endpointer.Authentication.API.Models
     {
         private bool _useDatabase;
         private Action<IServiceCollection> _addDbContext;
-        private Action<IServiceCollection> _addDbUserRepository;
-        private Action<IServiceCollection> _addDbRefreshTokenRepository;
+        private Action<IServiceCollection> _addUserRepository;
+        private Action<IServiceCollection> _addRefreshTokenRepository;
+
+        public EndpointerAuthenticationOptionsBuilder()
+        {
+            _addUserRepository = services => services.AddSingleton<IUserRepository, InMemoryUserRepository>();
+            _addRefreshTokenRepository = services => services.AddSingleton<IRefreshTokenRepository, InMemoryRefreshTokenRepository>();
+        }
 
         /// <summary>
         /// Add database services to Endpointer with a DefaultAuthenticationDbContext.
@@ -34,12 +40,18 @@ namespace Endpointer.Authentication.API.Models
         public EndpointerAuthenticationOptionsBuilder WithDatabase<TDbContext>(Action<DbContextOptionsBuilder> dbOptions = null)
             where TDbContext : DbContext, IAuthenticationDbContext<User>
         {
+            dbOptions = dbOptions ?? (o => { }); 
             _useDatabase = true;
 
             _addDbContext = services => services.AddDbContext<TDbContext>(dbOptions);
-            _addDbUserRepository = services => services.AddScoped<IUserRepository, DatabaseUserRepository<TDbContext>>();
-            _addDbRefreshTokenRepository = services => services.AddScoped<IRefreshTokenRepository, DatabaseRefreshTokenRepository<TDbContext>>();
+            _addUserRepository = services => services.AddScoped<IUserRepository, DatabaseUserRepository<TDbContext>>();
+            _addRefreshTokenRepository = services => services.AddScoped<IRefreshTokenRepository, DatabaseRefreshTokenRepository<TDbContext>>();
 
+            return this;
+        }
+
+        public EndpointerAuthenticationOptionsBuilder WithCustomDataSource(CustomDataSourceConfiguration dataSourceConfiguration)
+        {
             return this;
         }
 
@@ -53,8 +65,8 @@ namespace Endpointer.Authentication.API.Models
             {
                 UseDatabase = _useDatabase,
                 AddDbContext = _addDbContext,
-                AddDbUserRepository = _addDbUserRepository,
-                AddDbRefreshTokenRepository = _addDbRefreshTokenRepository
+                AddUserRepository = _addUserRepository,
+                AddRefreshTokenRepository = _addRefreshTokenRepository
             };
         }
     }

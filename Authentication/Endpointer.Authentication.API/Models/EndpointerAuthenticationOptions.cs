@@ -10,7 +10,7 @@ namespace Endpointer.Authentication.API.Models
     {
         public bool UseDatabase { get; set; }
         public Action<IServiceCollection> AddDbContext { get; set; }
-        public Action<IServiceCollection> AddDbUserRepository { get; set; }
-        public Action<IServiceCollection> AddDbRefreshTokenRepository { get; set; }
+        public Action<IServiceCollection> AddUserRepository { get; set; }
+        public Action<IServiceCollection> AddRefreshTokenRepository { get; set; }
     }
 }

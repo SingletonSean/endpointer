@@ -1,5 +1,10 @@
 ﻿using NUnit.Framework;
 using Endpointer.Authentication.API.Models;
+using Microsoft.Extensions.DependencyInjection;
+using Endpointer.Authentication.API.Services.UserRepositories;
+using Endpointer.Authentication.API.Services.RefreshTokenRepositories;
+using Moq;
+using System;
 
 namespace Endpointer.Authentication.API.Tests.Models
 {
@@ -8,10 +13,16 @@ namespace Endpointer.Authentication.API.Tests.Models
     {
         private EndpointerAuthenticationOptionsBuilder _builder;
 
+        private Mock<IServiceCollection> _mockServices;
+
+        private IServiceCollection Services => _mockServices.Object;
+
         [SetUp]
         public void Setup()
         {
             _builder = new EndpointerAuthenticationOptionsBuilder();
+
+            _mockServices = new Mock<IServiceCollection>();
         }
 
         [Test()]
@@ -28,8 +39,8 @@ namespace Endpointer.Authentication.API.Tests.Models
             EndpointerAuthenticationOptions options = _builder.WithDatabase().Build();
 
             Assert.IsNotNull(options.AddDbContext);
-            Assert.IsNotNull(options.AddDbRefreshTokenRepository);
-            Assert.IsNotNull(options.AddDbUserRepository);
+            Assert.IsNotNull(options.AddRefreshTokenRepository);
+            Assert.IsNotNull(options.AddUserRepository);
         }
 
         [Test()]
@@ -46,8 +57,22 @@ namespace Endpointer.Authentication.API.Tests.Models
             EndpointerAuthenticationOptions options = _builder.Build();
 
             Assert.IsNull(options.AddDbContext);
-            Assert.IsNull(options.AddDbRefreshTokenRepository);
-            Assert.IsNull(options.AddDbUserRepository);
+        }
+
+        [Test()]
+        public void Build_WithoutConfiguration_ReturnsOptionsWithInMemoryDataSourceServices()
+        {
+            EndpointerAuthenticationOptions options = _builder.Build();
+
+            options.AddUserRepository(Services);
+            options.AddRefreshTokenRepository(Services);
+            VerifyServiceAdded(typeof(IUserRepository), typeof(InMemoryUserRepository));
+            VerifyServiceAdded(typeof(IRefreshTokenRepository), typeof(InMemoryRefreshTokenRepository));
+        }
+
+        private void VerifyServiceAdded(Type inter, Type implem)
+        {
+            _mockServices.Verify(s => s.Add(It.Is<ServiceDescriptor>(s => s.ServiceType == inter && s.ImplementationType == implem)));
         }
     }
 }
