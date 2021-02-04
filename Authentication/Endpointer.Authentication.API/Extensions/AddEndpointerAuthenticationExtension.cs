@@ -34,19 +34,7 @@ namespace Endpointer.Authentication.API.Extensions
             configureOptions?.Invoke(optionsBuilder);
             EndpointerAuthenticationOptions options = optionsBuilder.Build();
 
-            if(options.UseDatabase)
-            {
-                options.AddDbContext?.Invoke(services);
-                
-            }
-            else
-            {
-                services.AddSingleton<IUserRepository, InMemoryUserRepository>();
-                services.AddSingleton<IRefreshTokenRepository, InMemoryRefreshTokenRepository>();
-            }
-
-            options.AddUserRepository(services);
-            options.AddRefreshTokenRepository(services);
+            options.AddDataSourceServices(services);
 
             services.AddSingleton(authenticationConfiguration);
 

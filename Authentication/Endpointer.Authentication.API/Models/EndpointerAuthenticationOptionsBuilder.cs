@@ -10,15 +10,15 @@ namespace Endpointer.Authentication.API.Models
 {
     public class EndpointerAuthenticationOptionsBuilder
     {
-        private bool _useDatabase;
-        private Action<IServiceCollection> _addDbContext;
-        private Action<IServiceCollection> _addUserRepository;
-        private Action<IServiceCollection> _addRefreshTokenRepository;
+        private Action<IServiceCollection> _addDataSourceServices;
 
         public EndpointerAuthenticationOptionsBuilder()
         {
-            _addUserRepository = services => services.AddSingleton<IUserRepository, InMemoryUserRepository>();
-            _addRefreshTokenRepository = services => services.AddSingleton<IRefreshTokenRepository, InMemoryRefreshTokenRepository>();
+            _addDataSourceServices = services =>
+            {
+                services.AddSingleton<IUserRepository, InMemoryUserRepository>();
+                services.AddSingleton<IRefreshTokenRepository, InMemoryRefreshTokenRepository>();
+            };
         }
 
         /// <summary>
@@ -26,9 +26,9 @@ namespace Endpointer.Authentication.API.Models
         /// </summary>
         /// <param name="dbOptions">The options to configure the DbContext.</param>
         /// <returns>The builder to configure options.</returns>
-        public EndpointerAuthenticationOptionsBuilder WithDatabase(Action<DbContextOptionsBuilder> dbOptions = null)
+        public EndpointerAuthenticationOptionsBuilder WithEntityFrameworkDataSource(Action<DbContextOptionsBuilder> dbOptions = null)
         {
-            return WithDatabase<DefaultAuthenticationDbContext>(dbOptions);
+            return WithEntityFrameworkDataSource<DefaultAuthenticationDbContext>(dbOptions);
         }
 
         /// <summary>
@@ -37,15 +37,17 @@ namespace Endpointer.Authentication.API.Models
         /// <typeparam name="TDbContext">The type of DbContext for the database.</typeparam>
         /// <param name="dbOptions">The options to configure the DbContext.</param>
         /// <returns>The builder to configure options.</returns>
-        public EndpointerAuthenticationOptionsBuilder WithDatabase<TDbContext>(Action<DbContextOptionsBuilder> dbOptions = null)
+        public EndpointerAuthenticationOptionsBuilder WithEntityFrameworkDataSource<TDbContext>(Action<DbContextOptionsBuilder> dbOptions = null)
             where TDbContext : DbContext, IAuthenticationDbContext<User>
         {
-            dbOptions = dbOptions ?? (o => { }); 
-            _useDatabase = true;
+            dbOptions = dbOptions ?? (o => { });
 
-            _addDbContext = services => services.AddDbContext<TDbContext>(dbOptions);
-            _addUserRepository = services => services.AddScoped<IUserRepository, DatabaseUserRepository<TDbContext>>();
-            _addRefreshTokenRepository = services => services.AddScoped<IRefreshTokenRepository, DatabaseRefreshTokenRepository<TDbContext>>();
+            _addDataSourceServices = services =>
+            {
+                services.AddDbContext<TDbContext>(dbOptions);
+                services.AddScoped<IUserRepository, DatabaseUserRepository<TDbContext>>();
+                services.AddScoped<IRefreshTokenRepository, DatabaseRefreshTokenRepository<TDbContext>>();
+            };
 
             return this;
         }
@@ -54,13 +56,14 @@ namespace Endpointer.Authentication.API.Models
         /// Add data source services using a custom data source.
         /// </summary>
         /// <param name="dataSourceConfiguration">The configuration of the custom data source services.</param>
-        /// <returns></returns>
+        /// <returns>The builder to configure options.</returns>
         public EndpointerAuthenticationOptionsBuilder WithCustomDataSource(CustomDataSourceConfiguration dataSourceConfiguration)
         {
-            _useDatabase = false;
-
-            _addUserRepository = dataSourceConfiguration.AddUserRepository;
-            _addRefreshTokenRepository = dataSourceConfiguration.AddRefreshTokenRepository;
+            _addDataSourceServices = services =>
+            {
+                dataSourceConfiguration.AddUserRepository(services);
+                dataSourceConfiguration.AddRefreshTokenRepository(services);
+            };
 
             return this;
         }
@@ -73,10 +76,7 @@ namespace Endpointer.Authentication.API.Models
         {
             return new EndpointerAuthenticationOptions()
             {
-                UseDatabase = _useDatabase,
-                AddDbContext = _addDbContext,
-                AddUserRepository = _addUserRepository,
-                AddRefreshTokenRepository = _addRefreshTokenRepository
+                AddDataSourceServices = _addDataSourceServices,
             };
         }
     }

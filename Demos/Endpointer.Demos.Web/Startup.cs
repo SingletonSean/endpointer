@@ -44,9 +44,8 @@ namespace Endpointer.Demos.Web
             string connectionString = _configuration.GetConnectionString("sqlite");
             services.AddEndpointerAuthentication(authenticationConfiguration,
                 validationParameters, 
-                o => o.WithDatabase<CustomDbContext>(
-                    c => c.UseSqlite(connectionString))
-                );
+                o => o.WithEntityFrameworkDataSource<CustomDbContext>(
+                    c => c.UseSqlite(connectionString)));
 
             services.AddEndpointerAccounts(validationParameters,
                 o => o.WithDatabase<CustomDbContext>(

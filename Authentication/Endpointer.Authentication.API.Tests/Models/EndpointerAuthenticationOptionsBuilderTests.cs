@@ -5,6 +5,8 @@ using Endpointer.Authentication.API.Services.UserRepositories;
 using Endpointer.Authentication.API.Services.RefreshTokenRepositories;
 using Moq;
 using System;
+using Endpointer.Authentication.API.Contexts;
+using System.Collections.Generic;
 
 namespace Endpointer.Authentication.API.Tests.Models
 {
@@ -23,37 +25,20 @@ namespace Endpointer.Authentication.API.Tests.Models
             _builder = new EndpointerAuthenticationOptionsBuilder();
 
             _mockServices = new Mock<IServiceCollection>();
+            _mockServices.Setup(s => s.GetEnumerator()).Returns(new List<ServiceDescriptor>().GetEnumerator());
         }
 
         [Test()]
-        public void Build_WithDatabase_ReturnsOptionsWithUseDatabaseTrue()
+        public void Build_WithEntityFrameworkDataSource_ReturnsOptionsWithEntityFrameworkDataSourceServices()
         {
-            EndpointerAuthenticationOptions options = _builder.WithDatabase().Build();
+            EndpointerAuthenticationOptions options = _builder.WithEntityFrameworkDataSource().Build();
 
-            Assert.IsTrue(options.UseDatabase);
-        }
+            Assert.IsNotNull(options.AddDataSourceServices);
 
-        [Test()]
-        public void Build_WithDatabase_ReturnsOptionsWithDatabaseServices()
-        {
-            EndpointerAuthenticationOptions options = _builder.WithDatabase().Build();
-
-            Assert.IsNotNull(options.AddDbContext);
-            Assert.IsNotNull(options.AddRefreshTokenRepository);
-            Assert.IsNotNull(options.AddUserRepository);
-        }
-
-        [Test()]
-        public void Build_WithCustomDataSourceAfterUseDatabase_ReturnsOptionsWithUseDatabaseFalse()
-        {
-            CustomDataSourceConfiguration dataSourceConfiguration = new CustomDataSourceConfiguration(
-                It.IsAny<Action<IServiceCollection>>(),
-                It.IsAny<Action<IServiceCollection>>()
-            );
-
-            EndpointerAuthenticationOptions options = _builder.WithDatabase().WithCustomDataSource(dataSourceConfiguration).Build();
-
-            Assert.IsFalse(options.UseDatabase);
+            options.AddDataSourceServices(Services);
+            VerifyServiceAdded(typeof(DefaultAuthenticationDbContext), It.IsAny<DefaultAuthenticationDbContext>());
+            VerifyServiceAdded(typeof(IUserRepository), typeof(DatabaseUserRepository<DefaultAuthenticationDbContext>));
+            VerifyServiceAdded(typeof(IRefreshTokenRepository), typeof(DatabaseRefreshTokenRepository<DefaultAuthenticationDbContext>));
         }
 
         [Test()]
@@ -64,28 +49,11 @@ namespace Endpointer.Authentication.API.Tests.Models
             CustomDataSourceConfiguration dataSourceConfiguration = new CustomDataSourceConfiguration(
                 (s) => s.AddSingleton(customUserRepository), s => s.AddSingleton(customRefreshRepository));
 
-            EndpointerAuthenticationOptions options = _builder.WithDatabase().WithCustomDataSource(dataSourceConfiguration).Build();
+            EndpointerAuthenticationOptions options = _builder.WithCustomDataSource(dataSourceConfiguration).Build();
 
-            options.AddUserRepository(Services);
-            options.AddRefreshTokenRepository(Services);
+            options.AddDataSourceServices(Services);
             VerifyServiceAdded(typeof(IUserRepository), customUserRepository);
             VerifyServiceAdded(typeof(IRefreshTokenRepository), customRefreshRepository);
-        }
-
-        [Test()]
-        public void Build_WithoutConfiguration_ReturnsOptionsWithUseDatabaseFalse()
-        {
-            EndpointerAuthenticationOptions options = _builder.Build();
-
-            Assert.IsFalse(options.UseDatabase);
-        }
-
-        [Test()]
-        public void Build_WithoutConfiguration_ReturnsOptionsWithoutDatabaseServices()
-        {
-            EndpointerAuthenticationOptions options = _builder.Build();
-
-            Assert.IsNull(options.AddDbContext);
         }
 
         [Test()]
@@ -93,8 +61,7 @@ namespace Endpointer.Authentication.API.Tests.Models
         {
             EndpointerAuthenticationOptions options = _builder.Build();
 
-            options.AddUserRepository(Services);
-            options.AddRefreshTokenRepository(Services);
+            options.AddDataSourceServices(Services);
             VerifyServiceAdded(typeof(IUserRepository), typeof(InMemoryUserRepository));
             VerifyServiceAdded(typeof(IRefreshTokenRepository), typeof(InMemoryRefreshTokenRepository));
         }
