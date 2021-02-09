@@ -2,11 +2,11 @@
 using Endpointer.Authentication.API.EndpointHandlers;
 using Endpointer.Authentication.API.Mappers;
 using Endpointer.Authentication.API.Models;
-using Endpointer.Authentication.API.Models.Users;
 using Endpointer.Authentication.API.Services.Authenticators;
 using Endpointer.Authentication.API.Services.PasswordHashers;
 using Endpointer.Authentication.API.Services.TokenGenerators;
 using Endpointer.Authentication.API.Services.TokenValidators;
+using Endpointer.Authentication.API.Services.UserRegisters;
 using Endpointer.Core.API.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -48,11 +48,11 @@ namespace Endpointer.Authentication.API.Extensions
 
             if(options.RequireEmailVerification)
             {
-                services.AddSingleton<IUserFactory, UnverifiedUserFactory>();
+                services.AddSingleton<IUserRegister, UserRegister>();
             }
             else
             {
-                services.AddSingleton<IUserFactory, UserFactory>();
+                services.AddSingleton<IUserRegister, UserRegister>();
             }
 
 

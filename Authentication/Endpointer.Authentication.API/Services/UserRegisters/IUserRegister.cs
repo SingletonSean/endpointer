@@ -2,18 +2,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace Endpointer.Authentication.API.Models.Users
+namespace Endpointer.Authentication.API.Services.UserRegisters
 {
-    public interface IUserFactory
+    public interface IUserRegister
     {
         /// <summary>
-        /// Create a new user.
+        /// Register a new user.
         /// </summary>
         /// <param name="email">The user's email.</param>
         /// <param name="username">The user's username.</param>
         /// <param name="passwordHash">The user's hashed password.</param>
         /// <returns>The created user.</returns>
-        User CreateUser(string email, string username, string passwordHash);
+        /// <exception cref="Exception">Thrown if registration fails.</exception>
+        Task<User> RegisterUser(string email, string username, string passwordHash);
     }
 }

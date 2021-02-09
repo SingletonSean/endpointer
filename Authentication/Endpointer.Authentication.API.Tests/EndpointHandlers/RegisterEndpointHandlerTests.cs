@@ -1,6 +1,6 @@
 ﻿using Endpointer.Authentication.API.EndpointHandlers;
-using Endpointer.Authentication.API.Models.Users;
 using Endpointer.Authentication.API.Services.PasswordHashers;
+using Endpointer.Authentication.API.Services.UserRegisters;
 using Endpointer.Authentication.API.Services.UserRepositories;
 using Endpointer.Authentication.Core.Models.Requests;
 using Endpointer.Core.API.Models;
@@ -20,7 +20,7 @@ namespace Endpointer.Authentication.API.Tests.EndpointHandlers
 
         private Mock<IUserRepository> _mockUserRepository;
         private Mock<IPasswordHasher> _mockPasswordHasher;
-        private Mock<IUserFactory> _mockUserFactory;
+        private Mock<IUserRegister> _mockUserRegister;
 
         private RegisterRequest _request;
         private ModelStateDictionary _validModelState;
@@ -31,12 +31,12 @@ namespace Endpointer.Authentication.API.Tests.EndpointHandlers
         {
             _mockUserRepository = new Mock<IUserRepository>();
             _mockPasswordHasher = new Mock<IPasswordHasher>();
-            _mockUserFactory = new Mock<IUserFactory>();
+            _mockUserRegister = new Mock<IUserRegister>();
 
             _handler = new RegisterEndpointHandler(
                 _mockUserRepository.Object,
                 _mockPasswordHasher.Object,
-                _mockUserFactory.Object,
+                _mockUserRegister.Object,
                 new Mock<ILogger<RegisterEndpointHandler>>().Object);
 
             _request = new RegisterRequest()
@@ -93,7 +93,7 @@ namespace Endpointer.Authentication.API.Tests.EndpointHandlers
         {
             _mockUserRepository.Setup(s => s.GetByEmail(_request.Email)).ReturnsAsync(() => null);
             _mockUserRepository.Setup(s => s.GetByUsername(_request.Username)).ReturnsAsync(() => null);
-            _mockUserRepository.Setup(s => s.Create(It.IsAny<User>())).ThrowsAsync(new Exception());
+            _mockUserRegister.Setup(s => s.RegisterUser(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).ThrowsAsync(new Exception());
 
             Assert.ThrowsAsync<Exception>(() => _handler.HandleRegister(_request, _validModelState));
         }
@@ -110,15 +110,14 @@ namespace Endpointer.Authentication.API.Tests.EndpointHandlers
         }
 
         [Test]
-        public async Task HandleRegister_WithSuccess_CreatesUser()
+        public async Task HandleRegister_WithSuccess_RegistersUser()
         {
             _mockUserRepository.Setup(s => s.GetByEmail(_request.Email)).ReturnsAsync(() => null);
             _mockUserRepository.Setup(s => s.GetByUsername(_request.Username)).ReturnsAsync(() => null);
 
             await _handler.HandleRegister(_request, _validModelState);
 
-            _mockUserFactory.Verify(f => f.CreateUser(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
-            _mockUserRepository.Verify(r => r.Create(It.IsAny<User>()), Times.Once);
+            _mockUserRegister.Verify(f => f.RegisterUser(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
         }
     }
 }
