@@ -3,8 +3,10 @@ using Endpointer.Authentication.API.EndpointHandlers;
 using Endpointer.Authentication.API.Mappers;
 using Endpointer.Authentication.API.Models;
 using Endpointer.Authentication.API.Services.Authenticators;
+using Endpointer.Authentication.API.Services.EmailSenders;
 using Endpointer.Authentication.API.Services.PasswordHashers;
 using Endpointer.Authentication.API.Services.TokenGenerators;
+using Endpointer.Authentication.API.Services.TokenGenerators.EmailVerifications;
 using Endpointer.Authentication.API.Services.TokenValidators;
 using Endpointer.Authentication.API.Services.UserRegisters;
 using Endpointer.Core.API.Extensions;
@@ -48,6 +50,12 @@ namespace Endpointer.Authentication.API.Extensions
 
             if(options.RequireEmailVerification)
             {
+                FluentEmailServicesBuilder emailBuilder = services.AddFluentEmail(options.EmailVerificationConfiguration.EmailFromAddress);
+                options.EmailVerificationConfiguration.ConfigureFluentEmailServices?.Invoke(emailBuilder);
+
+                services.AddSingleton(options.EmailVerificationConfiguration);
+                services.AddSingleton<IEmailVerificationTokenGenerator, EmailVerificationTokenGenerator>();
+                services.AddSingleton<IEmailSender, FluentEmailSender>();
                 services.AddSingleton<IUserRegister, EmailVerificationUserRegister>();
             }
             else

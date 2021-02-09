@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace Endpointer.Authentication.API.Models
 {
@@ -21,6 +20,7 @@ namespace Endpointer.Authentication.API.Models
         public string TokenIssuer { get; set; }
         public string TokenAudience { get; set; }
         public double TokenExpirationMinutes { get; set; }
+        public Action<FluentEmailServicesBuilder> ConfigureFluentEmailServices { get; set; }
 
         public EmailVerificationConfiguration()
         {

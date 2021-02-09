@@ -46,13 +46,6 @@ namespace Endpointer.Demos.Web
 
             string connectionString = _configuration.GetConnectionString("sqlite");
 
-            // Entity Framework
-            //services.AddEndpointerAuthentication(authenticationConfiguration,
-            //    validationParameters, 
-            //    o => o.WithEntityFrameworkDataSource<CustomDbContext>(
-            //        c => c.UseSqlite(connectionString)));
-
-            // Firebase
             EmailVerificationConfiguration emailVerificationConfiguration = new EmailVerificationConfiguration()
             {
                 EmailFromAddress = "test@endpointer.com",
@@ -61,8 +54,16 @@ namespace Endpointer.Demos.Web
                 TokenExpirationMinutes = 60,
                 TokenSecret = authenticationConfiguration.AccessTokenSecret,
                 VerifyBaseUrl = "https://localhost:5001/verify",
+                ConfigureFluentEmailServices = (builder) => builder.AddSendGridSender("API_KEY")
             };
 
+            // Entity Framework
+            //services.AddEndpointerAuthentication(authenticationConfiguration,
+            //    validationParameters, 
+            //    o => o.WithEntityFrameworkDataSource<CustomDbContext>(
+            //        c => c.UseSqlite(connectionString)));
+
+            // Firebase
             services.AddEndpointerAuthentication(authenticationConfiguration,
                 validationParameters,
                 o => o
