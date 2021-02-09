@@ -16,6 +16,7 @@ namespace Endpointer.Core.API.Http
         /// <exception cref="BearerSchemeNotProvidedException">Thrown if Authorization header does not have 'Bearer ' prefix.</exception>
         /// <exception cref="SecurityTokenException">Thrown if unable to get claims from token.</exception>
         /// <exception cref="SecurityTokenDecryptionFailedException">Thrown if unable to get user values from token.</exception>
+        /// <exception cref="UnverifiedEmailException">Thrown if user has an unverified email.</exception>
         Task<User> Authenticate(HttpRequest request);
     }
 }
