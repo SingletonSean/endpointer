@@ -1,4 +1,5 @@
 ﻿using Endpointer.Authentication.API.Models;
+using Endpointer.Core.API.Services.TokenClaimsDecoders;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -9,11 +10,13 @@ namespace Endpointer.Authentication.API.Services.TokenValidators
 {
     public class RefreshTokenValidator : IRefreshTokenValidator
     {
+        private readonly ITokenClaimsDecoder _tokenDecoder;
         private readonly AuthenticationConfiguration _configuration;
         private readonly ILogger<RefreshTokenValidator> _logger;
 
-        public RefreshTokenValidator(AuthenticationConfiguration configuration, ILogger<RefreshTokenValidator> logger)
+        public RefreshTokenValidator(ITokenClaimsDecoder tokenDecoder, AuthenticationConfiguration configuration, ILogger<RefreshTokenValidator> logger)
         {
+            _tokenDecoder = tokenDecoder;
             _configuration = configuration;
             _logger = logger;
         }
@@ -33,12 +36,10 @@ namespace Endpointer.Authentication.API.Services.TokenValidators
                 ClockSkew = TimeSpan.Zero
             };
 
-            JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
-
             try
             {
                 _logger.LogInformation("Validating token.");
-                tokenHandler.ValidateToken(refreshToken, validationParameters, out SecurityToken validatedToken);
+                _tokenDecoder.GetClaims(refreshToken, validationParameters);
 
                 _logger.LogInformation("Successfully validated token.");
                 return true;

@@ -11,11 +11,15 @@ namespace Endpointer.Core.API.Services.TokenDecoders
     public class AccessTokenDecoder : IAccessTokenDecoder
     {
         private readonly ITokenClaimsDecoder _claimsDecoder;
+        private readonly TokenValidationParameters _tokenValidationParameters;
         private readonly ILogger<AccessTokenDecoder> _logger;
 
-        public AccessTokenDecoder(ITokenClaimsDecoder claimsDecoder, ILogger<AccessTokenDecoder> logger)
+        public AccessTokenDecoder(ITokenClaimsDecoder claimsDecoder,
+            TokenValidationParameters tokenValidationParameters,
+            ILogger<AccessTokenDecoder> logger)
         {
             _claimsDecoder = claimsDecoder;
+            _tokenValidationParameters = tokenValidationParameters;
             _logger = logger;
         }
 
@@ -23,7 +27,7 @@ namespace Endpointer.Core.API.Services.TokenDecoders
         public Task<User> GetUserFromToken(string token)
         {
             _logger.LogInformation("Getting claims from token.");
-            ClaimsPrincipal claims = _claimsDecoder.GetClaims(token);
+            ClaimsPrincipal claims = _claimsDecoder.GetClaims(token, _tokenValidationParameters);
 
             _logger.LogInformation("Getting user ID from token claims.");
             Guid id = GetId(claims);

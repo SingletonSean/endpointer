@@ -25,13 +25,13 @@ namespace Endpointer.Core.API.Tests.Services.TokenDecoders
         {
             _mockTokenClaimsDecoder = new Mock<ITokenClaimsDecoder>();
 
-            _decoder = new AccessTokenDecoder(_mockTokenClaimsDecoder.Object, new Mock<ILogger<AccessTokenDecoder>>().Object);
+            _decoder = new AccessTokenDecoder(_mockTokenClaimsDecoder.Object, It.IsAny<TokenValidationParameters>(), new Mock<ILogger<AccessTokenDecoder>>().Object);
         }
 
         [Test]
         public void GetUserFromToken_WithSecurityTokenException_ThrowsSecurityTokenException()
         {
-            _mockTokenClaimsDecoder.Setup(d => d.GetClaims(_token)).Throws(new SecurityTokenException());
+            _mockTokenClaimsDecoder.Setup(d => d.GetClaims(_token, It.IsAny<TokenValidationParameters>())).Throws(new SecurityTokenException());
 
             Assert.ThrowsAsync<SecurityTokenException>(() => _decoder.GetUserFromToken(_token));
         }
@@ -40,7 +40,7 @@ namespace Endpointer.Core.API.Tests.Services.TokenDecoders
         public void GetUserFromToken_WithNoIdClaim_ThrowsSecurityTokenDecryptionFailedException()
         {
             ClaimsPrincipal claims = new ClaimsPrincipal();
-            _mockTokenClaimsDecoder.Setup(d => d.GetClaims(_token)).Returns(claims);
+            _mockTokenClaimsDecoder.Setup(d => d.GetClaims(_token, It.IsAny<TokenValidationParameters>())).Returns(claims);
 
             Assert.ThrowsAsync<SecurityTokenDecryptionFailedException>(() => _decoder.GetUserFromToken(_token));
         }
@@ -49,7 +49,7 @@ namespace Endpointer.Core.API.Tests.Services.TokenDecoders
         public void GetUserFromToken_WithNonGuidIdClaim_ThrowsSecurityTokenDecryptionFailedException()
         {
             ClaimsPrincipal claims = CreateClaims(new Claim("id", "not_a_guid"));
-            _mockTokenClaimsDecoder.Setup(d => d.GetClaims(_token)).Returns(claims);
+            _mockTokenClaimsDecoder.Setup(d => d.GetClaims(_token, It.IsAny<TokenValidationParameters>())).Returns(claims);
 
             Assert.ThrowsAsync<SecurityTokenDecryptionFailedException>(() => _decoder.GetUserFromToken(_token));
         }
@@ -58,7 +58,7 @@ namespace Endpointer.Core.API.Tests.Services.TokenDecoders
         public void GetUserFromToken_WithNoEmailClaim_ThrowsSecurityTokenDecryptionFailedException()
         {
             ClaimsPrincipal claims = CreateClaims(new Claim("id", Guid.NewGuid().ToString()));
-            _mockTokenClaimsDecoder.Setup(d => d.GetClaims(_token)).Returns(claims);
+            _mockTokenClaimsDecoder.Setup(d => d.GetClaims(_token, It.IsAny<TokenValidationParameters>())).Returns(claims);
 
             Assert.ThrowsAsync<SecurityTokenDecryptionFailedException>(() => _decoder.GetUserFromToken(_token));
         }
@@ -69,7 +69,7 @@ namespace Endpointer.Core.API.Tests.Services.TokenDecoders
             ClaimsPrincipal claims = CreateClaims(
                 new Claim("id", Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.Email, "test@gmail.com"));
-            _mockTokenClaimsDecoder.Setup(d => d.GetClaims(_token)).Returns(claims);
+            _mockTokenClaimsDecoder.Setup(d => d.GetClaims(_token, It.IsAny<TokenValidationParameters>())).Returns(claims);
 
             Assert.ThrowsAsync<SecurityTokenDecryptionFailedException>(() => _decoder.GetUserFromToken(_token));
         }
@@ -81,7 +81,7 @@ namespace Endpointer.Core.API.Tests.Services.TokenDecoders
                 new Claim("id", Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.Email, "test@gmail.com"),
                 new Claim(ClaimTypes.Name, "test"));
-            _mockTokenClaimsDecoder.Setup(d => d.GetClaims(_token)).Returns(claims);
+            _mockTokenClaimsDecoder.Setup(d => d.GetClaims(_token, It.IsAny<TokenValidationParameters>())).Returns(claims);
 
             User user = await _decoder.GetUserFromToken(_token);
 
@@ -96,7 +96,7 @@ namespace Endpointer.Core.API.Tests.Services.TokenDecoders
                 new Claim(ClaimTypes.Email, "test@gmail.com"),
                 new Claim(ClaimTypes.Name, "test"),
                 new Claim(ClaimKey.EMAIL_VERIFIED, string.Empty));
-            _mockTokenClaimsDecoder.Setup(d => d.GetClaims(_token)).Returns(claims);
+            _mockTokenClaimsDecoder.Setup(d => d.GetClaims(_token, It.IsAny<TokenValidationParameters>())).Returns(claims);
 
             User user = await _decoder.GetUserFromToken(_token);
 
@@ -111,7 +111,7 @@ namespace Endpointer.Core.API.Tests.Services.TokenDecoders
                 new Claim(ClaimTypes.Email, "test@gmail.com"),
                 new Claim(ClaimTypes.Name, "test"),
                 new Claim(ClaimKey.EMAIL_VERIFIED, "true"));
-            _mockTokenClaimsDecoder.Setup(d => d.GetClaims(_token)).Returns(claims);
+            _mockTokenClaimsDecoder.Setup(d => d.GetClaims(_token, It.IsAny<TokenValidationParameters>())).Returns(claims);
 
             User user = await _decoder.GetUserFromToken(_token);
 
@@ -126,7 +126,7 @@ namespace Endpointer.Core.API.Tests.Services.TokenDecoders
                 new Claim(ClaimTypes.Email, "test@gmail.com"),
                 new Claim(ClaimTypes.Name, "test"),
                 new Claim(ClaimKey.EMAIL_VERIFIED, "false"));
-            _mockTokenClaimsDecoder.Setup(d => d.GetClaims(_token)).Returns(claims);
+            _mockTokenClaimsDecoder.Setup(d => d.GetClaims(_token, It.IsAny<TokenValidationParameters>())).Returns(claims);
 
             User user = await _decoder.GetUserFromToken(_token);
 
@@ -145,7 +145,7 @@ namespace Endpointer.Core.API.Tests.Services.TokenDecoders
                 new Claim(ClaimTypes.Email, email),
                 new Claim(ClaimTypes.Name, username),
                 new Claim(ClaimKey.EMAIL_VERIFIED, emailVerified.ToString()));
-            _mockTokenClaimsDecoder.Setup(d => d.GetClaims(_token)).Returns(claims);
+            _mockTokenClaimsDecoder.Setup(d => d.GetClaims(_token, It.IsAny<TokenValidationParameters>())).Returns(claims);
 
             User user = await _decoder.GetUserFromToken(_token);
 
