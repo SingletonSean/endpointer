@@ -53,11 +53,21 @@ namespace Endpointer.Demos.Web
             //        c => c.UseSqlite(connectionString)));
 
             // Firebase
+            EmailVerificationConfiguration emailVerificationConfiguration = new EmailVerificationConfiguration()
+            {
+                EmailFromAddress = "test@endpointer.com",
+                TokenAudience = "localhost:5001",
+                TokenIssuer = "localhost:5001",
+                TokenExpirationMinutes = 60,
+                TokenSecret = authenticationConfiguration.AccessTokenSecret,
+                VerifyBaseUrl = "localhost:5001/verify"
+            };
+
             services.AddEndpointerAuthentication(authenticationConfiguration,
                 validationParameters,
                 o => o
                     .WithFirebaseDataSource(CreateFirebaseClient())
-                    .RequireEmailVerification());
+                    .RequireEmailVerification(emailVerificationConfiguration));
 
             services.AddEndpointerAccounts(validationParameters,
                 o => o.WithDatabase<CustomDbContext>(

@@ -36,7 +36,7 @@ namespace Endpointer.Authentication.API.Services.TokenGenerators.EmailVerificati
                 _configuration.TokenSecret,
                 _configuration.TokenIssuer,
                 _configuration.TokenAudience,
-                _configuration.TokenExpirationTime,
+                DateTime.Now.AddMinutes(_configuration.TokenExpirationMinutes),
                 claims);
         }
     }

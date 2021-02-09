@@ -21,7 +21,6 @@ namespace Endpointer.Authentication.API.Tests.Services.TokenGenerators.EmailVeri
         private EmailVerificationConfiguration _configuration;
 
         private string _email;
-        private DateTime _expirationTime;
 
         [SetUp]
         public void Setup()
@@ -32,7 +31,7 @@ namespace Endpointer.Authentication.API.Tests.Services.TokenGenerators.EmailVeri
                 TokenSecret = "12345",
                 TokenAudience = "localhost:5000/audience",
                 TokenIssuer = "localhost:5000/issuer",
-                TokenExpirationTime = DateTime.Now.AddDays(3)
+                TokenExpirationMinutes = 5
             };
 
             _tokenGenerator = new EmailVerificationTokenGenerator(
@@ -68,7 +67,7 @@ namespace Endpointer.Authentication.API.Tests.Services.TokenGenerators.EmailVeri
                 _configuration.TokenSecret, 
                 _configuration.TokenIssuer, 
                 _configuration.TokenAudience, 
-                _configuration.TokenExpirationTime, 
+                It.IsAny<DateTime>(), 
                 It.IsAny<IEnumerable<Claim>>());
         }
     }

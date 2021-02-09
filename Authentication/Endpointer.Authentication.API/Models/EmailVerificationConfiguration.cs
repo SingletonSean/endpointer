@@ -20,7 +20,7 @@ namespace Endpointer.Authentication.API.Models
         public string TokenSecret { get; set; }
         public string TokenIssuer { get; set; }
         public string TokenAudience { get; set; }
-        public DateTime TokenExpirationTime { get; set; }
+        public double TokenExpirationMinutes { get; set; }
 
         public EmailVerificationConfiguration()
         {
