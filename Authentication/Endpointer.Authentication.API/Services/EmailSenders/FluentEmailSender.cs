@@ -8,10 +8,17 @@ namespace Endpointer.Authentication.API.Services.EmailSenders
 {
     public class FluentEmailSender : IEmailSender
     {
+        private readonly IFluentEmail _fluentEmail;
+
+        public FluentEmailSender(IFluentEmail fluentEmail)
+        {
+            _fluentEmail = fluentEmail;
+        }
+
         /// <inheritdoc />
         public async Task Send(string from, string to, string subject, string body)
         {
-            await Email.From(from).To(to).Subject(subject).Body(body).SendAsync();
+            await _fluentEmail.SetFrom(from).To(to).Subject(subject).Body(body).SendAsync();
         }
     }
 }

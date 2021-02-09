@@ -60,7 +60,7 @@ namespace Endpointer.Demos.Web
                 TokenIssuer = "localhost:5001",
                 TokenExpirationMinutes = 60,
                 TokenSecret = authenticationConfiguration.AccessTokenSecret,
-                VerifyBaseUrl = "localhost:5001/verify"
+                VerifyBaseUrl = "https://localhost:5001/verify",
             };
 
             services.AddEndpointerAuthentication(authenticationConfiguration,
