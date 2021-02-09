@@ -45,7 +45,16 @@ namespace Endpointer.Authentication.API.Extensions
             services.AddScoped<IAuthenticator, Authenticator>();
             services.AddSingleton<ITokenGenerator, TokenGenerator>();
             services.AddSingleton<IPasswordHasher, BcryptPasswordHasher>();
-            services.AddSingleton<IUserFactory, UserFactory>();
+
+            if(options.RequireEmailVerification)
+            {
+                services.AddSingleton<IUserFactory, UnverifiedUserFactory>();
+            }
+            else
+            {
+                services.AddSingleton<IUserFactory, UserFactory>();
+            }
+
 
             services.AddScoped<RegisterEndpointHandler>();
             services.AddScoped<LoginEndpointHandler>();

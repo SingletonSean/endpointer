@@ -11,6 +11,7 @@ namespace Endpointer.Authentication.API.Models
     public class EndpointerAuthenticationOptionsBuilder
     {
         private Action<IServiceCollection> _addDataSourceServices;
+        private bool _requireEmailVerification;
 
         public EndpointerAuthenticationOptionsBuilder()
         {
@@ -19,6 +20,7 @@ namespace Endpointer.Authentication.API.Models
                 services.AddSingleton<IUserRepository, InMemoryUserRepository>();
                 services.AddSingleton<IRefreshTokenRepository, InMemoryRefreshTokenRepository>();
             };
+            _requireEmailVerification = false;
         }
 
         /// <summary>
@@ -65,6 +67,17 @@ namespace Endpointer.Authentication.API.Models
         }
 
         /// <summary>
+        /// Require new user's to verify their emails.
+        /// </summary>
+        /// <returns>The builder to configure options.</returns>
+        public EndpointerAuthenticationOptionsBuilder RequireEmailVerification()
+        {
+            _requireEmailVerification = true;
+
+            return this;
+        }
+
+        /// <summary>
         /// Build the Endpointer options.
         /// </summary>
         /// <returns>The built options.</returns>
@@ -72,6 +85,7 @@ namespace Endpointer.Authentication.API.Models
         {
             return new EndpointerAuthenticationOptions()
             {
+                RequireEmailVerification = _requireEmailVerification,
                 AddDataSourceServices = _addDataSourceServices,
             };
         }

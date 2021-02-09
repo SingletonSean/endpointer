@@ -29,6 +29,14 @@ namespace Endpointer.Authentication.API.Tests.Models
         }
 
         [Test()]
+        public void Build_RequireEmailVerification_ReturnsOptionsWithRequireEmailVerificationTrue()
+        {
+            EndpointerAuthenticationOptions options = _builder.RequireEmailVerification().Build();
+
+            Assert.IsTrue(options.RequireEmailVerification);
+        }
+
+        [Test()]
         public void Build_WithEntityFrameworkDataSource_ReturnsOptionsWithEntityFrameworkDataSourceServices()
         {
             EndpointerAuthenticationOptions options = _builder.WithEntityFrameworkDataSource().Build();
@@ -65,6 +73,14 @@ namespace Endpointer.Authentication.API.Tests.Models
             options.AddDataSourceServices(Services);
             VerifyServiceAdded(typeof(IUserRepository), typeof(InMemoryUserRepository));
             VerifyServiceAdded(typeof(IRefreshTokenRepository), typeof(InMemoryRefreshTokenRepository));
+        }
+
+        [Test()]
+        public void Build_WithoutConfiguration_ReturnsOptionsWithRequireEmailVerificationFalse()
+        {
+            EndpointerAuthenticationOptions options = _builder.Build();
+
+            Assert.IsFalse(options.RequireEmailVerification);
         }
 
         private void VerifyServiceAdded(Type inter, Type implem)

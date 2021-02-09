@@ -8,6 +8,7 @@ namespace Endpointer.Authentication.API.Models
     /// </summary>
     public class EndpointerAuthenticationOptions
     {
+        public bool RequireEmailVerification { get; set; }
         public Action<IServiceCollection> AddDataSourceServices { get; set; }
     }
 }

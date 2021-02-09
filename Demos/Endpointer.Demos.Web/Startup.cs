@@ -55,7 +55,9 @@ namespace Endpointer.Demos.Web
             // Firebase
             services.AddEndpointerAuthentication(authenticationConfiguration,
                 validationParameters,
-                o => o.WithFirebaseDataSource(CreateFirebaseClient()));
+                o => o
+                    .WithFirebaseDataSource(CreateFirebaseClient())
+                    .RequireEmailVerification());
 
             services.AddEndpointerAccounts(validationParameters,
                 o => o.WithDatabase<CustomDbContext>(
