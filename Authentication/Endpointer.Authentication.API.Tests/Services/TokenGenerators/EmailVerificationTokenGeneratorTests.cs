@@ -20,7 +20,7 @@ namespace Endpointer.Authentication.API.Tests.Services.TokenGenerators.EmailVeri
         private Mock<ITokenGenerator> _mockTokenGenerator;
         private EmailVerificationConfiguration _configuration;
 
-        private string _email;
+        private User _user;
 
         [SetUp]
         public void Setup()
@@ -39,7 +39,11 @@ namespace Endpointer.Authentication.API.Tests.Services.TokenGenerators.EmailVeri
                 _mockTokenGenerator.Object,
                 new Mock<ILogger<EmailVerificationTokenGenerator>>().Object);
 
-            _email = "test@gmail.com";
+            _user = new User()
+            {
+                Id = Guid.NewGuid(),
+                Email = "test@gmail.com"
+            };
         }
 
         [Test]
@@ -47,7 +51,7 @@ namespace Endpointer.Authentication.API.Tests.Services.TokenGenerators.EmailVeri
         {
             _mockTokenGenerator.Setup(ExpectedMockTokenGeneratorCallSetup()).Throws(new Exception());
 
-            Assert.Throws<Exception>(() => _tokenGenerator.GenerateToken(_email));
+            Assert.Throws<Exception>(() => _tokenGenerator.GenerateToken(_user));
         }
 
         [Test]
@@ -56,7 +60,7 @@ namespace Endpointer.Authentication.API.Tests.Services.TokenGenerators.EmailVeri
             string expected = "123token123";
             _mockTokenGenerator.Setup(ExpectedMockTokenGeneratorCallSetup()).Returns(expected);
 
-            string actual = _tokenGenerator.GenerateToken(_email);
+            string actual = _tokenGenerator.GenerateToken(_user);
 
             Assert.AreEqual(expected, actual);
         }

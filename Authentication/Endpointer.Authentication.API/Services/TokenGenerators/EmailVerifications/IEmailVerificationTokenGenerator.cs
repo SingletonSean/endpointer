@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Endpointer.Core.API.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -9,9 +10,9 @@ namespace Endpointer.Authentication.API.Services.TokenGenerators.EmailVerificati
         /// <summary>
         /// Generate an email verification token for an email.
         /// </summary>
-        /// <param name="email">The email to generate the token for.</param>
+        /// <param name="user">The user to generate the token for.</param>
         /// <returns>The generated token.</returns>
         /// <exception cref="Exception">Thrown if token generation fails.</exception>
-        string GenerateToken(string email);
+        string GenerateToken(User user);
     }
 }

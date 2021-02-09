@@ -94,7 +94,7 @@ namespace Endpointer.Authentication.API.Tests.Services.UserRegisters
         {
             string token = "123test123";
             string expectedUrl = $"localhost:5000/verify?token={token}";
-            _mockTokenGenerator.Setup(s => s.GenerateToken(_email)).Returns(token);
+            _mockTokenGenerator.Setup(s => s.GenerateToken(ExpectedNonEmailVerifiedUser())).Returns(token);
 
             await _userRegister.RegisterUser(_email, _username, _passwordHash);
 

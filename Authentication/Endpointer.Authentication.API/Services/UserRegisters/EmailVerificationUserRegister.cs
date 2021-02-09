@@ -43,7 +43,7 @@ namespace Endpointer.Authentication.API.Services.UserRegisters
 
             string subject = _emailVerificationConfiguration.CreateEmailSubject?.Invoke(username);
 
-            string emailVerificationToken = _tokenGenerator.GenerateToken(email);
+            string emailVerificationToken = _tokenGenerator.GenerateToken(user);
             string emailVerificationUrl = $"{_emailVerificationConfiguration.VerifyBaseUrl}?token={emailVerificationToken}";
 
             await _emailSender.Send(
