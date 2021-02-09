@@ -25,7 +25,7 @@ namespace Endpointer.Authentication.API.Services.UserRepositories
         }
 
         /// <inheritdoc />
-        public async Task<User> Create(User user)
+        public async Task Create(User user)
         {
             user.Id = Guid.NewGuid();
 
@@ -33,8 +33,6 @@ namespace Endpointer.Authentication.API.Services.UserRepositories
                 .Child(_usersKey)
                 .Child(user.Id.ToString())
                 .PutAsync(user);
-
-            return user;
         }
 
         /// <inheritdoc />

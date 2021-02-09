@@ -3,17 +3,17 @@ using Endpointer.Authentication.API.Services.UserRegisters;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
 using Endpointer.Core.API.Models;
 using Moq;
 using Endpointer.Authentication.API.Services.UserRepositories;
+using System.Threading.Tasks;
 
 namespace Endpointer.Authentication.API.Tests.Services.UserRegisters
 {
     [TestFixture()]
-    public class UserRegisterTests
+    public class EmailVerificationUserRegisterTests
     {
-        private UserRegister _userRegister;
+        private EmailVerificationUserRegister _userRegister;
 
         private Mock<IUserRepository> _mockUserRepository;
 
@@ -26,7 +26,7 @@ namespace Endpointer.Authentication.API.Tests.Services.UserRegisters
         {
             _mockUserRepository = new Mock<IUserRepository>();
 
-            _userRegister = new UserRegister(_mockUserRepository.Object);
+            _userRegister = new EmailVerificationUserRegister(_mockUserRepository.Object);
 
             _email = "test@gmail.com";
             _username = "test";
@@ -42,31 +42,31 @@ namespace Endpointer.Authentication.API.Tests.Services.UserRegisters
             Assert.AreEqual(_email, user.Email);
             Assert.AreEqual(_username, user.Username);
             Assert.AreEqual(_passwordHash, user.PasswordHash);
-            Assert.IsTrue(user.IsEmailVerified);
+            Assert.IsFalse(user.IsEmailVerified);
         }
 
         [Test()]
-        public async Task RegisterUser_WithSuccess_CallsRepositoryWithEmailVerifiedAndNoIDUser()
+        public async Task RegisterUser_WithSuccess_CallsRepositoryWithNonEmailVerifiedAndNoIdUser()
         {
             await _userRegister.RegisterUser(_email, _username, _passwordHash);
 
-            _mockUserRepository.Verify(r => r.Create(ExpectedEmailVerifiedUser()), Times.Once);
+            _mockUserRepository.Verify(r => r.Create(ExpectedNonEmailVerifiedUser()), Times.Once);
         }
 
         [Test()]
-        public void RegisterUser_WithException_ThrowsException()
+        public void RegisterUser_WithRepositoryException_ThrowsException()
         {
-            _mockUserRepository.Setup(s => s.Create(ExpectedEmailVerifiedUser())).ThrowsAsync(new Exception());
+            _mockUserRepository.Setup(s => s.Create(ExpectedNonEmailVerifiedUser())).ThrowsAsync(new Exception());
 
             Assert.ThrowsAsync<Exception>(() => _userRegister.RegisterUser(_email, _username, _passwordHash));
         }
 
-        private User ExpectedEmailVerifiedUser()
+        private User ExpectedNonEmailVerifiedUser()
         {
-            return It.Is<User>(u => u.Email == _email && 
-                u.Username == _username && 
+            return It.Is<User>(u => u.Email == _email &&
+                u.Username == _username &&
                 u.PasswordHash == _passwordHash &&
-                u.IsEmailVerified == true);
+                u.IsEmailVerified == false);
         }
     }
 }

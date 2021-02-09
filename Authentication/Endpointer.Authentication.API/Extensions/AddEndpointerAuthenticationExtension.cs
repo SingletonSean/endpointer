@@ -48,13 +48,12 @@ namespace Endpointer.Authentication.API.Extensions
 
             if(options.RequireEmailVerification)
             {
-                services.AddSingleton<IUserRegister, UserRegister>();
+                services.AddSingleton<IUserRegister, EmailVerificationUserRegister>();
             }
             else
             {
                 services.AddSingleton<IUserRegister, UserRegister>();
             }
-
 
             services.AddScoped<RegisterEndpointHandler>();
             services.AddScoped<LoginEndpointHandler>();

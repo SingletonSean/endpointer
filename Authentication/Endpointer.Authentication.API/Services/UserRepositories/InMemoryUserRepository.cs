@@ -11,13 +11,13 @@ namespace Endpointer.Authentication.API.Services.UserRepositories
         private readonly List<User> _users = new List<User>();
 
         /// <inheritdoc />
-        public Task<User> Create(User user)
+        public Task Create(User user)
         {
             user.Id = Guid.NewGuid();
 
             _users.Add(user);
 
-            return Task.FromResult(user);
+            return Task.CompletedTask;
         }
 
         /// <inheritdoc />

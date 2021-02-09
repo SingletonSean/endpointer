@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 
 namespace Endpointer.Authentication.API.Services.UserRegisters
 {
-    public class UserRegister : IUserRegister
+    public class EmailVerificationUserRegister : IUserRegister
     {
         private readonly IUserRepository _userRepository;
 
-        public UserRegister(IUserRepository userRepository)
+        public EmailVerificationUserRegister(IUserRepository userRepository)
         {
             _userRepository = userRepository;
         }
 
-        /// <inheritdoc />
+        ///<inheritdoc />
         public async Task<User> RegisterUser(string email, string username, string passwordHash)
         {
             User user = new User()
@@ -24,7 +24,7 @@ namespace Endpointer.Authentication.API.Services.UserRegisters
                 Email = email,
                 Username = username,
                 PasswordHash = passwordHash,
-                IsEmailVerified = true
+                IsEmailVerified = false
             };
 
             await _userRepository.Create(user);

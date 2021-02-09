@@ -20,14 +20,13 @@ namespace Endpointer.Authentication.API.Services.UserRepositories
         }
 
         /// <inheritdoc />
-        public async Task<User> Create(User user)
+        public async Task Create(User user)
         {
             _logger.LogInformation("Saving new user.");
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
             _logger.LogInformation("Successfully created new user.");
-            return user;
         }
 
         /// <inheritdoc />
