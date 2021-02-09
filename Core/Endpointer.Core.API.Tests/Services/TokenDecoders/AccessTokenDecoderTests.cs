@@ -75,15 +75,76 @@ namespace Endpointer.Core.API.Tests.Services.TokenDecoders
         }
 
         [Test]
+        public async Task GetUserFromToken_WithNoEmailVerifiedClaim_ReturnsUserWithIsEmailVerifiedFalse()
+        {
+            ClaimsPrincipal claims = CreateClaims(
+                new Claim("id", Guid.NewGuid().ToString()),
+                new Claim(ClaimTypes.Email, "test@gmail.com"),
+                new Claim(ClaimTypes.Name, "test"));
+            _mockTokenClaimsDecoder.Setup(d => d.GetClaims(_token)).Returns(claims);
+
+            User user = await _decoder.GetUserFromToken(_token);
+
+            Assert.IsFalse(user.IsEmailVerified);
+        }
+
+        [Test]
+        public async Task GetUserFromToken_WithEmptyEmailVerifiedClaim_ReturnsUserWithIsEmailVerifiedFalse()
+        {
+            ClaimsPrincipal claims = CreateClaims(
+                new Claim("id", Guid.NewGuid().ToString()),
+                new Claim(ClaimTypes.Email, "test@gmail.com"),
+                new Claim(ClaimTypes.Name, "test"),
+                new Claim(ClaimKey.EMAIL_VERIFIED, string.Empty));
+            _mockTokenClaimsDecoder.Setup(d => d.GetClaims(_token)).Returns(claims);
+
+            User user = await _decoder.GetUserFromToken(_token);
+
+            Assert.IsFalse(user.IsEmailVerified);
+        }
+
+        [Test]
+        public async Task GetUserFromToken_WithTrueEmailVerifiedClaim_ReturnsUserWithIsEmailVerifiedTrue()
+        {
+            ClaimsPrincipal claims = CreateClaims(
+                new Claim("id", Guid.NewGuid().ToString()),
+                new Claim(ClaimTypes.Email, "test@gmail.com"),
+                new Claim(ClaimTypes.Name, "test"),
+                new Claim(ClaimKey.EMAIL_VERIFIED, "true"));
+            _mockTokenClaimsDecoder.Setup(d => d.GetClaims(_token)).Returns(claims);
+
+            User user = await _decoder.GetUserFromToken(_token);
+
+            Assert.IsTrue(user.IsEmailVerified);
+        }
+
+        [Test]
+        public async Task GetUserFromToken_WithFalseEmailVerifiedClaim_ReturnsUserWithIsEmailVerifiedFalse()
+        {
+            ClaimsPrincipal claims = CreateClaims(
+                new Claim("id", Guid.NewGuid().ToString()),
+                new Claim(ClaimTypes.Email, "test@gmail.com"),
+                new Claim(ClaimTypes.Name, "test"),
+                new Claim(ClaimKey.EMAIL_VERIFIED, "false"));
+            _mockTokenClaimsDecoder.Setup(d => d.GetClaims(_token)).Returns(claims);
+
+            User user = await _decoder.GetUserFromToken(_token);
+
+            Assert.IsFalse(user.IsEmailVerified);
+        }
+
+        [Test]
         public async Task GetUserFromToken_WithValidToken_ReturnsDecodedUserAsync()
         {
             Guid userId = Guid.NewGuid();
             string email = "test@gmail.com";
             string username = "test";
+            bool emailVerified = true;
             ClaimsPrincipal claims = CreateClaims(
                 new Claim("id", userId.ToString()),
                 new Claim(ClaimTypes.Email, email),
-                new Claim(ClaimTypes.Name, username));
+                new Claim(ClaimTypes.Name, username),
+                new Claim(ClaimKey.EMAIL_VERIFIED, emailVerified.ToString()));
             _mockTokenClaimsDecoder.Setup(d => d.GetClaims(_token)).Returns(claims);
 
             User user = await _decoder.GetUserFromToken(_token);
@@ -92,6 +153,7 @@ namespace Endpointer.Core.API.Tests.Services.TokenDecoders
             Assert.AreEqual(userId, user.Id);
             Assert.AreEqual(email, user.Email);
             Assert.AreEqual(username, user.Username);
+            Assert.AreEqual(emailVerified, user.IsEmailVerified);
         }
 
         private ClaimsPrincipal CreateClaims(params Claim[] claims)
