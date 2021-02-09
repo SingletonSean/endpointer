@@ -12,6 +12,7 @@ namespace Endpointer.Authentication.API.Models
     {
         private Action<IServiceCollection> _addDataSourceServices;
         private bool _requireEmailVerification;
+        private EmailVerificationConfiguration _emailVerificationConfiguration;
 
         public EndpointerAuthenticationOptionsBuilder()
         {
@@ -69,10 +70,12 @@ namespace Endpointer.Authentication.API.Models
         /// <summary>
         /// Require new user's to verify their emails.
         /// </summary>
+        /// <param name="configuration">The configuration options for email verification.</param>
         /// <returns>The builder to configure options.</returns>
-        public EndpointerAuthenticationOptionsBuilder RequireEmailVerification()
+        public EndpointerAuthenticationOptionsBuilder RequireEmailVerification(EmailVerificationConfiguration configuration)
         {
             _requireEmailVerification = true;
+            _emailVerificationConfiguration = configuration;
 
             return this;
         }
@@ -85,6 +88,7 @@ namespace Endpointer.Authentication.API.Models
         {
             return new EndpointerAuthenticationOptions()
             {
+                EmailVerificationConfiguration = _emailVerificationConfiguration,
                 RequireEmailVerification = _requireEmailVerification,
                 AddDataSourceServices = _addDataSourceServices,
             };

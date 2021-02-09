@@ -9,6 +9,8 @@ namespace Endpointer.Authentication.API.Models
     public class EndpointerAuthenticationOptions
     {
         public bool RequireEmailVerification { get; set; }
+        public EmailVerificationConfiguration EmailVerificationConfiguration { get; set; }
+
         public Action<IServiceCollection> AddDataSourceServices { get; set; }
     }
 }

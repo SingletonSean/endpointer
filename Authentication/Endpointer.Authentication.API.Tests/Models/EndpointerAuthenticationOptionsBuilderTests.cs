@@ -31,9 +31,12 @@ namespace Endpointer.Authentication.API.Tests.Models
         [Test()]
         public void Build_RequireEmailVerification_ReturnsOptionsWithRequireEmailVerificationTrue()
         {
-            EndpointerAuthenticationOptions options = _builder.RequireEmailVerification().Build();
+            EmailVerificationConfiguration configuration = new EmailVerificationConfiguration();
+
+            EndpointerAuthenticationOptions options = _builder.RequireEmailVerification(configuration).Build();
 
             Assert.IsTrue(options.RequireEmailVerification);
+            Assert.AreEqual(configuration, options.EmailVerificationConfiguration);
         }
 
         [Test()]
@@ -81,6 +84,14 @@ namespace Endpointer.Authentication.API.Tests.Models
             EndpointerAuthenticationOptions options = _builder.Build();
 
             Assert.IsFalse(options.RequireEmailVerification);
+        }
+
+        [Test()]
+        public void Build_WithoutConfiguration_ReturnsOptionsWithNullEmailVerificationConfiguration()
+        {
+            EndpointerAuthenticationOptions options = _builder.Build();
+
+            Assert.IsNull(options.EmailVerificationConfiguration);
         }
 
         private void VerifyServiceAdded(Type inter, Type implem)
