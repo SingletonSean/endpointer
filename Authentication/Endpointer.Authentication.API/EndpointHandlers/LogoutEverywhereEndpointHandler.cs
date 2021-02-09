@@ -59,6 +59,11 @@ namespace Endpointer.Authentication.API.EndpointHandlers
                 _logger.LogError(ex, "Failed to authenticate request.");
                 return new UnauthorizedResult();
             }
+            catch (UnverifiedEmailException ex)
+            {
+                _logger.LogError(ex, "Email is unverified.");
+                return new UnauthorizedResult();
+            }
         }
     }
 }

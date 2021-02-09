@@ -69,6 +69,16 @@ namespace Endpointer.Authentication.API.Tests.EndpointHandlers
         }
 
         [Test]
+        public async Task HandleLogoutEverywhere_WithUnverifiedEmailException_ReturnsUnauthorizedResult()
+        {
+            _mockHttpRequestAuthenticator.Setup(s => s.Authenticate(_request)).ThrowsAsync(new UnverifiedEmailException(string.Empty));
+
+            IActionResult result = await _handler.HandleLogoutEverywhere(_request);
+
+            Assert.IsAssignableFrom<UnauthorizedResult>(result);
+        }
+
+        [Test]
         public void HandleLogoutEverywhere_WithException_ThrowsException()
         {
             _mockHttpRequestAuthenticator.Setup(s => s.Authenticate(_request)).ReturnsAsync(new User());
