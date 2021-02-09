@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Threading.Tasks;
 using System;
 using Microsoft.Extensions.Logging;
+using Endpointer.Authentication.API.Models.Users;
 
 namespace Endpointer.Authentication.API.EndpointHandlers
 {
@@ -17,14 +18,17 @@ namespace Endpointer.Authentication.API.EndpointHandlers
     {
         private readonly IUserRepository _userRepository;
         private readonly IPasswordHasher _passwordHasher;
+        private readonly IUserFactory _userFactory;
         private readonly ILogger<RegisterEndpointHandler> _logger;
 
         public RegisterEndpointHandler(IUserRepository userRepository, 
             IPasswordHasher passwordHasher,
+            IUserFactory userFactory,
             ILogger<RegisterEndpointHandler> logger)
         {
             _userRepository = userRepository;
             _passwordHasher = passwordHasher;
+            _userFactory = userFactory;
             _logger = logger;
         }
 
@@ -80,12 +84,7 @@ namespace Endpointer.Authentication.API.EndpointHandlers
 
             _logger.LogInformation("Hashing user password.");
             string passwordHash = _passwordHasher.HashPassword(registerRequest.Password);
-            User registrationUser = new User()
-            {
-                Email = registerRequest.Email,
-                Username = registerRequest.Username,
-                PasswordHash = passwordHash
-            };
+            User registrationUser = _userFactory.CreateUser(registerRequest.Email, registerRequest.Username, passwordHash);
 
             _logger.LogInformation("Creating new user.");
             await _userRepository.Create(registrationUser);

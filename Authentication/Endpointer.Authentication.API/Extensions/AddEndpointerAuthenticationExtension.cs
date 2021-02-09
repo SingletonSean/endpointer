@@ -2,6 +2,7 @@
 using Endpointer.Authentication.API.EndpointHandlers;
 using Endpointer.Authentication.API.Mappers;
 using Endpointer.Authentication.API.Models;
+using Endpointer.Authentication.API.Models.Users;
 using Endpointer.Authentication.API.Services.Authenticators;
 using Endpointer.Authentication.API.Services.PasswordHashers;
 using Endpointer.Authentication.API.Services.TokenGenerators;
@@ -44,6 +45,7 @@ namespace Endpointer.Authentication.API.Extensions
             services.AddScoped<IAuthenticator, Authenticator>();
             services.AddSingleton<ITokenGenerator, TokenGenerator>();
             services.AddSingleton<IPasswordHasher, BcryptPasswordHasher>();
+            services.AddSingleton<IUserFactory, UserFactory>();
 
             services.AddScoped<RegisterEndpointHandler>();
             services.AddScoped<LoginEndpointHandler>();

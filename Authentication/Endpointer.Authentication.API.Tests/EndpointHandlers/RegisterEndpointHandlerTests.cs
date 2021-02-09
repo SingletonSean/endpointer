@@ -1,4 +1,5 @@
 ﻿using Endpointer.Authentication.API.EndpointHandlers;
+using Endpointer.Authentication.API.Models.Users;
 using Endpointer.Authentication.API.Services.PasswordHashers;
 using Endpointer.Authentication.API.Services.UserRepositories;
 using Endpointer.Authentication.Core.Models.Requests;
@@ -19,6 +20,7 @@ namespace Endpointer.Authentication.API.Tests.EndpointHandlers
 
         private Mock<IUserRepository> _mockUserRepository;
         private Mock<IPasswordHasher> _mockPasswordHasher;
+        private Mock<IUserFactory> _mockUserFactory;
 
         private RegisterRequest _request;
         private ModelStateDictionary _validModelState;
@@ -29,10 +31,12 @@ namespace Endpointer.Authentication.API.Tests.EndpointHandlers
         {
             _mockUserRepository = new Mock<IUserRepository>();
             _mockPasswordHasher = new Mock<IPasswordHasher>();
+            _mockUserFactory = new Mock<IUserFactory>();
 
             _handler = new RegisterEndpointHandler(
                 _mockUserRepository.Object,
                 _mockPasswordHasher.Object,
+                _mockUserFactory.Object,
                 new Mock<ILogger<RegisterEndpointHandler>>().Object);
 
             _request = new RegisterRequest()
@@ -103,6 +107,18 @@ namespace Endpointer.Authentication.API.Tests.EndpointHandlers
             IActionResult result = await _handler.HandleRegister(_request, _validModelState);
 
             Assert.IsAssignableFrom<OkResult>(result);
+        }
+
+        [Test]
+        public async Task HandleRegister_WithSuccess_CreatesUser()
+        {
+            _mockUserRepository.Setup(s => s.GetByEmail(_request.Email)).ReturnsAsync(() => null);
+            _mockUserRepository.Setup(s => s.GetByUsername(_request.Username)).ReturnsAsync(() => null);
+
+            await _handler.HandleRegister(_request, _validModelState);
+
+            _mockUserFactory.Verify(f => f.CreateUser(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+            _mockUserRepository.Verify(r => r.Create(It.IsAny<User>()), Times.Once);
         }
     }
 }
