@@ -16,10 +16,11 @@ namespace Endpointer.Authentication.API.Models
         /// </summary>
         public Func<string, string> CreateEmailSubject { get; set; }
 
-        public string EmailVerificationTokenSecret { get; set; }
-        public string Issuer { get; set; }
-        public string Audience { get; set; }
-        public DateTime EmailVerificationTokenExpirationTime { get; set; }
+        public string VerifyBaseUrl { get; set; }
+        public string TokenSecret { get; set; }
+        public string TokenIssuer { get; set; }
+        public string TokenAudience { get; set; }
+        public DateTime TokenExpirationTime { get; set; }
 
         public EmailVerificationConfiguration()
         {

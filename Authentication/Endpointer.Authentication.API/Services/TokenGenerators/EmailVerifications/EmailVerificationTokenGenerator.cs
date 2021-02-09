@@ -33,10 +33,10 @@ namespace Endpointer.Authentication.API.Services.TokenGenerators.EmailVerificati
 
             _logger.LogInformation("Generating email verification token for email claim.");
             return _tokenGenerator.GenerateToken(
-                _configuration.EmailVerificationTokenSecret,
-                _configuration.Issuer,
-                _configuration.Audience,
-                _configuration.EmailVerificationTokenExpirationTime,
+                _configuration.TokenSecret,
+                _configuration.TokenIssuer,
+                _configuration.TokenAudience,
+                _configuration.TokenExpirationTime,
                 claims);
         }
     }

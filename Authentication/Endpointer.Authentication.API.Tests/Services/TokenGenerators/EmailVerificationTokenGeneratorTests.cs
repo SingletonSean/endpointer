@@ -29,10 +29,10 @@ namespace Endpointer.Authentication.API.Tests.Services.TokenGenerators.EmailVeri
             _mockTokenGenerator = new Mock<ITokenGenerator>();
             _configuration = new EmailVerificationConfiguration()
             {
-                EmailVerificationTokenSecret = "12345",
-                Audience = "localhost:5000/audience",
-                Issuer = "localhost:5000/issuer",
-                EmailVerificationTokenExpirationTime = DateTime.Now.AddDays(3)
+                TokenSecret = "12345",
+                TokenAudience = "localhost:5000/audience",
+                TokenIssuer = "localhost:5000/issuer",
+                TokenExpirationTime = DateTime.Now.AddDays(3)
             };
 
             _tokenGenerator = new EmailVerificationTokenGenerator(
@@ -65,10 +65,10 @@ namespace Endpointer.Authentication.API.Tests.Services.TokenGenerators.EmailVeri
         private Expression<Func<ITokenGenerator, string>> ExpectedMockTokenGeneratorCallSetup()
         {
             return s => s.GenerateToken(
-                _configuration.EmailVerificationTokenSecret, 
-                _configuration.Issuer, 
-                _configuration.Audience, 
-                _configuration.EmailVerificationTokenExpirationTime, 
+                _configuration.TokenSecret, 
+                _configuration.TokenIssuer, 
+                _configuration.TokenAudience, 
+                _configuration.TokenExpirationTime, 
                 It.IsAny<IEnumerable<Claim>>());
         }
     }
