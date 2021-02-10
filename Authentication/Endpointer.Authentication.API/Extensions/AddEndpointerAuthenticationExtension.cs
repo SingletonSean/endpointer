@@ -10,6 +10,7 @@ using Endpointer.Authentication.API.Services.TokenGenerators.EmailVerifications;
 using Endpointer.Authentication.API.Services.TokenValidators;
 using Endpointer.Authentication.API.Services.UserRegisters;
 using Endpointer.Core.API.Extensions;
+using Endpointer.Core.API.Services.TokenClaimsDecoders;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -56,11 +57,11 @@ namespace Endpointer.Authentication.API.Extensions
                 services.AddSingleton(options.EmailVerificationConfiguration);
                 services.AddSingleton<IEmailVerificationTokenGenerator, EmailVerificationTokenGenerator>();
                 services.AddSingleton<IEmailSender, FluentEmailSender>();
-                services.AddSingleton<IUserRegister, EmailVerificationUserRegister>();
+                services.AddScoped<IUserRegister, EmailVerificationUserRegister>();
             }
             else
             {
-                services.AddSingleton<IUserRegister, UserRegister>();
+                services.AddScoped<IUserRegister, UserRegister>();
             }
 
             services.AddScoped<RegisterEndpointHandler>();

@@ -19,7 +19,7 @@ namespace Endpointer.Core.API.Extensions
         {
             services.AddSingleton(tokenValidationParameters);
 
-            services.AddScoped<ITokenClaimsDecoder, TokenHandlerTokenClaimsDecoder>();
+            services.AddSingleton<ITokenClaimsDecoder, TokenHandlerTokenClaimsDecoder>();
             services.AddScoped<IAccessTokenDecoder, AccessTokenDecoder>();
             services.AddScoped<IHttpRequestAuthenticator, HttpRequestAuthenticator>();
 
