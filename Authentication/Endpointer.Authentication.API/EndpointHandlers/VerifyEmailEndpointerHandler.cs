@@ -57,14 +57,20 @@ namespace Endpointer.Authentication.API.EndpointHandlers
         {
             try
             {
+                _logger.LogInformation("Validating email verification token.");
                 EmailVerificationToken token = _tokenValidator.Validate(verifyRequest.VerifyToken);
 
+                _logger.LogInformation("Updating user's email verification status.");
                 await _userRepository.Update(token.UserId, (u) => u.IsEmailVerified = true);
+
+                _logger.LogInformation("Successfully verified user email.");
 
                 return new OkResult();
             }
-            catch (SecurityTokenException)
+            catch (SecurityTokenException ex)
             {
+                _logger.LogError("Failed to validate email verification token.", ex);
+
                 return new UnauthorizedResult();
             }
         }
