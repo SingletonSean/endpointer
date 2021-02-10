@@ -13,7 +13,7 @@ namespace Endpointer.API.Tests.EndpointHandlers
         protected ModelStateDictionary _invalidModelState;
 
         [SetUp]
-        public void SetUp()
+        public void SetUpBase()
         {
             _validModelState = new ModelStateDictionary();
             _invalidModelState = new ModelStateDictionary();

@@ -14,6 +14,7 @@ namespace Endpointer.Authentication.API.Services.TokenValidators.EmailVerificati
         /// <param name="emailVerificationToken">The token to validate.</param>
         /// <returns>The decoded email token.</returns>
         /// <exception cref="SecurityTokenException">Thrown if token validation fails.</exception>
+        /// <exception cref="SecurityTokenDecryptionFailedException">Thrown if token decoding fails.</exception>
         EmailVerificationToken Validate(string emailVerificationToken);
     }
 }
