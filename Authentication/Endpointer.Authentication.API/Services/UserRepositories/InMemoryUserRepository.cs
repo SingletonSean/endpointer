@@ -37,5 +37,20 @@ namespace Endpointer.Authentication.API.Services.UserRepositories
         {
             return Task.FromResult(_users.FirstOrDefault(u => u.Username == username));
         }
+
+        /// <inheritdoc />
+        public Task Update(Guid id, Action<User> update)
+        {
+            User user = _users.FirstOrDefault(u => u.Id == id);
+
+            if(user == null)
+            {
+                throw new Exception("User not found.");
+            }
+
+            update(user);
+
+            return Task.CompletedTask;
+        }
     }
 }

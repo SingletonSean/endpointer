@@ -82,5 +82,16 @@ namespace Endpointer.Authentication.API.Services.UserRepositories
 
             return user;
         }
+
+        /// <inheritdoc />
+        public async Task Update(Guid id, Action<User> update)
+        {
+            User user = new User() { Id = id };
+
+            _context.Attach(user);
+            update(user);
+
+            await _context.SaveChangesAsync();
+        }
     }
 }

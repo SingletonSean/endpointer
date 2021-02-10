@@ -91,5 +91,23 @@ namespace Endpointer.Authentication.API.Services.UserRepositories
 
             return user;
         }
+
+        /// <inheritdoc />
+        public async Task Update(Guid id, Action<User> update)
+        {
+            User user = await GetById(id);
+
+            if(user == null)
+            {
+                throw new Exception("User not found.");
+            }
+
+            update(user);
+
+            await _client
+                .Child(_usersKey)
+                .Child(user.Id.ToString())
+                .PutAsync(user);
+        }
     }
 }
