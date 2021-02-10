@@ -14,6 +14,7 @@ using System.Text;
 using Firebase.Database;
 using Google.Apis.Auth.OAuth2;
 using Endpointer.Authentication.API.Firebase.Extensions;
+using System.Net.Mail;
 
 namespace Endpointer.Demos.Web
 {
@@ -54,14 +55,21 @@ namespace Endpointer.Demos.Web
                 TokenExpirationMinutes = 60,
                 TokenSecret = authenticationConfiguration.AccessTokenSecret,
                 VerifyBaseUrl = "https://localhost:5001/verify",
-                ConfigureFluentEmailServices = (builder) => builder.AddSendGridSender("API_KEY")
+                ConfigureFluentEmailServices = (builder) => builder.AddSmtpSender(() => new SmtpClient("localhost")
+                {
+                    EnableSsl = false,
+                    DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory,
+                    PickupDirectoryLocation = @"C:/emails"
+                })
             };
 
             // Entity Framework
             //services.AddEndpointerAuthentication(authenticationConfiguration,
-            //    validationParameters, 
-            //    o => o.WithEntityFrameworkDataSource<CustomDbContext>(
-            //        c => c.UseSqlite(connectionString)));
+            //    validationParameters,
+            //    o => o
+            //        .RequireEmailVerification(emailVerificationConfiguration)
+            //        .WithEntityFrameworkDataSource<CustomDbContext>(
+            //            c => c.UseSqlite(connectionString)));
 
             // Firebase
             services.AddEndpointerAuthentication(authenticationConfiguration,

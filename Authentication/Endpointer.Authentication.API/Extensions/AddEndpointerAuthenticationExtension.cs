@@ -58,7 +58,7 @@ namespace Endpointer.Authentication.API.Extensions
                 services.AddSingleton(options.EmailVerificationConfiguration);
                 services.AddSingleton<IEmailVerificationTokenGenerator, EmailVerificationTokenGenerator>();
                 services.AddSingleton<IEmailVerificationTokenValidator, EmailVerificationTokenValidator>();
-                services.AddSingleton<IEmailSender, FluentEmailSender>();
+                services.AddScoped<IEmailSender, FluentEmailSender>();
                 services.AddScoped<IUserRegister, EmailVerificationUserRegister>();
             }
             else
