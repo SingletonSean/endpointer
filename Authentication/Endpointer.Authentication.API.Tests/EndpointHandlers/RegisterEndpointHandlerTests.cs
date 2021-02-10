@@ -1,4 +1,5 @@
-﻿using Endpointer.Authentication.API.EndpointHandlers;
+﻿using Endpointer.API.Tests.EndpointHandlers;
+using Endpointer.Authentication.API.EndpointHandlers;
 using Endpointer.Authentication.API.Services.PasswordHashers;
 using Endpointer.Authentication.API.Services.UserRegisters;
 using Endpointer.Authentication.API.Services.UserRepositories;
@@ -14,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Endpointer.Authentication.API.Tests.EndpointHandlers
 {
-    class RegisterEndpointHandlerTests
+    public class RegisterEndpointHandlerTests : EndpointHandlerTests
     {
         private RegisterEndpointHandler _handler;
 
@@ -23,8 +24,6 @@ namespace Endpointer.Authentication.API.Tests.EndpointHandlers
         private Mock<IUserRegister> _mockUserRegister;
 
         private RegisterRequest _request;
-        private ModelStateDictionary _validModelState;
-        private ModelStateDictionary _invalidModelState;
 
         [SetUp]
         public void SetUp()
@@ -44,9 +43,6 @@ namespace Endpointer.Authentication.API.Tests.EndpointHandlers
                 Password = "match",
                 ConfirmPassword = "match"
             };
-            _validModelState = new ModelStateDictionary();
-            _invalidModelState = new ModelStateDictionary();
-            _invalidModelState.AddModelError("Error", "Message");
         }
 
         [Test]
