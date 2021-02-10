@@ -8,6 +8,7 @@ using Endpointer.Authentication.API.Services.PasswordHashers;
 using Endpointer.Authentication.API.Services.TokenGenerators;
 using Endpointer.Authentication.API.Services.TokenGenerators.EmailVerifications;
 using Endpointer.Authentication.API.Services.TokenValidators;
+using Endpointer.Authentication.API.Services.TokenValidators.EmailVerifications;
 using Endpointer.Authentication.API.Services.UserRegisters;
 using Endpointer.Core.API.Extensions;
 using Endpointer.Core.API.Services.TokenClaimsDecoders;
@@ -56,6 +57,7 @@ namespace Endpointer.Authentication.API.Extensions
 
                 services.AddSingleton(options.EmailVerificationConfiguration);
                 services.AddSingleton<IEmailVerificationTokenGenerator, EmailVerificationTokenGenerator>();
+                services.AddSingleton<IEmailVerificationTokenValidator, EmailVerificationTokenValidator>();
                 services.AddSingleton<IEmailSender, FluentEmailSender>();
                 services.AddScoped<IUserRegister, EmailVerificationUserRegister>();
             }
@@ -69,6 +71,7 @@ namespace Endpointer.Authentication.API.Extensions
             services.AddScoped<RefreshEndpointHandler>();
             services.AddScoped<LogoutEndpointHandler>();
             services.AddScoped<LogoutEverywhereEndpointHandler>();
+            services.AddScoped<VerifyEmailEndpointerHandler>();
 
             services.AddEndpointerCore(validationParameters);
 
