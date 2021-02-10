@@ -1,5 +1,6 @@
 ﻿using Endpointer.Authentication.API.Models;
 using Endpointer.Authentication.API.Services.TokenValidators.EmailVerifications;
+using Endpointer.Authentication.API.Services.UserRepositories;
 using Endpointer.Authentication.Core.Models.Requests;
 using Endpointer.Core.API.Extensions;
 using Microsoft.AspNetCore.Mvc;
@@ -16,11 +17,15 @@ namespace Endpointer.Authentication.API.EndpointHandlers
     public class VerifyEmailEndpointerHandler
     {
         private readonly IEmailVerificationTokenValidator _tokenValidator;
+        private readonly IUserRepository _userRepository;
         private readonly ILogger<VerifyEmailEndpointerHandler> _logger;
 
-        public VerifyEmailEndpointerHandler(IEmailVerificationTokenValidator tokenValidator, ILogger<VerifyEmailEndpointerHandler> logger)
+        public VerifyEmailEndpointerHandler(IEmailVerificationTokenValidator tokenValidator, 
+            IUserRepository userRepository, 
+            ILogger<VerifyEmailEndpointerHandler> logger)
         {
             _tokenValidator = tokenValidator;
+            _userRepository = userRepository;
             _logger = logger;
         }
 
@@ -53,6 +58,8 @@ namespace Endpointer.Authentication.API.EndpointHandlers
             try
             {
                 EmailVerificationToken token = _tokenValidator.Validate(verifyRequest.VerifyToken);
+
+                await _userRepository.Update(token.UserId, (u) => u.IsEmailVerified = true);
 
                 return new OkResult();
             }
