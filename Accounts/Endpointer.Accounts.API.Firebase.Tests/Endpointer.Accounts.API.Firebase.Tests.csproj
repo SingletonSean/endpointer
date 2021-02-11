@@ -16,7 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Core\Endpointer.API.Tests\Endpointer.API.Tests.csproj" />
+    <ProjectReference Include="..\..\Core\Endpointer.API.Tests\Endpointer.API.Tests.csproj" />
+    <ProjectReference Include="..\Endpointer.Accounts.API.Firebase\Endpointer.Accounts.API.Firebase.csproj" />
   </ItemGroup>
 
 </Project>
