@@ -11,10 +11,11 @@ namespace Endpointer.Authentication.API.Services.EmailSenders
         /// Send an email.
         /// </summary>
         /// <param name="fromAddress">The email sender.</param>
+        /// <param name="fromName">The email sender name.</param>
         /// <param name="toAddress">The email destination.</param>
         /// <param name="subject">The email subject.</param>
         /// <param name="body">The email body content.</param>
         /// <exception cref="Exception">Thrown if email fails to send.</exception>
-        Task Send(string fromAddress, string toAddress, string subject, string body);
+        Task Send(string fromAddress, string fromName, string toAddress, string subject, string body);
     }
 }

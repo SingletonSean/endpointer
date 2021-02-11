@@ -50,7 +50,8 @@ namespace Endpointer.Demos.Web
 
             EmailVerificationConfiguration emailVerificationConfiguration = new EmailVerificationConfiguration()
             {
-                EmailFromAddress = "test@endpointer.com",
+                EmailFromAddress = "admin@endpointer.com",
+                EmailFromName = "Endpointer",
                 TokenAudience = "localhost:5001",
                 TokenIssuer = "localhost:5001",
                 TokenExpirationMinutes = 60,

@@ -79,7 +79,10 @@ namespace Endpointer.Authentication.API.Tests.Services.UserRegisters
         {
             await _userRegister.RegisterUser(_email, _username, _passwordHash);
 
-            _mockEmailSender.Verify(r => r.Send(_emailVerificationConfiguration.EmailFromAddress, _email, It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+            _mockEmailSender.Verify(r => r.Send(_emailVerificationConfiguration.EmailFromAddress,
+                _emailVerificationConfiguration.EmailFromName,
+                _email, 
+                It.IsAny<string>(), It.IsAny<string>()), Times.Once);
         }
 
         [Test()]
@@ -89,7 +92,9 @@ namespace Endpointer.Authentication.API.Tests.Services.UserRegisters
 
             await _userRegister.RegisterUser(_email, _username, _passwordHash);
 
-            _mockEmailSender.Verify(r => r.Send(_emailVerificationConfiguration.EmailFromAddress, _email, expectedSubject, It.IsAny<string>()), Times.Once);
+            _mockEmailSender.Verify(r => r.Send(_emailVerificationConfiguration.EmailFromAddress, 
+                _emailVerificationConfiguration.EmailFromName,
+                _email, expectedSubject, It.IsAny<string>()), Times.Once);
         }
 
         [Test()]
@@ -102,7 +107,8 @@ namespace Endpointer.Authentication.API.Tests.Services.UserRegisters
             await _userRegister.RegisterUser(_email, _username, _passwordHash);
 
             _mockEmailSender.Verify(r => r.Send(
-                _emailVerificationConfiguration.EmailFromAddress, 
+                _emailVerificationConfiguration.EmailFromAddress,
+                _emailVerificationConfiguration.EmailFromName,
                 _email, 
                 It.IsAny<string>(), 
                 It.Is<string>(s => s.Contains(expectedUrl))), Times.Once);
@@ -120,7 +126,8 @@ namespace Endpointer.Authentication.API.Tests.Services.UserRegisters
         public void RegisterUser_WithException_ThrowsSendEmailException()
         {
             _mockEmailSender
-                .Setup(s => s.Send(_emailVerificationConfiguration.EmailFromAddress, _email, It.IsAny<string>(), It.IsAny<string>()))
+                .Setup(s => s.Send(_emailVerificationConfiguration.EmailFromAddress, _emailVerificationConfiguration.EmailFromName, 
+                    _email, It.IsAny<string>(), It.IsAny<string>()))
                 .ThrowsAsync(new Exception());
 
             SendEmailException exception = Assert.ThrowsAsync<SendEmailException>(() => _userRegister.RegisterUser(_email, _username, _passwordHash));

@@ -59,6 +59,7 @@ namespace Endpointer.Authentication.API.Services.UserRegisters
                 _logger.LogInformation("Sending email verification token to new user's email.");
                 await _emailSender.Send(
                     _emailVerificationConfiguration.EmailFromAddress,
+                    _emailVerificationConfiguration.EmailFromName,
                     email,
                     subject,
                     $"Welcome {username}! Please verify your email with the following link: {emailVerificationUrl}");

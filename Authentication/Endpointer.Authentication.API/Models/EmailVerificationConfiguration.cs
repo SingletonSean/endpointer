@@ -9,6 +9,7 @@ namespace Endpointer.Authentication.API.Models
     public class EmailVerificationConfiguration
     {
         public string EmailFromAddress { get; set; }
+        public string EmailFromName { get; set; }
 
         /// <summary>
         /// Callback to create an email subject using the new user's username.

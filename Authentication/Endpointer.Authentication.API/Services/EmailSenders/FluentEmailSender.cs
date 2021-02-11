@@ -19,10 +19,15 @@ namespace Endpointer.Authentication.API.Services.EmailSenders
         }
 
         /// <inheritdoc />
-        public async Task Send(string from, string to, string subject, string body)
+        public async Task Send(string fromAddress, string fromName, string to, string subject, string body)
         {
             _logger.LogInformation("Sending email.");
-            await _fluentEmail.SetFrom(from).To(to).Subject(subject).Body(body).SendAsync();
+            await _fluentEmail
+                .SetFrom(fromAddress, fromName)
+                .To(to)
+                .Subject(subject)
+                .Body(body)
+                .SendAsync();
             
             _logger.LogInformation("Successfully sent email.");
         }
