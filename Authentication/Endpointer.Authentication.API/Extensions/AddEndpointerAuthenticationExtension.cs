@@ -5,6 +5,7 @@ using Endpointer.Authentication.API.Models;
 using Endpointer.Authentication.API.Services.Authenticators;
 using Endpointer.Authentication.API.Services.EmailSenders;
 using Endpointer.Authentication.API.Services.PasswordHashers;
+using Endpointer.Authentication.API.Services.RefreshTokenRepositories;
 using Endpointer.Authentication.API.Services.TokenGenerators;
 using Endpointer.Authentication.API.Services.TokenGenerators.EmailVerifications;
 using Endpointer.Authentication.API.Services.TokenValidators;
@@ -71,23 +72,27 @@ namespace Endpointer.Authentication.API.Extensions
             if(options.RequireVerifiedEmail)
             {
                 services.AddScoped<HttpRequestAuthenticator>();
-                services.AddScoped<IHttpRequestAuthenticator>(s => new VerifyEmailHttpRequestAuthenticator(
+                services.AddScoped<VerifyEmailHttpRequestAuthenticator>(s => new VerifyEmailHttpRequestAuthenticator(
                     s.GetRequiredService<HttpRequestAuthenticator>(),
                     s.GetRequiredService<ILogger<VerifyEmailHttpRequestAuthenticator>>()));
 
-                services.AddEndpointerCore(validationParameters, s => s.GetRequiredService<IHttpRequestAuthenticator>());
+                services.AddScoped<LogoutEverywhereEndpointHandler>(s => new LogoutEverywhereEndpointHandler(
+                    s.GetRequiredService<IRefreshTokenRepository>(),
+                    s.GetRequiredService<VerifyEmailHttpRequestAuthenticator>(),
+                    s.GetRequiredService<ILogger<LogoutEverywhereEndpointHandler>>()));
             }
             else
             {
-                services.AddEndpointerCore(validationParameters);
+                services.AddScoped<LogoutEverywhereEndpointHandler>();
             }
 
             services.AddScoped<RegisterEndpointHandler>();
             services.AddScoped<LoginEndpointHandler>();
             services.AddScoped<RefreshEndpointHandler>();
             services.AddScoped<LogoutEndpointHandler>();
-            services.AddScoped<LogoutEverywhereEndpointHandler>();
             services.AddScoped<VerifyEmailEndpointerHandler>();
+
+            services.AddEndpointerCore(validationParameters);
 
             return services;
         }

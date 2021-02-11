@@ -19,26 +19,9 @@ namespace Endpointer.Core.API.Extensions
         public static IServiceCollection AddEndpointerCore(this IServiceCollection services,
             TokenValidationParameters tokenValidationParameters)
         {
-            services.TryAddScoped<IHttpRequestAuthenticator, HttpRequestAuthenticator>();
-
-            services.AddEndpointerCore(tokenValidationParameters, s => s.GetRequiredService<IHttpRequestAuthenticator>());
-
-            return services;
-        }
-
-        /// <summary>
-        /// Add Endpointer API core services.
-        /// </summary>
-        /// <param name="services">The service collection to add services to.</param>
-        /// <param name="tokenValidationParameters">The required token validation parameters for services.</param>
-        /// <returns>The service collection with the registered services.</returns>
-        public static IServiceCollection AddEndpointerCore(this IServiceCollection services,
-            TokenValidationParameters tokenValidationParameters,
-            Func<IServiceProvider, IHttpRequestAuthenticator> getHttpRequestAuthenticator)
-        {
             services.AddSingleton(tokenValidationParameters);
-            services.TryAddScoped(getHttpRequestAuthenticator);
 
+            services.AddScoped<IHttpRequestAuthenticator, HttpRequestAuthenticator>();
             services.AddSingleton<ITokenClaimsDecoder, TokenHandlerTokenClaimsDecoder>();
             services.AddScoped<IAccessTokenDecoder, AccessTokenDecoder>();
 
