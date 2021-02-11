@@ -12,6 +12,7 @@ using Endpointer.Authentication.API.Models;
 using Endpointer.Authentication.API.Services.TokenGenerators.EmailVerifications;
 using Endpointer.Authentication.API.Exceptions;
 using Microsoft.Extensions.Logging;
+using Endpointer.Authentication.API.Services.EmailVerificationSenders;
 
 namespace Endpointer.Authentication.API.Tests.Services.UserRegisters
 {
@@ -21,9 +22,7 @@ namespace Endpointer.Authentication.API.Tests.Services.UserRegisters
         private EmailVerificationUserRegister _userRegister;
 
         private Mock<IUserRepository> _mockUserRepository;
-        private Mock<IEmailSender> _mockEmailSender;
-        private Mock<IEmailVerificationTokenGenerator> _mockTokenGenerator;
-        private EmailVerificationConfiguration _emailVerificationConfiguration;
+        private Mock<IEmailVerificationSender> _mockEmailSender;
 
         private string _email;
         private string _username;
@@ -33,20 +32,11 @@ namespace Endpointer.Authentication.API.Tests.Services.UserRegisters
         public void SetUp()
         {
             _mockUserRepository = new Mock<IUserRepository>();
-            _mockEmailSender = new Mock<IEmailSender>();
-            _mockTokenGenerator = new Mock<IEmailVerificationTokenGenerator>();
-            _emailVerificationConfiguration = new EmailVerificationConfiguration()
-            {
-                EmailFromAddress = "from@gmail.com",
-                VerifyBaseUrl = "localhost:5000/verify",
-                CreateEmailSubject = (username) => $"Hello {username}",
-            };
+            _mockEmailSender = new Mock<IEmailVerificationSender>();
 
             _userRegister = new EmailVerificationUserRegister(
                 _mockUserRepository.Object, 
-                _mockEmailSender.Object, 
-                _mockTokenGenerator.Object,
-                _emailVerificationConfiguration,
+                _mockEmailSender.Object,
                 new Mock<ILogger<EmailVerificationUserRegister>>().Object);
 
             _email = "test@gmail.com";
@@ -79,39 +69,7 @@ namespace Endpointer.Authentication.API.Tests.Services.UserRegisters
         {
             await _userRegister.RegisterUser(_email, _username, _passwordHash);
 
-            _mockEmailSender.Verify(r => r.Send(_emailVerificationConfiguration.EmailFromAddress,
-                _emailVerificationConfiguration.EmailFromName,
-                _email, 
-                It.IsAny<string>(), It.IsAny<string>()), Times.Once);
-        }
-
-        [Test()]
-        public async Task RegisterUser_WithSuccess_SendsEmailVerificationEmailWithCorrectSubject()
-        {
-            string expectedSubject = _emailVerificationConfiguration.CreateEmailSubject(_username);
-
-            await _userRegister.RegisterUser(_email, _username, _passwordHash);
-
-            _mockEmailSender.Verify(r => r.Send(_emailVerificationConfiguration.EmailFromAddress, 
-                _emailVerificationConfiguration.EmailFromName,
-                _email, expectedSubject, It.IsAny<string>()), Times.Once);
-        }
-
-        [Test()]
-        public async Task RegisterUser_WithSuccess_SendsEmailVerificationEmailWithCorrectVerifyUrl()
-        {
-            string token = "123test123";
-            string expectedUrl = $"localhost:5000/verify?token={token}";
-            _mockTokenGenerator.Setup(s => s.GenerateToken(ExpectedNonEmailVerifiedUser())).Returns(token);
-
-            await _userRegister.RegisterUser(_email, _username, _passwordHash);
-
-            _mockEmailSender.Verify(r => r.Send(
-                _emailVerificationConfiguration.EmailFromAddress,
-                _emailVerificationConfiguration.EmailFromName,
-                _email, 
-                It.IsAny<string>(), 
-                It.Is<string>(s => s.Contains(expectedUrl))), Times.Once);
+            _mockEmailSender.Verify(s => s.SendEmailVerificationEmail(ExpectedNonEmailVerifiedUser()), Times.Once);
         }
 
         [Test()]
@@ -123,12 +81,9 @@ namespace Endpointer.Authentication.API.Tests.Services.UserRegisters
         }
 
         [Test()]
-        public void RegisterUser_WithException_ThrowsSendEmailException()
+        public void RegisterUser_WithEmailSenderException_ThrowsSendEmailException()
         {
-            _mockEmailSender
-                .Setup(s => s.Send(_emailVerificationConfiguration.EmailFromAddress, _emailVerificationConfiguration.EmailFromName, 
-                    _email, It.IsAny<string>(), It.IsAny<string>()))
-                .ThrowsAsync(new Exception());
+            _mockEmailSender.Setup(s => s.SendEmailVerificationEmail(ExpectedNonEmailVerifiedUser())).Throws(new Exception());
 
             SendEmailException exception = Assert.ThrowsAsync<SendEmailException>(() => _userRegister.RegisterUser(_email, _username, _passwordHash));
 

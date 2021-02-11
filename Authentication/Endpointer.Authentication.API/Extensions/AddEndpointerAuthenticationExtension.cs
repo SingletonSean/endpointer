@@ -4,6 +4,7 @@ using Endpointer.Authentication.API.Mappers;
 using Endpointer.Authentication.API.Models;
 using Endpointer.Authentication.API.Services.Authenticators;
 using Endpointer.Authentication.API.Services.EmailSenders;
+using Endpointer.Authentication.API.Services.EmailVerificationSenders;
 using Endpointer.Authentication.API.Services.PasswordHashers;
 using Endpointer.Authentication.API.Services.RefreshTokenRepositories;
 using Endpointer.Authentication.API.Services.TokenGenerators;
@@ -61,6 +62,7 @@ namespace Endpointer.Authentication.API.Extensions
                 services.AddSingleton(options.EmailVerificationConfiguration);
                 services.AddSingleton<IEmailVerificationTokenGenerator, EmailVerificationTokenGenerator>();
                 services.AddSingleton<IEmailVerificationTokenValidator, EmailVerificationTokenValidator>();
+                services.AddScoped<IEmailVerificationSender, EmailVerificationSender>();
                 services.AddScoped<IEmailSender, FluentEmailSender>();
                 services.AddScoped<IUserRegister, EmailVerificationUserRegister>();
             }

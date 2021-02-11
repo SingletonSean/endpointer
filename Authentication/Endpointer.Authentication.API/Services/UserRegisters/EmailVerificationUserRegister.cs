@@ -1,6 +1,7 @@
 ﻿using Endpointer.Authentication.API.Exceptions;
 using Endpointer.Authentication.API.Models;
 using Endpointer.Authentication.API.Services.EmailSenders;
+using Endpointer.Authentication.API.Services.EmailVerificationSenders;
 using Endpointer.Authentication.API.Services.TokenGenerators.EmailVerifications;
 using Endpointer.Authentication.API.Services.UserRepositories;
 using Endpointer.Core.API.Models;
@@ -15,21 +16,15 @@ namespace Endpointer.Authentication.API.Services.UserRegisters
     public class EmailVerificationUserRegister : IUserRegister
     {
         private readonly IUserRepository _userRepository;
-        private readonly IEmailSender _emailSender;
-        private readonly IEmailVerificationTokenGenerator _tokenGenerator;
-        private readonly EmailVerificationConfiguration _emailVerificationConfiguration;
+        private readonly IEmailVerificationSender _emailSender;
         private readonly ILogger<EmailVerificationUserRegister> _logger;
 
         public EmailVerificationUserRegister(IUserRepository userRepository,
-            IEmailSender emailSender,
-            IEmailVerificationTokenGenerator tokenGenerator,
-            EmailVerificationConfiguration emailVerificationConfiguration,
+            IEmailVerificationSender emailSender,
             ILogger<EmailVerificationUserRegister> logger)
         {
             _userRepository = userRepository;
             _emailSender = emailSender;
-            _tokenGenerator = tokenGenerator;
-            _emailVerificationConfiguration = emailVerificationConfiguration;
             _logger = logger;
         }
 
@@ -49,20 +44,8 @@ namespace Endpointer.Authentication.API.Services.UserRegisters
 
             try
             {
-                _logger.LogInformation("Creating email verification subject.");
-                string subject = _emailVerificationConfiguration.CreateEmailSubject?.Invoke(username);
-
-                _logger.LogInformation("Generating email verification token.");
-                string emailVerificationToken = _tokenGenerator.GenerateToken(user);
-                string emailVerificationUrl = $"{_emailVerificationConfiguration.VerifyBaseUrl}?token={emailVerificationToken}";
-
-                _logger.LogInformation("Sending email verification token to new user's email.");
-                await _emailSender.Send(
-                    _emailVerificationConfiguration.EmailFromAddress,
-                    _emailVerificationConfiguration.EmailFromName,
-                    email,
-                    subject,
-                    $"Welcome {username}! Please verify your email with the following link: {emailVerificationUrl}");
+                _logger.LogInformation("Sending email verification email.");
+                await _emailSender.SendEmailVerificationEmail(user);
 
                 _logger.LogInformation("Successfully registered user.");
                 return user;
