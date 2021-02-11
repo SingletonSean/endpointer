@@ -64,23 +64,24 @@ namespace Endpointer.Demos.Web
             };
 
             // Entity Framework
-            //services.AddEndpointerAuthentication(authenticationConfiguration,
-            //    validationParameters,
-            //    o => o
-            //        .RequireEmailVerification(emailVerificationConfiguration)
-            //        .WithEntityFrameworkDataSource<CustomDbContext>(
-            //            c => c.UseSqlite(connectionString)));
-
-            // Firebase
             services.AddEndpointerAuthentication(authenticationConfiguration,
                 validationParameters,
                 o => o
-                    .WithFirebaseDataSource(CreateFirebaseClient())
                     .EnableEmailVerification(emailVerificationConfiguration)
-                    .RequireVerifiedEmail());
+                    .RequireVerifiedEmail()
+                    .WithEntityFrameworkDataSource<CustomDbContext>(
+                        c => c.UseSqlite(connectionString)));
+
+            // Firebase
+            //services.AddEndpointerAuthentication(authenticationConfiguration,
+            //    validationParameters,
+            //    o => o
+            //        .WithFirebaseDataSource(CreateFirebaseClient())
+            //        .EnableEmailVerification(emailVerificationConfiguration)
+            //        .RequireVerifiedEmail());
 
             services.AddEndpointerAccounts(validationParameters,
-                o => o.WithDatabase<CustomDbContext>(
+                o => o.WithEntityFrameworkDataSource<CustomDbContext>(
                     c => c.UseSqlite(connectionString)));
         }
 

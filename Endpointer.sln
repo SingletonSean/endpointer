@@ -53,7 +53,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Endpointer.Authentication.C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Endpointer.Authentication.API.Firebase", "Authentication\Endpointer.Authentication.API.Firebase\Endpointer.Authentication.API.Firebase.csproj", "{3D98F1F7-59CE-4344-A1CD-D772414D0BA5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Endpointer.Authentication.API.Firebase.Tests", "Authentication\Endpointer.Authentication.API.Firebase.Tests\Endpointer.Authentication.API.Firebase.Tests.csproj", "{ADA60892-2077-46B9-A4B7-AB6822A76B46}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Endpointer.Authentication.API.Firebase.Tests", "Authentication\Endpointer.Authentication.API.Firebase.Tests\Endpointer.Authentication.API.Firebase.Tests.csproj", "{ADA60892-2077-46B9-A4B7-AB6822A76B46}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Endpointer.Accounts.API.Firebase", "Endpointer.Accounts.API.Firebase\Endpointer.Accounts.API.Firebase.csproj", "{CE7A79F0-7129-4294-9C39-20FAB893539B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -149,6 +151,10 @@ Global
 		{ADA60892-2077-46B9-A4B7-AB6822A76B46}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ADA60892-2077-46B9-A4B7-AB6822A76B46}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ADA60892-2077-46B9-A4B7-AB6822A76B46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE7A79F0-7129-4294-9C39-20FAB893539B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE7A79F0-7129-4294-9C39-20FAB893539B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE7A79F0-7129-4294-9C39-20FAB893539B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE7A79F0-7129-4294-9C39-20FAB893539B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -176,6 +182,7 @@ Global
 		{F2D0A2B7-8744-4DDE-A97E-928C48B5659C} = {ABC66115-9240-4509-9BCC-D0376218864A}
 		{3D98F1F7-59CE-4344-A1CD-D772414D0BA5} = {ABC66115-9240-4509-9BCC-D0376218864A}
 		{ADA60892-2077-46B9-A4B7-AB6822A76B46} = {ABC66115-9240-4509-9BCC-D0376218864A}
+		{CE7A79F0-7129-4294-9C39-20FAB893539B} = {C9D21AFB-DC94-4880-8BE4-358FCBDF4E19}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {22080EC3-FAA9-448A-B298-F86B819E92D0}
