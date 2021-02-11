@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace Endpointer.Authentication.Core.Models.Requests
@@ -9,6 +10,7 @@ namespace Endpointer.Authentication.Core.Models.Requests
     /// </summary>
     public class VerifyEmailRequest
     {
+        [Required]
         public string VerifyToken { get; set; }
     }
 }

@@ -27,6 +27,9 @@
             <DataTemplate DataType="{x:Type vm:AccountViewModel}">
                 <views:AccountView />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:VerifyEmailViewModel}">
+                <views:VerifyEmailView />
+            </DataTemplate>
         </ContentControl.Resources>
     </ContentControl>
 </Window>

@@ -32,7 +32,7 @@ namespace Endpointer.Authentication.Client.Services.Logout
                 if (ex.StatusCode == HttpStatusCode.Unauthorized)
                 {
                     _logger.LogError("Unauthorized logout everywhere request.");
-                    throw new UnauthorizedException(ex.Message, ex.InnerException);
+                    throw new UnauthorizedException(ex.Message, ex);
                 }
 
                 _logger.LogError("Unknown error.");

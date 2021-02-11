@@ -45,7 +45,7 @@ namespace Endpointer.Authentication.Client.Services.Login
                 if(ex.StatusCode == HttpStatusCode.Unauthorized)
                 {
                     _logger.LogError("Unauthorized login credentials.");
-                    throw new UnauthorizedException(ex.Message, ex.InnerException);
+                    throw new UnauthorizedException(ex.Message, ex);
                 }
 
                 ErrorResponse error = await ex.GetContentAsAsync<ErrorResponse>();

@@ -27,35 +27,62 @@
                                 <ColumnDefinition Width="auto" />
                                 <ColumnDefinition Width="auto" />
                                 <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="auto" />
                             </Grid.ColumnDefinitions>
 
-                            <TextBlock Grid.Column="0"
+                            <TextBlock
+                                Grid.Column="0"
                                 VerticalAlignment="Center"
                                 FontSize="16"
                                 Foreground="White"
                                 Text="Endpointer Demo" />
 
-                            <Button Grid.Column="1" Margin="5 0" Padding="10 5"
+                            <Button
+                                Grid.Column="1"
+                                Margin="5 0"
+                                Padding="10 5"
                                 Command="{Binding ShowRegisterCommand}"
                                 Content="Register" />
 
-                            <Button Grid.Column="2" Margin="5 0" Padding="10 5"
+                            <Button
+                                Grid.Column="2"
+                                Margin="5 0"
+                                Padding="10 5"
                                 Command="{Binding ShowLoginCommand}"
                                 Content="Login" />
 
-                            <Button Grid.Column="3" Margin="5 0" Padding="10 5"
+                            <Button
+                                Grid.Column="3"
+                                Margin="5 0"
+                                Padding="10 5"
                                 Command="{Binding ShowAccountCommand}"
                                 Content="Account" />
 
-                            <Button Grid.Column="4" Margin="5 0" Padding="10 5"
+                            <Button
+                                Grid.Column="4"
+                                Margin="5 0"
+                                Padding="10 5"
+                                Command="{Binding ShowVerifyEmailCommand}"
+                                Content="Verify Email" />
+
+                            <Button
+                                Grid.Column="5"
+                                Margin="5 0"
+                                Padding="10 5"
                                 Command="{Binding RefreshCommand}"
                                 Content="Refresh" />
 
-                            <Button Grid.Column="5" Margin="5 0" Padding="10 5"
+                            <Button
+                                Grid.Column="6"
+                                Margin="5 0"
+                                Padding="10 5"
                                 Command="{Binding LogoutCommand}"
                                 Content="Logout" />
 
-                            <Button Grid.Column="6" Margin="5 0" Padding="10 5"
+                            <Button
+                                Grid.Column="7"
+                                Margin="5 0"
+                                Padding="10 5"
                                 Command="{Binding LogoutEverywhereCommand}"
                                 Content="Logout Everywhere" />
                         </Grid>
