@@ -11,8 +11,10 @@ using Endpointer.Authentication.API.Services.TokenValidators;
 using Endpointer.Authentication.API.Services.TokenValidators.EmailVerifications;
 using Endpointer.Authentication.API.Services.UserRegisters;
 using Endpointer.Core.API.Extensions;
+using Endpointer.Core.API.Http;
 using Endpointer.Core.API.Services.TokenClaimsDecoders;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System;
 
@@ -66,14 +68,26 @@ namespace Endpointer.Authentication.API.Extensions
                 services.AddScoped<IUserRegister, UserRegister>();
             }
 
+            if(options.RequireVerifiedEmail)
+            {
+                services.AddScoped<HttpRequestAuthenticator>();
+                services.AddScoped<IHttpRequestAuthenticator>(s => new VerifyEmailHttpRequestAuthenticator(
+                    s.GetRequiredService<HttpRequestAuthenticator>(),
+                    s.GetRequiredService<ILogger<VerifyEmailHttpRequestAuthenticator>>()));
+
+                services.AddEndpointerCore(validationParameters, s => s.GetRequiredService<IHttpRequestAuthenticator>());
+            }
+            else
+            {
+                services.AddEndpointerCore(validationParameters);
+            }
+
             services.AddScoped<RegisterEndpointHandler>();
             services.AddScoped<LoginEndpointHandler>();
             services.AddScoped<RefreshEndpointHandler>();
             services.AddScoped<LogoutEndpointHandler>();
             services.AddScoped<LogoutEverywhereEndpointHandler>();
             services.AddScoped<VerifyEmailEndpointerHandler>();
-
-            services.AddEndpointerCore(validationParameters);
 
             return services;
         }
