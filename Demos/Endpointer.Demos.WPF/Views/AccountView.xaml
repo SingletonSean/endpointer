@@ -33,7 +33,8 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0"
+        <TextBlock
+            Grid.Row="0"
             Style="{StaticResource Header}"
             Text="Account" />
 
@@ -42,6 +43,7 @@
 
             <Grid Grid.IsSharedSizeScope="True" Style="{StaticResource OnlyShowIfNotLoading}">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
@@ -54,7 +56,9 @@
 
                     <TextBlock Grid.Column="0" Text="Email" />
 
-                    <TextBlock Grid.Column="1" Margin="20 0 0 0"
+                    <TextBlock
+                        Grid.Column="1"
+                        Margin="20 0 0 0"
                         Text="{Binding Email}" />
                 </Grid>
 
@@ -66,8 +70,24 @@
 
                     <TextBlock Grid.Column="0" Text="Username" />
 
-                    <TextBlock Grid.Column="1" Margin="20 0 0 0"
+                    <TextBlock
+                        Grid.Column="1"
+                        Margin="20 0 0 0"
                         Text="{Binding Username}" />
+                </Grid>
+
+                <Grid Grid.Row="2" Margin="0 20 0 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" SharedSizeGroup="Label" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Text="Email Verified?" />
+
+                    <TextBlock
+                        Grid.Column="1"
+                        Margin="20 0 0 0"
+                        Text="{Binding IsEmailVerified}" />
                 </Grid>
             </Grid>
         </Grid>

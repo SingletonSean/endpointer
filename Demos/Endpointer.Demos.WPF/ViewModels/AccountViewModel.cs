@@ -33,6 +33,20 @@ namespace Endpointer.Demos.WPF.ViewModels
             }
         }
 
+        private bool _isEmailVerified;
+        public bool IsEmailVerified
+        {
+            get
+            {
+                return _isEmailVerified;
+            }
+            set
+            {
+                _isEmailVerified = value;
+                OnPropertyChanged(nameof(IsEmailVerified));
+            }
+        }
+
         private bool _isLoading;
         public bool IsLoading
         {
