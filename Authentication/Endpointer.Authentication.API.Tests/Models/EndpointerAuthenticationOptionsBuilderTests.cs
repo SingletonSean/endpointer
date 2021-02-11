@@ -29,14 +29,22 @@ namespace Endpointer.Authentication.API.Tests.Models
         }
 
         [Test()]
-        public void Build_RequireEmailVerification_ReturnsOptionsWithRequireEmailVerificationTrue()
+        public void Build_EnableEmailVerification_ReturnsOptionsWithEnableEmailVerificationTrue()
         {
             EmailVerificationConfiguration configuration = new EmailVerificationConfiguration();
 
-            EndpointerAuthenticationOptions options = _builder.RequireEmailVerification(configuration).Build();
+            EndpointerAuthenticationOptions options = _builder.EnableEmailVerification(configuration).Build();
 
-            Assert.IsTrue(options.RequireEmailVerification);
+            Assert.IsTrue(options.EnableEmailVerification);
             Assert.AreEqual(configuration, options.EmailVerificationConfiguration);
+        }
+
+        [Test()]
+        public void Build_EnableEmailVerification_ReturnsOptionsWithRequireVerifiedEmailTrue()
+        {
+            EndpointerAuthenticationOptions options = _builder.RequireVerifiedEmail().Build();
+
+            Assert.IsTrue(options.RequireVerifiedEmail);
         }
 
         [Test()]
@@ -79,11 +87,19 @@ namespace Endpointer.Authentication.API.Tests.Models
         }
 
         [Test()]
-        public void Build_WithoutConfiguration_ReturnsOptionsWithRequireEmailVerificationFalse()
+        public void Build_WithoutConfiguration_ReturnsOptionsWithEnableEmailVerificationFalse()
         {
             EndpointerAuthenticationOptions options = _builder.Build();
 
-            Assert.IsFalse(options.RequireEmailVerification);
+            Assert.IsFalse(options.EnableEmailVerification);
+        }
+
+        [Test()]
+        public void Build_WithoutConfiguration_ReturnsOptionsWithRequireVerifiedEmailFalse()
+        {
+            EndpointerAuthenticationOptions options = _builder.Build();
+
+            Assert.IsFalse(options.RequireVerifiedEmail);
         }
 
         [Test()]

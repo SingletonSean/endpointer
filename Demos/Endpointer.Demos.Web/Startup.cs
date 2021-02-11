@@ -76,7 +76,7 @@ namespace Endpointer.Demos.Web
                 validationParameters,
                 o => o
                     .WithFirebaseDataSource(CreateFirebaseClient())
-                    .RequireEmailVerification(emailVerificationConfiguration));
+                    .EnableEmailVerification(emailVerificationConfiguration));
 
             services.AddEndpointerAccounts(validationParameters,
                 o => o.WithDatabase<CustomDbContext>(

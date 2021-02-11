@@ -50,7 +50,7 @@ namespace Endpointer.Authentication.API.Extensions
             services.AddSingleton<ITokenGenerator, TokenGenerator>();
             services.AddSingleton<IPasswordHasher, BcryptPasswordHasher>();
 
-            if(options.RequireEmailVerification)
+            if(options.EnableEmailVerification)
             {
                 FluentEmailServicesBuilder emailBuilder = services.AddFluentEmail(options.EmailVerificationConfiguration.EmailFromAddress);
                 options.EmailVerificationConfiguration.ConfigureFluentEmailServices?.Invoke(emailBuilder);
