@@ -4,6 +4,19 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <PackageId>Endpointer.Authentication.API.Firebase</PackageId>
+    <Version>1.5.0-alpha</Version>
+    <Authors>SingletonSean</Authors>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <RepositoryUrl>https://github.com/SingletonSean/endpointer</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/SingletonSean/endpointer</PackageProjectUrl>
+    <PackageTags>asp net core model endpointer functions api</PackageTags>
+    <Description>
+      Add a Firebase back-end to an Endpointer Accounts API.
+    </Description>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="FirebaseAdmin" Version="2.0.0" />
     <PackageReference Include="FirebaseDatabase.net" Version="4.0.5" />
