@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Endpointer.Core.API.Models;
 using Moq;
 using Endpointer.Authentication.API.Services.UserRepositories;
+using Microsoft.Extensions.Logging;
 
 namespace Endpointer.Authentication.API.Tests.Services.UserRegisters
 {
@@ -26,7 +27,7 @@ namespace Endpointer.Authentication.API.Tests.Services.UserRegisters
         {
             _mockUserRepository = new Mock<IUserRepository>();
 
-            _userRegister = new UserRegister(_mockUserRepository.Object);
+            _userRegister = new UserRegister(_mockUserRepository.Object, new Mock<ILogger<UserRegister>>().Object);
 
             _email = "test@gmail.com";
             _username = "test";

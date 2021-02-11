@@ -11,6 +11,7 @@ using System.Net;
 using Refit;
 using System.Threading.Tasks;
 using Endpointer.Core.Models.Responses;
+using Microsoft.Extensions.Logging;
 
 namespace Endpointer.Authentication.Client.Tests.Services.VerifyEmail
 {
@@ -28,7 +29,7 @@ namespace Endpointer.Authentication.Client.Tests.Services.VerifyEmail
         {
             _mockAPI = new Mock<IAPIVerifyEmailService>();
 
-            _service = new VerifyEmailService(_mockAPI.Object);
+            _service = new VerifyEmailService(_mockAPI.Object, new Mock<ILogger<VerifyEmailService>>().Object);
 
             _request = new VerifyEmailRequest();
         }

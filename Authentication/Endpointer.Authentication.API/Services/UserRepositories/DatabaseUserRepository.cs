@@ -88,10 +88,16 @@ namespace Endpointer.Authentication.API.Services.UserRepositories
         {
             User user = new User() { Id = id };
 
+            _logger.LogInformation("Attaching existing user.");
             _context.Attach(user);
+
+            _logger.LogInformation("Applying desired updates to user.");
             update(user);
 
+            _logger.LogInformation("Saving user.");
             await _context.SaveChangesAsync();
+
+            _logger.LogInformation("Successfully saved user.");
         }
     }
 }

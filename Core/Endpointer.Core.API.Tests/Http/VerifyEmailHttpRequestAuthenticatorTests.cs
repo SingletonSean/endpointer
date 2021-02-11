@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Endpointer.Core.API.Models;
 using Endpointer.Core.API.Exceptions;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace Endpointer.Core.API.Tests.Http
 {
@@ -25,7 +26,7 @@ namespace Endpointer.Core.API.Tests.Http
         {
             _baseAuthenticator = new Mock<IHttpRequestAuthenticator>();
 
-            _authenticator = new VerifyEmailHttpRequestAuthenticator(_baseAuthenticator.Object);
+            _authenticator = new VerifyEmailHttpRequestAuthenticator(_baseAuthenticator.Object, new Mock<ILogger<VerifyEmailHttpRequestAuthenticator>>().Object);
 
             _httpRequest = new Mock<HttpRequest>().Object;
         }

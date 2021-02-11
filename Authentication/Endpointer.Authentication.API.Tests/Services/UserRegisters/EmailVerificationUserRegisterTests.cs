@@ -11,6 +11,7 @@ using Endpointer.Authentication.API.Services.EmailSenders;
 using Endpointer.Authentication.API.Models;
 using Endpointer.Authentication.API.Services.TokenGenerators.EmailVerifications;
 using Endpointer.Authentication.API.Exceptions;
+using Microsoft.Extensions.Logging;
 
 namespace Endpointer.Authentication.API.Tests.Services.UserRegisters
 {
@@ -45,7 +46,8 @@ namespace Endpointer.Authentication.API.Tests.Services.UserRegisters
                 _mockUserRepository.Object, 
                 _mockEmailSender.Object, 
                 _mockTokenGenerator.Object,
-                _emailVerificationConfiguration);
+                _emailVerificationConfiguration,
+                new Mock<ILogger<EmailVerificationUserRegister>>().Object);
 
             _email = "test@gmail.com";
             _username = "test";

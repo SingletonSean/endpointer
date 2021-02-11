@@ -25,7 +25,7 @@ namespace Endpointer.Authentication.API.Services.TokenGenerators.EmailVerificati
         /// <inheritdoc />
         public string GenerateToken(User user)
         {
-            _logger.LogInformation("Creating email claim.");
+            _logger.LogInformation("Creating email verification claims.");
             List<Claim> claims = new List<Claim>()
             {
                 new Claim("id", user.Id.ToString()),
