@@ -10,6 +10,7 @@ using Moq;
 using Endpointer.Authentication.API.Services.UserRepositories;
 using Endpointer.Authentication.API.Services.RefreshTokenRepositories;
 using Endpointer.Authentication.API.Firebase.Services.RefreshTokenRepositories;
+using Endpointer.API.Tests.ServiceCollections;
 
 namespace Endpointer.Authentication.API.Firebase.Tests.Extensions
 {
@@ -18,17 +19,17 @@ namespace Endpointer.Authentication.API.Firebase.Tests.Extensions
     {
         private EndpointerAuthenticationOptionsBuilder _builder;
 
-        private Mock<IServiceCollection> _mockServices;
+        private MockServiceCollectionTests _mockServices;
 
-        private IServiceCollection Services => _mockServices.Object;
+        private IServiceCollection Services => _mockServices.MockServices.Object;
 
         [SetUp]
         public void Setup()
         {
             _builder = new EndpointerAuthenticationOptionsBuilder();
 
-            _mockServices = new Mock<IServiceCollection>();
-            _mockServices.Setup(s => s.GetEnumerator()).Returns(new List<ServiceDescriptor>().GetEnumerator());
+            _mockServices = new MockServiceCollectionTests();
+            _mockServices.SetUp();
         }
 
         [Test()]
@@ -39,19 +40,9 @@ namespace Endpointer.Authentication.API.Firebase.Tests.Extensions
             EndpointerAuthenticationOptions options = _builder.WithFirebaseDataSource(client).Build();
 
             options.AddDataSourceServices(Services);
-            VerifyServiceAdded(typeof(FirebaseClient), client);
-            VerifyServiceAdded(typeof(IUserRepository), typeof(FirebaseUserRepository));
-            VerifyServiceAdded(typeof(IRefreshTokenRepository), typeof(FirebaseRefreshTokenRepository));
-        }
-
-        private void VerifyServiceAdded(Type inter, Type implem)
-        {
-            _mockServices.Verify(s => s.Add(It.Is<ServiceDescriptor>(s => s.ServiceType == inter && s.ImplementationType == implem)));
-        }
-
-        private void VerifyServiceAdded(Type inter, object implem)
-        {
-            _mockServices.Verify(s => s.Add(It.Is<ServiceDescriptor>(s => s.ServiceType == inter && s.ImplementationInstance == implem)));
+            _mockServices.VerifyServiceAdded(typeof(FirebaseClient), client);
+            _mockServices.VerifyServiceAdded(typeof(IUserRepository), typeof(FirebaseUserRepository));
+            _mockServices.VerifyServiceAdded(typeof(IRefreshTokenRepository), typeof(FirebaseRefreshTokenRepository));
         }
     }
 }

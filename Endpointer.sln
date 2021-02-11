@@ -57,6 +57,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Endpointer.Authentication.A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Endpointer.Accounts.API.Firebase", "Endpointer.Accounts.API.Firebase\Endpointer.Accounts.API.Firebase.csproj", "{CE7A79F0-7129-4294-9C39-20FAB893539B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Endpointer.Accounts.API.Firebase.Tests", "Endpointer.Accounts.API.FirebaseTests\Endpointer.Accounts.API.Firebase.Tests.csproj", "{79B5E331-A647-43D2-8CC4-794C150D7A0E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -155,6 +157,10 @@ Global
 		{CE7A79F0-7129-4294-9C39-20FAB893539B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE7A79F0-7129-4294-9C39-20FAB893539B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE7A79F0-7129-4294-9C39-20FAB893539B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79B5E331-A647-43D2-8CC4-794C150D7A0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79B5E331-A647-43D2-8CC4-794C150D7A0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79B5E331-A647-43D2-8CC4-794C150D7A0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79B5E331-A647-43D2-8CC4-794C150D7A0E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -183,6 +189,7 @@ Global
 		{3D98F1F7-59CE-4344-A1CD-D772414D0BA5} = {ABC66115-9240-4509-9BCC-D0376218864A}
 		{ADA60892-2077-46B9-A4B7-AB6822A76B46} = {ABC66115-9240-4509-9BCC-D0376218864A}
 		{CE7A79F0-7129-4294-9C39-20FAB893539B} = {C9D21AFB-DC94-4880-8BE4-358FCBDF4E19}
+		{79B5E331-A647-43D2-8CC4-794C150D7A0E} = {C9D21AFB-DC94-4880-8BE4-358FCBDF4E19}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {22080EC3-FAA9-448A-B298-F86B819E92D0}
