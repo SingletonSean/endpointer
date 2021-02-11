@@ -1,11 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
   <PropertyGroup>
-    <PackageId>Endpointer.Authentication.API.Firebase</PackageId>
+    <PackageId>Endpointer.Accounts.API.Firebase</PackageId>
     <Version>1.5.0-alpha</Version>
     <Authors>SingletonSean</Authors>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
