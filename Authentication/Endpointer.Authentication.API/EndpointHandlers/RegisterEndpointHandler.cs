@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System;
 using Microsoft.Extensions.Logging;
 using Endpointer.Authentication.API.Services.UserRegisters;
+using Endpointer.Authentication.API.Exceptions;
 
 namespace Endpointer.Authentication.API.EndpointHandlers
 {
@@ -85,11 +86,19 @@ namespace Endpointer.Authentication.API.EndpointHandlers
             _logger.LogInformation("Hashing user password.");
             string passwordHash = _passwordHasher.HashPassword(registerRequest.Password);
 
-            _logger.LogInformation("Registering new user.");
-            await _userRegister.RegisterUser(registerRequest.Email, registerRequest.Username, passwordHash);
+            try
+            {
+                _logger.LogInformation("Registering new user.");
+                await _userRegister.RegisterUser(registerRequest.Email, registerRequest.Username, passwordHash);
 
-            _logger.LogInformation("Successfully registered user.");
-            return new OkResult();
+                _logger.LogInformation("Successfully registered user.");
+                return new OkResult();
+            }
+            catch (SendEmailException)
+            {
+                _logger.LogError("Failed to send email verification.");
+                return new OkResult();
+            }
         }
     }
 }

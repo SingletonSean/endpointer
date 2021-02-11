@@ -1,4 +1,5 @@
-﻿using Endpointer.Authentication.API.Models;
+﻿using Endpointer.Authentication.API.Exceptions;
+using Endpointer.Authentication.API.Models;
 using Endpointer.Authentication.API.Services.EmailSenders;
 using Endpointer.Authentication.API.Services.TokenGenerators.EmailVerifications;
 using Endpointer.Authentication.API.Services.UserRepositories;
@@ -41,18 +42,25 @@ namespace Endpointer.Authentication.API.Services.UserRegisters
 
             await _userRepository.Create(user);
 
-            string subject = _emailVerificationConfiguration.CreateEmailSubject?.Invoke(username);
+            try
+            {
+                string subject = _emailVerificationConfiguration.CreateEmailSubject?.Invoke(username);
 
-            string emailVerificationToken = _tokenGenerator.GenerateToken(user);
-            string emailVerificationUrl = $"{_emailVerificationConfiguration.VerifyBaseUrl}?token={emailVerificationToken}";
+                string emailVerificationToken = _tokenGenerator.GenerateToken(user);
+                string emailVerificationUrl = $"{_emailVerificationConfiguration.VerifyBaseUrl}?token={emailVerificationToken}";
 
-            await _emailSender.Send(
-                _emailVerificationConfiguration.EmailFromAddress, 
-                email, 
-                subject, 
-                $"Welcome {username}! Please verify your email with the following link: {emailVerificationUrl}");
+                await _emailSender.Send(
+                    _emailVerificationConfiguration.EmailFromAddress,
+                    email,
+                    subject,
+                    $"Welcome {username}! Please verify your email with the following link: {emailVerificationUrl}");
 
-            return user;
+                return user;
+            }
+            catch (Exception ex)
+            {
+                throw new SendEmailException("Failed to send email verification email.", ex, email);
+            }
         }
     }
 }

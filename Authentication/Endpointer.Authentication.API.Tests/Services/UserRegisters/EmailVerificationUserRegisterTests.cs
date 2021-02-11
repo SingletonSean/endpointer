@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Endpointer.Authentication.API.Services.EmailSenders;
 using Endpointer.Authentication.API.Models;
 using Endpointer.Authentication.API.Services.TokenGenerators.EmailVerifications;
+using Endpointer.Authentication.API.Exceptions;
 
 namespace Endpointer.Authentication.API.Tests.Services.UserRegisters
 {
@@ -114,13 +115,15 @@ namespace Endpointer.Authentication.API.Tests.Services.UserRegisters
         }
 
         [Test()]
-        public void RegisterUser_WithEmailSenderException_ThrowsException()
+        public void RegisterUser_WithException_ThrowsSendEmailException()
         {
             _mockEmailSender
                 .Setup(s => s.Send(_emailVerificationConfiguration.EmailFromAddress, _email, It.IsAny<string>(), It.IsAny<string>()))
                 .ThrowsAsync(new Exception());
 
-            Assert.ThrowsAsync<Exception>(() => _userRegister.RegisterUser(_email, _username, _passwordHash));
+            SendEmailException exception = Assert.ThrowsAsync<SendEmailException>(() => _userRegister.RegisterUser(_email, _username, _passwordHash));
+
+            Assert.AreEqual(_email, exception.To);
         }
 
         private User ExpectedNonEmailVerifiedUser()

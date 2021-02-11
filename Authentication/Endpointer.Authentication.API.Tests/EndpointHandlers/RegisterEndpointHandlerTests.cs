@@ -1,5 +1,6 @@
 ﻿using Endpointer.API.Tests.EndpointHandlers;
 using Endpointer.Authentication.API.EndpointHandlers;
+using Endpointer.Authentication.API.Exceptions;
 using Endpointer.Authentication.API.Services.PasswordHashers;
 using Endpointer.Authentication.API.Services.UserRegisters;
 using Endpointer.Authentication.API.Services.UserRepositories;
@@ -92,6 +93,18 @@ namespace Endpointer.Authentication.API.Tests.EndpointHandlers
             _mockUserRegister.Setup(s => s.RegisterUser(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).ThrowsAsync(new Exception());
 
             Assert.ThrowsAsync<Exception>(() => _handler.HandleRegister(_request, _validModelState));
+        }
+
+        [Test]
+        public async Task HandleRegister_WithSendEmailException_ReturnsOk()
+        {
+            _mockUserRepository.Setup(s => s.GetByEmail(_request.Email)).ReturnsAsync(() => null);
+            _mockUserRepository.Setup(s => s.GetByUsername(_request.Username)).ReturnsAsync(() => null);
+            _mockUserRegister.Setup(s => s.RegisterUser(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).ThrowsAsync(new SendEmailException(_request.Email));
+
+            IActionResult result = await _handler.HandleRegister(_request, _validModelState);
+
+            Assert.IsAssignableFrom<OkResult>(result);
         }
 
         [Test]
