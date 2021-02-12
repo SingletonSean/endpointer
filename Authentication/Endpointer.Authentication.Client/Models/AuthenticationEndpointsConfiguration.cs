@@ -10,5 +10,6 @@
         public string RefreshEndpoint { get; set; }
         public string LogoutEndpoint { get; set; }
         public string VerifyEmailEndpoint { get; set; }
+        public string SendVerifyEmailEndpoint { get; set; }
     }
 }

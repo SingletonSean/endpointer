@@ -20,7 +20,8 @@ namespace Endpointer.Demos.WPF.Containers
                 LoginEndpoint = baseAddress + "login",
                 RefreshEndpoint = baseAddress + "refresh",
                 LogoutEndpoint = baseAddress + "logout",
-                VerifyEmailEndpoint = baseAddress + "verify"
+                VerifyEmailEndpoint = baseAddress + "verify",
+                SendVerifyEmailEndpoint = baseAddress + "send-verify",
             };
             AccountEndpointsConfiguration accountsEndpointConfiguration = new AccountEndpointsConfiguration()
             {

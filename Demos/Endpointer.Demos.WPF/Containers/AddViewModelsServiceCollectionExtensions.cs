@@ -1,6 +1,7 @@
 ﻿using Endpointer.Accounts.Client.Services.Accounts;
 using Endpointer.Authentication.Client.Services.Login;
 using Endpointer.Authentication.Client.Services.Register;
+using Endpointer.Authentication.Client.Services.SendVerifyEmail;
 using Endpointer.Authentication.Client.Services.VerifyEmail;
 using Endpointer.Demos.WPF.Commands;
 using Endpointer.Demos.WPF.Commands.Accounts;
@@ -59,8 +60,9 @@ namespace Endpointer.Demos.WPF.Containers
 
         private static CreateViewModel<AccountViewModel> CreateAccountViewModel(IServiceProvider services)
         {
-            return () => AccountViewModel.LoadViewModel(vm => new LoadAccountCommand(vm,
-                services.GetRequiredService<IAccountService>()));
+            return () => AccountViewModel.LoadViewModel(
+                vm => new LoadAccountCommand(vm, services.GetRequiredService<IAccountService>()),
+                vm => new SendVerifyEmailCommand(services.GetRequiredService<ISendVerifyEmailService>()));
         }
 
         private static CreateViewModel<VerifyEmailViewModel> CreateVerifyEmailViewModel(IServiceProvider services)

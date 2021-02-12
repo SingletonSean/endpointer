@@ -62,15 +62,21 @@ namespace Endpointer.Demos.WPF.ViewModels
         }
 
         public ICommand LoadAccountCommand { get; }
+        public ICommand SendEmailVerificationEmailCommand { get; }
 
-        public AccountViewModel(CreateCommand<AccountViewModel> createLoadAccountCommand)
+        public AccountViewModel(
+            CreateCommand<AccountViewModel> createLoadAccountCommand,
+            CreateCommand<AccountViewModel> createSendEmailVerificationEmailCommand)
         {
             LoadAccountCommand = createLoadAccountCommand(this);
+            SendEmailVerificationEmailCommand = createSendEmailVerificationEmailCommand(this);
         }
 
-        public static AccountViewModel LoadViewModel(CreateCommand<AccountViewModel> createLoadAccountCommand)
+        public static AccountViewModel LoadViewModel(
+            CreateCommand<AccountViewModel> createLoadAccountCommand, 
+            CreateCommand<AccountViewModel> createSendEmailVerificationEmailCommand)
         {
-            AccountViewModel viewModel = new AccountViewModel(createLoadAccountCommand);
+            AccountViewModel viewModel = new AccountViewModel(createLoadAccountCommand, createSendEmailVerificationEmailCommand);
 
             viewModel.LoadAccountCommand.Execute(null);
 

@@ -2,6 +2,7 @@
 using Endpointer.Authentication.Client.Services.Login;
 using Endpointer.Authentication.Client.Services.Logout;
 using Endpointer.Authentication.Client.Services.Register;
+using Endpointer.Authentication.Client.Services.SendVerifyEmail;
 using Endpointer.Authentication.Client.Services.VerifyEmail;
 using Endpointer.Core.Client.Extensions;
 using Endpointer.Core.Client.Models;
@@ -43,10 +44,16 @@ namespace Endpointer.Authentication.Client.Extensions
                 services.AddAutoRefreshRefitClient<IAPILogoutEverywhereService>(options.RefitSettings, 
                     endpointsConfiguration.LogoutEndpoint, 
                     options.GetAutoRefreshTokenStore);
+                services.AddAutoRefreshRefitClient<IAPISendVerifyEmailService>(options.RefitSettings, 
+                    endpointsConfiguration.SendVerifyEmailEndpoint,
+                    options.GetAutoRefreshTokenStore);
             }
             else
             {
                 services.AddAccessTokenRefitClient<IAPILogoutService>(options.RefitSettings,
+                    endpointsConfiguration.LogoutEndpoint,
+                    getTokenStore);
+                services.AddAccessTokenRefitClient<IAPISendVerifyEmailService>(options.RefitSettings,
                     endpointsConfiguration.LogoutEndpoint,
                     getTokenStore);
             }
@@ -57,6 +64,7 @@ namespace Endpointer.Authentication.Client.Extensions
             services.AddSingleton<ILogoutService, LogoutService>();
             services.AddSingleton<IRefreshService, RefreshService>();
             services.AddSingleton<IVerifyEmailService, VerifyEmailService>();
+            services.AddSingleton<ISendVerifyEmailService, SendVerifyEmailService>();
 
             return services;
         }
