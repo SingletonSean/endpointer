@@ -93,6 +93,7 @@ namespace Endpointer.Authentication.API.Extensions
             services.AddScoped<RefreshEndpointHandler>();
             services.AddScoped<LogoutEndpointHandler>();
             services.AddScoped<VerifyEmailEndpointerHandler>();
+            services.AddScoped<SendVerifyEmailEndpointerHandler>();
 
             services.AddEndpointerCore(validationParameters);
 

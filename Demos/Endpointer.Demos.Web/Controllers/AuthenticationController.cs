@@ -14,13 +14,15 @@ namespace Endpointer.Demos.Web.Controllers
         private readonly LogoutEndpointHandler _logoutHandler;
         private readonly LogoutEverywhereEndpointHandler _logoutEverywhereHandler;
         private readonly VerifyEmailEndpointerHandler _verifyEmailHandler;
+        private readonly SendVerifyEmailEndpointerHandler _sendVerifyEmailHandler;
 
         public AuthenticationController(RegisterEndpointHandler registerHandler,
             LoginEndpointHandler loginHandler,
             RefreshEndpointHandler refreshHandler,
             LogoutEndpointHandler logoutHandler,
-            LogoutEverywhereEndpointHandler logoutEverywhereHandler, 
-            VerifyEmailEndpointerHandler verifyEmailHandler)
+            LogoutEverywhereEndpointHandler logoutEverywhereHandler,
+            VerifyEmailEndpointerHandler verifyEmailHandler,
+            SendVerifyEmailEndpointerHandler sendVerifyEmailHandler)
         {
             _registerHandler = registerHandler;
             _loginHandler = loginHandler;
@@ -28,6 +30,7 @@ namespace Endpointer.Demos.Web.Controllers
             _logoutHandler = logoutHandler;
             _logoutEverywhereHandler = logoutEverywhereHandler;
             _verifyEmailHandler = verifyEmailHandler;
+            _sendVerifyEmailHandler = sendVerifyEmailHandler;
         }
 
         [HttpPost("register")]
@@ -64,6 +67,12 @@ namespace Endpointer.Demos.Web.Controllers
         public async Task<IActionResult> VerifyEmail([FromBody] VerifyEmailRequest request)
         {
             return await _verifyEmailHandler.HandleVerifyEmail(request);
+        }
+
+        [HttpPost("send-verify")]
+        public async Task<IActionResult> SendVerifyEmail()
+        {
+            return await _sendVerifyEmailHandler.HandleSendVerifyEmail(HttpContext.Request);
         }
     }
 }
