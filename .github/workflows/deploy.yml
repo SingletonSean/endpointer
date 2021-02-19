@@ -64,7 +64,7 @@ jobs:
       - name: "Pack Accounts API project"
         run: dotnet pack Accounts/Endpointer.Accounts.API -c ${{ env.BUILD_CONFIGURATION }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }} ${{ env.PACK_OPTIONS }}
 
-      - name: "Pack Authentication API Firebase project"
+      - name: "Pack Accounts API Firebase project"
         run: dotnet pack Accounts/Endpointer.Accounts.API.Firebase -c ${{ env.BUILD_CONFIGURATION }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }} ${{ env.PACK_OPTIONS }}
 
       - name: "Pack Accounts Client project"
