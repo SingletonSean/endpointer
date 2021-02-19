@@ -6,7 +6,7 @@
 
   <PropertyGroup>
     <PackageId>Endpointer.Accounts.API.Firebase</PackageId>
-    <Version>1.5.0-alpha</Version>
+    <Version>1.2.0-alpha</Version>
     <Authors>SingletonSean</Authors>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <RepositoryUrl>https://github.com/SingletonSean/endpointer</RepositoryUrl>
