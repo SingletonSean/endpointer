@@ -54,7 +54,8 @@ namespace Endpointer.Accounts.API.EndpointHandlers
                 {
                     Id = account.Id,
                     Email = account.Email,
-                    Username = account.Username
+                    Username = account.Username,
+                    IsEmailVerified = account.IsEmailVerified
                 };
 
                 _logger.LogInformation("Successfully retrieved account for user id {UserId}.", user.Id);

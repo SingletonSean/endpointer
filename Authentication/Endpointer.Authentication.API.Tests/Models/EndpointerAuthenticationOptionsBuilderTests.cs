@@ -7,6 +7,7 @@ using Moq;
 using System;
 using Endpointer.Authentication.API.Contexts;
 using System.Collections.Generic;
+using Endpointer.API.Tests.ServiceCollections;
 
 namespace Endpointer.Authentication.API.Tests.Models
 {
@@ -15,17 +16,36 @@ namespace Endpointer.Authentication.API.Tests.Models
     {
         private EndpointerAuthenticationOptionsBuilder _builder;
 
-        private Mock<IServiceCollection> _mockServices;
-
-        private IServiceCollection Services => _mockServices.Object;
+        private MockServiceCollectionTests _mockServicesTests;
+        private Mock<IServiceCollection> MockServices => _mockServicesTests.MockServices;
+        private IServiceCollection Services => MockServices.Object;
 
         [SetUp]
         public void Setup()
         {
             _builder = new EndpointerAuthenticationOptionsBuilder();
 
-            _mockServices = new Mock<IServiceCollection>();
-            _mockServices.Setup(s => s.GetEnumerator()).Returns(new List<ServiceDescriptor>().GetEnumerator());
+            _mockServicesTests = new MockServiceCollectionTests();
+            _mockServicesTests.SetUp();
+        }
+
+        [Test()]
+        public void Build_EnableEmailVerification_ReturnsOptionsWithEnableEmailVerificationTrue()
+        {
+            EmailVerificationConfiguration configuration = new EmailVerificationConfiguration();
+
+            EndpointerAuthenticationOptions options = _builder.EnableEmailVerification(configuration).Build();
+
+            Assert.IsTrue(options.EnableEmailVerification);
+            Assert.AreEqual(configuration, options.EmailVerificationConfiguration);
+        }
+
+        [Test()]
+        public void Build_EnableEmailVerification_ReturnsOptionsWithRequireVerifiedEmailTrue()
+        {
+            EndpointerAuthenticationOptions options = _builder.RequireVerifiedEmail().Build();
+
+            Assert.IsTrue(options.RequireVerifiedEmail);
         }
 
         [Test()]
@@ -34,9 +54,9 @@ namespace Endpointer.Authentication.API.Tests.Models
             EndpointerAuthenticationOptions options = _builder.WithEntityFrameworkDataSource().Build();
 
             options.AddDataSourceServices(Services);
-            VerifyServiceAdded(typeof(DefaultAuthenticationDbContext), It.IsAny<DefaultAuthenticationDbContext>());
-            VerifyServiceAdded(typeof(IUserRepository), typeof(DatabaseUserRepository<DefaultAuthenticationDbContext>));
-            VerifyServiceAdded(typeof(IRefreshTokenRepository), typeof(DatabaseRefreshTokenRepository<DefaultAuthenticationDbContext>));
+            _mockServicesTests.VerifyServiceAdded(typeof(DefaultAuthenticationDbContext), It.IsAny<DefaultAuthenticationDbContext>());
+            _mockServicesTests.VerifyServiceAdded(typeof(IUserRepository), typeof(DatabaseUserRepository<DefaultAuthenticationDbContext>));
+            _mockServicesTests.VerifyServiceAdded(typeof(IRefreshTokenRepository), typeof(DatabaseRefreshTokenRepository<DefaultAuthenticationDbContext>));
         }
 
         [Test()]
@@ -53,8 +73,8 @@ namespace Endpointer.Authentication.API.Tests.Models
             EndpointerAuthenticationOptions options = _builder.WithCustomDataSource(addCustomDataSource).Build();
 
             options.AddDataSourceServices(Services);
-            VerifyServiceAdded(typeof(IUserRepository), customUserRepository);
-            VerifyServiceAdded(typeof(IRefreshTokenRepository), customRefreshRepository);
+            _mockServicesTests.VerifyServiceAdded(typeof(IUserRepository), customUserRepository);
+            _mockServicesTests.VerifyServiceAdded(typeof(IRefreshTokenRepository), customRefreshRepository);
         }
 
         [Test()]
@@ -63,18 +83,32 @@ namespace Endpointer.Authentication.API.Tests.Models
             EndpointerAuthenticationOptions options = _builder.Build();
 
             options.AddDataSourceServices(Services);
-            VerifyServiceAdded(typeof(IUserRepository), typeof(InMemoryUserRepository));
-            VerifyServiceAdded(typeof(IRefreshTokenRepository), typeof(InMemoryRefreshTokenRepository));
+            _mockServicesTests.VerifyServiceAdded(typeof(IUserRepository), typeof(InMemoryUserRepository));
+            _mockServicesTests.VerifyServiceAdded(typeof(IRefreshTokenRepository), typeof(InMemoryRefreshTokenRepository));
         }
 
-        private void VerifyServiceAdded(Type inter, Type implem)
+        [Test()]
+        public void Build_WithoutConfiguration_ReturnsOptionsWithEnableEmailVerificationFalse()
         {
-            _mockServices.Verify(s => s.Add(It.Is<ServiceDescriptor>(s => s.ServiceType == inter && s.ImplementationType == implem)));
+            EndpointerAuthenticationOptions options = _builder.Build();
+
+            Assert.IsFalse(options.EnableEmailVerification);
         }
 
-        private void VerifyServiceAdded(Type inter, object implem)
+        [Test()]
+        public void Build_WithoutConfiguration_ReturnsOptionsWithRequireVerifiedEmailFalse()
         {
-            _mockServices.Verify(s => s.Add(It.Is<ServiceDescriptor>(s => s.ServiceType == inter && s.ImplementationInstance == implem)));
+            EndpointerAuthenticationOptions options = _builder.Build();
+
+            Assert.IsFalse(options.RequireVerifiedEmail);
+        }
+
+        [Test()]
+        public void Build_WithoutConfiguration_ReturnsOptionsWithNullEmailVerificationConfiguration()
+        {
+            EndpointerAuthenticationOptions options = _builder.Build();
+
+            Assert.IsNull(options.EmailVerificationConfiguration);
         }
     }
 }

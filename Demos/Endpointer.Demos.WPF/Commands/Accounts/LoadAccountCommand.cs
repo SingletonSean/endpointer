@@ -31,6 +31,7 @@ namespace Endpointer.Demos.WPF.Commands.Accounts
 
                 _viewModel.Email = account.Email;
                 _viewModel.Username = account.Username;
+                _viewModel.IsEmailVerified = account.IsEmailVerified;
 
                 success = true;
             }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Endpointer.API.Tests.EndpointHandlers;
 using Endpointer.Authentication.API.EndpointHandlers;
 using Endpointer.Authentication.API.Services.Authenticators;
 using Endpointer.Authentication.API.Services.PasswordHashers;
@@ -16,7 +17,7 @@ using System.Threading.Tasks;
 namespace Endpointer.Authentication.API.Tests.EndpointHandlers
 {
     [TestFixture]
-    public class LoginEndpointHandlerTests
+    public class LoginEndpointHandlerTests : EndpointHandlerTests
     {
         private LoginEndpointHandler _handler;
 
@@ -26,8 +27,6 @@ namespace Endpointer.Authentication.API.Tests.EndpointHandlers
         private Mock<IMapper> _mockMapper;
 
         private LoginRequest _request;
-        private ModelStateDictionary _validModelState;
-        private ModelStateDictionary _invalidModelState;
 
         [SetUp]
         public void SetUp()
@@ -45,9 +44,6 @@ namespace Endpointer.Authentication.API.Tests.EndpointHandlers
                 new Mock<ILogger<LoginEndpointHandler>>().Object);
 
             _request = new LoginRequest();
-            _validModelState = new ModelStateDictionary();
-            _invalidModelState = new ModelStateDictionary();
-            _invalidModelState.AddModelError("Error", "Message");
         }
 
         [Test]

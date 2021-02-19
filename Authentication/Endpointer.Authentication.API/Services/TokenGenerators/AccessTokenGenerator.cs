@@ -31,6 +31,7 @@ namespace Endpointer.Authentication.API.Services.TokenGenerators
                 new Claim("id", user.Id.ToString()),
                 new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.Name, user.Username),
+                new Claim(ClaimKey.EMAIL_VERIFIED, user.IsEmailVerified.ToString())
             };
 
             _logger.LogInformation("Generating access token for user claims.");

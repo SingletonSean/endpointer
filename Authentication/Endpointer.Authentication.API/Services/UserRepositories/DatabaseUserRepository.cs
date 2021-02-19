@@ -20,14 +20,13 @@ namespace Endpointer.Authentication.API.Services.UserRepositories
         }
 
         /// <inheritdoc />
-        public async Task<User> Create(User user)
+        public async Task Create(User user)
         {
             _logger.LogInformation("Saving new user.");
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
             _logger.LogInformation("Successfully created new user.");
-            return user;
         }
 
         /// <inheritdoc />
@@ -82,6 +81,23 @@ namespace Endpointer.Authentication.API.Services.UserRepositories
             }
 
             return user;
+        }
+
+        /// <inheritdoc />
+        public async Task Update(Guid id, Action<User> update)
+        {
+            User user = new User() { Id = id };
+
+            _logger.LogInformation("Attaching existing user.");
+            _context.Attach(user);
+
+            _logger.LogInformation("Applying desired updates to user.");
+            update(user);
+
+            _logger.LogInformation("Saving user.");
+            await _context.SaveChangesAsync();
+
+            _logger.LogInformation("Successfully saved user.");
         }
     }
 }

@@ -14,6 +14,8 @@ using System.Text;
 using Firebase.Database;
 using Google.Apis.Auth.OAuth2;
 using Endpointer.Authentication.API.Firebase.Extensions;
+using Endpointer.Accounts.API.Firebase.Extensions;
+using System.Net.Mail;
 
 namespace Endpointer.Demos.Web
 {
@@ -46,20 +48,45 @@ namespace Endpointer.Demos.Web
 
             string connectionString = _configuration.GetConnectionString("sqlite");
 
+            EmailVerificationConfiguration emailVerificationConfiguration = new EmailVerificationConfiguration()
+            {
+                EmailFromAddress = "admin@endpointer.com",
+                EmailFromName = "Endpointer",
+                TokenAudience = "localhost:5001",
+                TokenIssuer = "localhost:5001",
+                TokenExpirationMinutes = 60,
+                TokenSecret = authenticationConfiguration.AccessTokenSecret,
+                VerifyBaseUrl = "https://localhost:5001/verify",
+                ConfigureFluentEmailServices = (builder) => builder.AddSmtpSender(() => new SmtpClient("localhost")
+                {
+                    EnableSsl = false,
+                    DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory,
+                    PickupDirectoryLocation = @"C:/emails"
+                })
+            };
+
             // Entity Framework
             //services.AddEndpointerAuthentication(authenticationConfiguration,
-            //    validationParameters, 
+            //    validationParameters,
+            //    o => o
+            //        .EnableEmailVerification(emailVerificationConfiguration)
+            //        .RequireVerifiedEmail()
+            //        .WithEntityFrameworkDataSource<CustomDbContext>(
+            //            c => c.UseSqlite(connectionString)));
+
+            //services.AddEndpointerAccounts(validationParameters,
             //    o => o.WithEntityFrameworkDataSource<CustomDbContext>(
             //        c => c.UseSqlite(connectionString)));
 
             // Firebase
             services.AddEndpointerAuthentication(authenticationConfiguration,
                 validationParameters,
-                o => o.WithFirebaseDataSource(CreateFirebaseClient()));
+                o => o
+                    .WithFirebaseDataSource(CreateFirebaseClient())
+                    .EnableEmailVerification(emailVerificationConfiguration)
+                    .RequireVerifiedEmail());
 
-            services.AddEndpointerAccounts(validationParameters,
-                o => o.WithDatabase<CustomDbContext>(
-                    c => c.UseSqlite(connectionString)));
+            services.AddEndpointerAccounts(validationParameters, o => o.WithFirebaseDataSource(CreateFirebaseClient()));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

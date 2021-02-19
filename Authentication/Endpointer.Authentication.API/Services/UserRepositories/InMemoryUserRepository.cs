@@ -11,13 +11,13 @@ namespace Endpointer.Authentication.API.Services.UserRepositories
         private readonly List<User> _users = new List<User>();
 
         /// <inheritdoc />
-        public Task<User> Create(User user)
+        public Task Create(User user)
         {
             user.Id = Guid.NewGuid();
 
             _users.Add(user);
 
-            return Task.FromResult(user);
+            return Task.CompletedTask;
         }
 
         /// <inheritdoc />
@@ -36,6 +36,21 @@ namespace Endpointer.Authentication.API.Services.UserRepositories
         public Task<User> GetByUsername(string username)
         {
             return Task.FromResult(_users.FirstOrDefault(u => u.Username == username));
+        }
+
+        /// <inheritdoc />
+        public Task Update(Guid id, Action<User> update)
+        {
+            User user = _users.FirstOrDefault(u => u.Id == id);
+
+            if(user == null)
+            {
+                throw new Exception("User not found.");
+            }
+
+            update(user);
+
+            return Task.CompletedTask;
         }
     }
 }

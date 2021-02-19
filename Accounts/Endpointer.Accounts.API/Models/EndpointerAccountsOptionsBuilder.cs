@@ -9,18 +9,24 @@ namespace Endpointer.Accounts.API.Models
 {
     public class EndpointerAccountsOptionsBuilder
     {
-        private bool _useDatabase;
-        private Action<IServiceCollection> _addDbContext;
-        private Action<IServiceCollection> _addDbAccountRepository;
+        private Action<IServiceCollection> _addDataSourceServices;
+
+        public EndpointerAccountsOptionsBuilder()
+        {
+            _addDataSourceServices = (s) =>
+            {
+                s.AddSingleton<IAccountRepository, InMemoryAccountRepository>();
+            };
+        }
 
         /// <summary>
         /// Add database services to Endpointer with a DefaultAccountDbContext.
         /// </summary>
         /// <param name="dbOptions">The options to configure the DbContext.</param>
         /// <returns>The builder to configure options.</returns>
-        public EndpointerAccountsOptionsBuilder WithDatabase(Action<DbContextOptionsBuilder> dbOptions = null)
+        public EndpointerAccountsOptionsBuilder WithEntityFrameworkDataSource(Action<DbContextOptionsBuilder> dbOptions = null)
         {
-            return WithDatabase<DefaultAccountDbContext>(dbOptions);
+            return WithEntityFrameworkDataSource<DefaultAccountDbContext>(dbOptions);
         }
 
         /// <summary>
@@ -29,13 +35,28 @@ namespace Endpointer.Accounts.API.Models
         /// <typeparam name="TDbContext">The type of DbContext for the database.</typeparam>
         /// <param name="dbOptions">The options to configure the DbContext.</param>
         /// <returns>The builder to configure options.</returns>
-        public EndpointerAccountsOptionsBuilder WithDatabase<TDbContext>(Action<DbContextOptionsBuilder> dbOptions = null)
+        public EndpointerAccountsOptionsBuilder WithEntityFrameworkDataSource<TDbContext>(Action<DbContextOptionsBuilder> dbOptions = null)
             where TDbContext : DbContext, IAccountsDbContext<User>
         {
-            _useDatabase = true;
+            dbOptions = dbOptions ?? (o => { });
 
-            _addDbContext = services => services.AddDbContext<TDbContext>(dbOptions);
-            _addDbAccountRepository = services => services.AddScoped<IAccountRepository, DatabaseAccountRepository<TDbContext>>();
+            _addDataSourceServices = (s) =>
+            {
+                s.AddDbContext<TDbContext>(dbOptions);
+                s.AddScoped<IAccountRepository, DatabaseAccountRepository<TDbContext>>();
+            };
+
+            return this;
+        }
+
+        /// <summary>
+        /// Add data source services using a custom data source.
+        /// </summary>
+        /// <param name="addDataSourceServices">The callback to add custom data source services.</param>
+        /// <returns>The builder to configure options.</returns>
+        public EndpointerAccountsOptionsBuilder WithCustomDataSource(Action<IServiceCollection> addDataSourceServices)
+        {
+            _addDataSourceServices = addDataSourceServices;
 
             return this;
         }
@@ -48,9 +69,7 @@ namespace Endpointer.Accounts.API.Models
         {
             return new EndpointerAccountsOptions()
             {
-                UseDatabase = _useDatabase,
-                AddDbContext = _addDbContext,
-                AddDbAccountRepository = _addDbAccountRepository
+                AddDataSourceServices = _addDataSourceServices
             };
         }
     }

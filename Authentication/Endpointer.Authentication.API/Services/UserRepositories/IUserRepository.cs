@@ -28,7 +28,7 @@ namespace Endpointer.Authentication.API.Services.UserRepositories
         /// <param name="user">The user to create.</param>
         /// <returns>The created user with a generated id.</returns>
         /// <exception cref="Exception">Thrown if create fails.</exception>
-        Task<User> Create(User user);
+        Task Create(User user);
 
         /// <summary>
         /// Get a user by id.
@@ -37,5 +37,13 @@ namespace Endpointer.Authentication.API.Services.UserRepositories
         /// <returns>The user with the id. Null if not found.</returns>
         /// <exception cref="Exception">Thrown if request fails.</exception>
         Task<User> GetById(Guid userId);
+
+        /// <summary>
+        /// Update a user by id.
+        /// </summary>
+        /// <param name="id">The id of the user to update.</param>
+        /// <param name="update">The updates to apply.</param>
+        /// <exception cref="Exception">Thrown if request fails.</exception>
+        Task Update(Guid id, Action<User> update);
     }
 }

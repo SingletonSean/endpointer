@@ -25,15 +25,7 @@ namespace Endpointer.Accounts.API.Extensions
             configureOptions?.Invoke(optionsBuilder);
             EndpointerAccountsOptions options = optionsBuilder.Build();
 
-            if(options.UseDatabase)
-            {
-                options.AddDbContext?.Invoke(services);
-                options.AddDbAccountRepository?.Invoke(services);
-            }
-            else
-            {
-                services.AddSingleton<IAccountRepository, InMemoryAccountRepository>();
-            }
+            options.AddDataSourceServices?.Invoke(services);
 
             services.AddScoped<GetAccountEndpointHandler>();
 

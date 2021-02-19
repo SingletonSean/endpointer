@@ -9,8 +9,9 @@ namespace Endpointer.Core.API.Services.TokenClaimsDecoders
         /// Get claims signed into a JWT token.
         /// </summary>
         /// <param name="token">The token value.</param>
+        /// <param name="tokenValidationParameters">The validation parameters for decoding the token.</param>
         /// <returns>The claims signed into the token.</returns>
         /// <exception cref="SecurityTokenException">Thrown if unable to get claims from token.</exception>
-        ClaimsPrincipal GetClaims(string token);
+        ClaimsPrincipal GetClaims(string token, TokenValidationParameters tokenValidationParameters);
     }
 }

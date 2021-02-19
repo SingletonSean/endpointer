@@ -20,6 +20,8 @@ namespace Endpointer.Demos.WPF.Containers
                 LoginEndpoint = baseAddress + "login",
                 RefreshEndpoint = baseAddress + "refresh",
                 LogoutEndpoint = baseAddress + "logout",
+                VerifyEmailEndpoint = baseAddress + "verify",
+                SendVerifyEmailEndpoint = baseAddress + "send-verify",
             };
             AccountEndpointsConfiguration accountsEndpointConfiguration = new AccountEndpointsConfiguration()
             {
@@ -38,6 +40,7 @@ namespace Endpointer.Demos.WPF.Containers
             services.AddSingleton<RenavigationService<RegisterViewModel>>();
             services.AddSingleton<RenavigationService<LoginViewModel>>();
             services.AddSingleton<RenavigationService<AccountViewModel>>();
+            services.AddSingleton<RenavigationService<VerifyEmailViewModel>>();
 
             return services;
         }

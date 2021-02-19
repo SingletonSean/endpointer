@@ -11,6 +11,9 @@ namespace Endpointer.Authentication.API.Models
     public class EndpointerAuthenticationOptionsBuilder
     {
         private Action<IServiceCollection> _addDataSourceServices;
+        private bool _requireVerifiedEmail;
+        private bool _enableEmailVerification;
+        private EmailVerificationConfiguration _emailVerificationConfiguration;
 
         public EndpointerAuthenticationOptionsBuilder()
         {
@@ -19,6 +22,8 @@ namespace Endpointer.Authentication.API.Models
                 services.AddSingleton<IUserRepository, InMemoryUserRepository>();
                 services.AddSingleton<IRefreshTokenRepository, InMemoryRefreshTokenRepository>();
             };
+            _requireVerifiedEmail = false;
+            _enableEmailVerification = false;
         }
 
         /// <summary>
@@ -65,6 +70,30 @@ namespace Endpointer.Authentication.API.Models
         }
 
         /// <summary>
+        /// Require new user's to verify their emails.
+        /// </summary>
+        /// <param name="configuration">The configuration options for email verification.</param>
+        /// <returns>The builder to configure options.</returns>
+        public EndpointerAuthenticationOptionsBuilder EnableEmailVerification(EmailVerificationConfiguration configuration)
+        {
+            _enableEmailVerification = true;
+            _emailVerificationConfiguration = configuration;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Require authenticated user's to have a verified email. Otherwise, the user will be unauthorized.
+        /// </summary>
+        /// <returns>The builder to configure options.</returns>
+        public EndpointerAuthenticationOptionsBuilder RequireVerifiedEmail()
+        {
+            _requireVerifiedEmail = true;
+
+            return this;
+        }
+
+        /// <summary>
         /// Build the Endpointer options.
         /// </summary>
         /// <returns>The built options.</returns>
@@ -72,7 +101,10 @@ namespace Endpointer.Authentication.API.Models
         {
             return new EndpointerAuthenticationOptions()
             {
+                EmailVerificationConfiguration = _emailVerificationConfiguration,
+                EnableEmailVerification = _enableEmailVerification,
                 AddDataSourceServices = _addDataSourceServices,
+                RequireVerifiedEmail = _requireVerifiedEmail
             };
         }
     }

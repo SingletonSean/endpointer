@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Threading.Tasks;
 using System;
 using Microsoft.Extensions.Logging;
+using Endpointer.Authentication.API.Services.UserRegisters;
+using Endpointer.Authentication.API.Exceptions;
 
 namespace Endpointer.Authentication.API.EndpointHandlers
 {
@@ -17,14 +19,17 @@ namespace Endpointer.Authentication.API.EndpointHandlers
     {
         private readonly IUserRepository _userRepository;
         private readonly IPasswordHasher _passwordHasher;
+        private readonly IUserRegister _userRegister;
         private readonly ILogger<RegisterEndpointHandler> _logger;
 
         public RegisterEndpointHandler(IUserRepository userRepository, 
             IPasswordHasher passwordHasher,
+            IUserRegister userRegister,
             ILogger<RegisterEndpointHandler> logger)
         {
             _userRepository = userRepository;
             _passwordHasher = passwordHasher;
+            _userRegister = userRegister;
             _logger = logger;
         }
 
@@ -80,18 +85,20 @@ namespace Endpointer.Authentication.API.EndpointHandlers
 
             _logger.LogInformation("Hashing user password.");
             string passwordHash = _passwordHasher.HashPassword(registerRequest.Password);
-            User registrationUser = new User()
+
+            try
             {
-                Email = registerRequest.Email,
-                Username = registerRequest.Username,
-                PasswordHash = passwordHash
-            };
+                _logger.LogInformation("Registering new user.");
+                await _userRegister.RegisterUser(registerRequest.Email, registerRequest.Username, passwordHash);
 
-            _logger.LogInformation("Creating new user.");
-            await _userRepository.Create(registrationUser);
-
-            _logger.LogInformation("Successfully registered user.");
-            return new OkResult();
+                _logger.LogInformation("Successfully registered user.");
+                return new OkResult();
+            }
+            catch (SendEmailException)
+            {
+                _logger.LogError("Failed to send email verification.");
+                return new OkResult();
+            }
         }
     }
 }

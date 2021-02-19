@@ -3,11 +3,20 @@ using Endpointer.Authentication.API.EndpointHandlers;
 using Endpointer.Authentication.API.Mappers;
 using Endpointer.Authentication.API.Models;
 using Endpointer.Authentication.API.Services.Authenticators;
+using Endpointer.Authentication.API.Services.EmailSenders;
+using Endpointer.Authentication.API.Services.EmailVerificationSenders;
 using Endpointer.Authentication.API.Services.PasswordHashers;
+using Endpointer.Authentication.API.Services.RefreshTokenRepositories;
 using Endpointer.Authentication.API.Services.TokenGenerators;
+using Endpointer.Authentication.API.Services.TokenGenerators.EmailVerifications;
 using Endpointer.Authentication.API.Services.TokenValidators;
+using Endpointer.Authentication.API.Services.TokenValidators.EmailVerifications;
+using Endpointer.Authentication.API.Services.UserRegisters;
 using Endpointer.Core.API.Extensions;
+using Endpointer.Core.API.Http;
+using Endpointer.Core.API.Services.TokenClaimsDecoders;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System;
 
@@ -45,11 +54,46 @@ namespace Endpointer.Authentication.API.Extensions
             services.AddSingleton<ITokenGenerator, TokenGenerator>();
             services.AddSingleton<IPasswordHasher, BcryptPasswordHasher>();
 
+            if(options.EnableEmailVerification)
+            {
+                FluentEmailServicesBuilder emailBuilder = services.AddFluentEmail(options.EmailVerificationConfiguration.EmailFromAddress);
+                options.EmailVerificationConfiguration.ConfigureFluentEmailServices?.Invoke(emailBuilder);
+
+                services.AddSingleton(options.EmailVerificationConfiguration);
+                services.AddSingleton<IEmailVerificationTokenGenerator, EmailVerificationTokenGenerator>();
+                services.AddSingleton<IEmailVerificationTokenValidator, EmailVerificationTokenValidator>();
+                services.AddScoped<IEmailVerificationSender, EmailVerificationSender>();
+                services.AddScoped<IEmailSender, FluentEmailSender>();
+                services.AddScoped<IUserRegister, EmailVerificationUserRegister>();
+            }
+            else
+            {
+                services.AddScoped<IUserRegister, UserRegister>();
+            }
+
+            if(options.RequireVerifiedEmail)
+            {
+                services.AddScoped<HttpRequestAuthenticator>();
+                services.AddScoped<VerifyEmailHttpRequestAuthenticator>(s => new VerifyEmailHttpRequestAuthenticator(
+                    s.GetRequiredService<HttpRequestAuthenticator>(),
+                    s.GetRequiredService<ILogger<VerifyEmailHttpRequestAuthenticator>>()));
+
+                services.AddScoped<LogoutEverywhereEndpointHandler>(s => new LogoutEverywhereEndpointHandler(
+                    s.GetRequiredService<IRefreshTokenRepository>(),
+                    s.GetRequiredService<VerifyEmailHttpRequestAuthenticator>(),
+                    s.GetRequiredService<ILogger<LogoutEverywhereEndpointHandler>>()));
+            }
+            else
+            {
+                services.AddScoped<LogoutEverywhereEndpointHandler>();
+            }
+
             services.AddScoped<RegisterEndpointHandler>();
             services.AddScoped<LoginEndpointHandler>();
             services.AddScoped<RefreshEndpointHandler>();
             services.AddScoped<LogoutEndpointHandler>();
-            services.AddScoped<LogoutEverywhereEndpointHandler>();
+            services.AddScoped<VerifyEmailEndpointerHandler>();
+            services.AddScoped<SendVerifyEmailEndpointerHandler>();
 
             services.AddEndpointerCore(validationParameters);
 

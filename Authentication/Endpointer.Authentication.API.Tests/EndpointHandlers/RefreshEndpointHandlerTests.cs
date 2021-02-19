@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Endpointer.API.Tests.EndpointHandlers;
 using Endpointer.Authentication.API.EndpointHandlers;
 using Endpointer.Authentication.API.Models;
 using Endpointer.Authentication.API.Services.Authenticators;
@@ -18,7 +19,7 @@ using System.Threading.Tasks;
 namespace Endpointer.Authentication.API.Tests.EndpointHandlers
 {
     [TestFixture]
-    class RefreshEndpointHandlerTests
+    public class RefreshEndpointHandlerTests : EndpointHandlerTests
     {
         private RefreshEndpointHandler _handler;
 
@@ -29,8 +30,6 @@ namespace Endpointer.Authentication.API.Tests.EndpointHandlers
         private Mock<IMapper> _mockMapper;
 
         private RefreshRequest _request;
-        private ModelStateDictionary _validModelState;
-        private ModelStateDictionary _invalidModelState;
 
         [SetUp]
         public void SetUp()
@@ -50,9 +49,6 @@ namespace Endpointer.Authentication.API.Tests.EndpointHandlers
                 new Mock<ILogger<RefreshEndpointHandler>>().Object);
 
             _request = new RefreshRequest();
-            _validModelState = new ModelStateDictionary();
-            _invalidModelState = new ModelStateDictionary();
-            _invalidModelState.AddModelError("Error", "Message");
         }
 
         [Test]

@@ -15,6 +15,7 @@ namespace Endpointer.Demos.WPF.Containers
             services.AddSingleton<NavigateCommand<RegisterViewModel>>();
             services.AddSingleton<NavigateCommand<LoginViewModel>>();
             services.AddSingleton<NavigateCommand<AccountViewModel>>();
+            services.AddSingleton<NavigateCommand<VerifyEmailViewModel>>();
 
             return services;
         }

@@ -148,6 +148,68 @@ namespace Endpointer.Authentication.API.Tests.Services.UserRepositories
             Assert.ThrowsAsync<SqliteException>(() => _repository.GetByUsername(string.Empty));
         }
 
+        [Test]
+        public async Task Update_WithExistingIdAndNewChanges_AppliesUpdate()
+        {
+            User user = new User() { Id = _userId, IsEmailVerified = false };
+            _context.Users.Add(user);
+            _context.SaveChanges();
+            _context.Users.Local.Clear();
+
+            await _repository.Update(_userId, u => u.IsEmailVerified = true);
+
+            User savedUser = _context.Users.Find(_userId);
+            Assert.IsTrue(savedUser.IsEmailVerified);
+        }
+
+        [Test]
+        public async Task Update_WithExistingIdAndMultipleNewChanges_AppliesUpdate()
+        {
+            string username = "test";
+            User user = new User() { Id = _userId, IsEmailVerified = false };
+            _context.Users.Add(user);
+            _context.SaveChanges();
+            _context.Users.Local.Clear();
+
+            await _repository.Update(_userId, u =>
+            {
+                u.IsEmailVerified = true;
+                u.Username = username;
+            });
+
+            User savedUser = _context.Users.Find(_userId);
+            Assert.IsTrue(savedUser.IsEmailVerified);
+            Assert.AreEqual(username, savedUser.Username);
+        }
+
+        [Test]
+        public async Task Update_WithExistingIdAndNoChanges_WorksButChangesNothing()
+        {
+            User user = new User() { Id = _userId, IsEmailVerified = false };
+            _context.Users.Add(user);
+            _context.SaveChanges();
+            _context.Users.Local.Clear();
+
+            await _repository.Update(_userId, u => u.IsEmailVerified = false);
+
+            User savedUser = _context.Users.Find(_userId);
+            Assert.IsFalse(savedUser.IsEmailVerified);
+        }
+
+        [Test]
+        public void Update_WithNonExistingId_ThrowsException()
+        {
+            Assert.ThrowsAsync<DbUpdateConcurrencyException>(() => _repository.Update(_userId, u => u.IsEmailVerified = true));
+        }
+
+        [Test]
+        public void Update_WithFailure_ThrowsException()
+        {
+            _connection.Dispose();
+
+            Assert.ThrowsAsync<DbUpdateException>(() => _repository.Update(_userId, u => u.IsEmailVerified = true));
+        }
+
         protected override DefaultAuthenticationDbContext CreateDbContext(DbContextOptions options)
         {
             return new DefaultAuthenticationDbContext(options);

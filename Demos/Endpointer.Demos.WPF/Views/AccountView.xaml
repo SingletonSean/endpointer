@@ -26,6 +26,8 @@
                     </DataTrigger>
                 </Style.Triggers>
             </Style>
+
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         </Grid.Resources>
 
         <Grid.RowDefinitions>
@@ -33,7 +35,8 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0"
+        <TextBlock
+            Grid.Row="0"
             Style="{StaticResource Header}"
             Text="Account" />
 
@@ -42,6 +45,7 @@
 
             <Grid Grid.IsSharedSizeScope="True" Style="{StaticResource OnlyShowIfNotLoading}">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
@@ -54,7 +58,9 @@
 
                     <TextBlock Grid.Column="0" Text="Email" />
 
-                    <TextBlock Grid.Column="1" Margin="20 0 0 0"
+                    <TextBlock
+                        Grid.Column="1"
+                        Margin="20 0 0 0"
                         Text="{Binding Email}" />
                 </Grid>
 
@@ -66,8 +72,60 @@
 
                     <TextBlock Grid.Column="0" Text="Username" />
 
-                    <TextBlock Grid.Column="1" Margin="20 0 0 0"
+                    <TextBlock
+                        Grid.Column="1"
+                        Margin="20 0 0 0"
                         Text="{Binding Username}" />
+                </Grid>
+
+                <Grid Grid.Row="2" Margin="0 20 0 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" SharedSizeGroup="Label" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        Text="Email Verified?" />
+
+                    <Grid Grid.Column="1" Margin="20 0 0 0">
+                        <TextBlock Text="Yes">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsEmailVerified}" Value="True">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel.Style>
+                                <Style TargetType="StackPanel">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsEmailVerified}" Value="False">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </StackPanel.Style>
+
+                            <TextBlock VerticalAlignment="Center" Text="No" />
+
+                            <Button
+                                Margin="10 0 0 0"
+                                Padding="5 3"
+                                Command="{Binding SendEmailVerificationEmailCommand}"
+                                Content="Send Email Verification Email" />
+                        </StackPanel>
+                    </Grid>
+
+
                 </Grid>
             </Grid>
         </Grid>

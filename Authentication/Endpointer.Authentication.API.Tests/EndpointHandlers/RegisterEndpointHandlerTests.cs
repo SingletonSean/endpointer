@@ -1,5 +1,8 @@
-﻿using Endpointer.Authentication.API.EndpointHandlers;
+﻿using Endpointer.API.Tests.EndpointHandlers;
+using Endpointer.Authentication.API.EndpointHandlers;
+using Endpointer.Authentication.API.Exceptions;
 using Endpointer.Authentication.API.Services.PasswordHashers;
+using Endpointer.Authentication.API.Services.UserRegisters;
 using Endpointer.Authentication.API.Services.UserRepositories;
 using Endpointer.Authentication.Core.Models.Requests;
 using Endpointer.Core.API.Models;
@@ -13,26 +16,27 @@ using System.Threading.Tasks;
 
 namespace Endpointer.Authentication.API.Tests.EndpointHandlers
 {
-    class RegisterEndpointHandlerTests
+    public class RegisterEndpointHandlerTests : EndpointHandlerTests
     {
         private RegisterEndpointHandler _handler;
 
         private Mock<IUserRepository> _mockUserRepository;
         private Mock<IPasswordHasher> _mockPasswordHasher;
+        private Mock<IUserRegister> _mockUserRegister;
 
         private RegisterRequest _request;
-        private ModelStateDictionary _validModelState;
-        private ModelStateDictionary _invalidModelState;
 
         [SetUp]
         public void SetUp()
         {
             _mockUserRepository = new Mock<IUserRepository>();
             _mockPasswordHasher = new Mock<IPasswordHasher>();
+            _mockUserRegister = new Mock<IUserRegister>();
 
             _handler = new RegisterEndpointHandler(
                 _mockUserRepository.Object,
                 _mockPasswordHasher.Object,
+                _mockUserRegister.Object,
                 new Mock<ILogger<RegisterEndpointHandler>>().Object);
 
             _request = new RegisterRequest()
@@ -40,9 +44,6 @@ namespace Endpointer.Authentication.API.Tests.EndpointHandlers
                 Password = "match",
                 ConfirmPassword = "match"
             };
-            _validModelState = new ModelStateDictionary();
-            _invalidModelState = new ModelStateDictionary();
-            _invalidModelState.AddModelError("Error", "Message");
         }
 
         [Test]
@@ -89,9 +90,21 @@ namespace Endpointer.Authentication.API.Tests.EndpointHandlers
         {
             _mockUserRepository.Setup(s => s.GetByEmail(_request.Email)).ReturnsAsync(() => null);
             _mockUserRepository.Setup(s => s.GetByUsername(_request.Username)).ReturnsAsync(() => null);
-            _mockUserRepository.Setup(s => s.Create(It.IsAny<User>())).ThrowsAsync(new Exception());
+            _mockUserRegister.Setup(s => s.RegisterUser(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).ThrowsAsync(new Exception());
 
             Assert.ThrowsAsync<Exception>(() => _handler.HandleRegister(_request, _validModelState));
+        }
+
+        [Test]
+        public async Task HandleRegister_WithSendEmailException_ReturnsOk()
+        {
+            _mockUserRepository.Setup(s => s.GetByEmail(_request.Email)).ReturnsAsync(() => null);
+            _mockUserRepository.Setup(s => s.GetByUsername(_request.Username)).ReturnsAsync(() => null);
+            _mockUserRegister.Setup(s => s.RegisterUser(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).ThrowsAsync(new SendEmailException(_request.Email));
+
+            IActionResult result = await _handler.HandleRegister(_request, _validModelState);
+
+            Assert.IsAssignableFrom<OkResult>(result);
         }
 
         [Test]
@@ -103,6 +116,17 @@ namespace Endpointer.Authentication.API.Tests.EndpointHandlers
             IActionResult result = await _handler.HandleRegister(_request, _validModelState);
 
             Assert.IsAssignableFrom<OkResult>(result);
+        }
+
+        [Test]
+        public async Task HandleRegister_WithSuccess_RegistersUser()
+        {
+            _mockUserRepository.Setup(s => s.GetByEmail(_request.Email)).ReturnsAsync(() => null);
+            _mockUserRepository.Setup(s => s.GetByUsername(_request.Username)).ReturnsAsync(() => null);
+
+            await _handler.HandleRegister(_request, _validModelState);
+
+            _mockUserRegister.Verify(f => f.RegisterUser(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
         }
     }
 }

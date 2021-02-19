@@ -1,5 +1,6 @@
 ﻿using Endpointer.Authentication.API.Models;
 using Endpointer.Authentication.API.Services.TokenValidators;
+using Endpointer.Core.API.Services.TokenClaimsDecoders;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Moq;
@@ -15,6 +16,8 @@ namespace Endpointer.Authentication.API.Tests.Services.TokenValidators
     {
         private RefreshTokenValidator _validator;
 
+        private Mock<ITokenClaimsDecoder> _mockTokenClaimsDecoder;
+
         private string _token;
 
         [SetUp]
@@ -26,15 +29,13 @@ namespace Endpointer.Authentication.API.Tests.Services.TokenValidators
                 Issuer = "test",
                 Audience = "test"
             };
+            _mockTokenClaimsDecoder = new Mock<ITokenClaimsDecoder>();
 
-            SecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.RefreshTokenSecret));
-            SigningCredentials credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            JwtSecurityToken token = new JwtSecurityToken(configuration.Issuer, 
-                configuration.Audience, null, DateTime.Now, DateTime.Now.AddDays(3), credentials);
-
-            _token = new JwtSecurityTokenHandler().WriteToken(token);
-
-            _validator = new RefreshTokenValidator(configuration, new Mock<ILogger<RefreshTokenValidator>>().Object);
+            _validator = new RefreshTokenValidator(_mockTokenClaimsDecoder.Object, 
+                configuration, 
+                new Mock<ILogger<RefreshTokenValidator>>().Object);
+            
+            _token = "123test123";
         }
 
         [Test]
@@ -48,7 +49,9 @@ namespace Endpointer.Authentication.API.Tests.Services.TokenValidators
         [Test]
         public void Validate_WithInvalidToken_ReturnsFalse()
         {
-            bool valid = _validator.Validate(string.Empty);
+            _mockTokenClaimsDecoder.Setup(d => d.GetClaims(_token, It.IsAny<TokenValidationParameters>())).Throws(new SecurityTokenException());
+            
+            bool valid = _validator.Validate(_token);
 
             Assert.IsFalse(valid);
         }

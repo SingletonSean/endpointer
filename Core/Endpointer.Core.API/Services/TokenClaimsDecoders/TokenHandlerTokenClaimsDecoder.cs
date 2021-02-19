@@ -8,22 +8,20 @@ namespace Endpointer.Core.API.Services.TokenClaimsDecoders
 {
     public class TokenHandlerTokenClaimsDecoder : ITokenClaimsDecoder
     {
-        private readonly TokenValidationParameters _validationParameters;
         private readonly ILogger<TokenHandlerTokenClaimsDecoder> _logger;
 
-        public TokenHandlerTokenClaimsDecoder(TokenValidationParameters validationParameters, ILogger<TokenHandlerTokenClaimsDecoder> logger)
+        public TokenHandlerTokenClaimsDecoder(ILogger<TokenHandlerTokenClaimsDecoder> logger)
         {
-            _validationParameters = validationParameters;
             _logger = logger;
         }
 
         /// <inheritdoc />
-        public ClaimsPrincipal GetClaims(string token)
+        public ClaimsPrincipal GetClaims(string token, TokenValidationParameters tokenValidationParameters)
         {
             try
             {
                 _logger.LogInformation("Validating token.");
-                ClaimsPrincipal claims = new JwtSecurityTokenHandler().ValidateToken(token, _validationParameters, out _);
+                ClaimsPrincipal claims = new JwtSecurityTokenHandler().ValidateToken(token, tokenValidationParameters, out _);
 
                 _logger.LogInformation("Successfully retrieved claims from token.");
                 return claims;

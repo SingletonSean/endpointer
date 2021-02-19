@@ -65,6 +65,11 @@ namespace Endpointer.Demos.WPF.ViewModels
 
         public RegisterViewModel(CreateCommand<RegisterViewModel> createRegisterCommand)
         {
+            Email = "test@gmail.com";
+            Username = "test";
+            Password = "test123";
+            ConfirmPassword = "test123";
+
             RegisterCommand = createRegisterCommand(this);
         }
     }
